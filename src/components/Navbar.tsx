@@ -7,9 +7,10 @@ interface NavbarProps {
   currentPage: string;
   onPageChange: (page: string) => void;
   onSelectService: (serviceSlug: string) => void;
+  onBookCall: () => void;
 }
 
-export default function Navbar({ currentPage, onPageChange, onSelectService }: NavbarProps) {
+export default function Navbar({ currentPage, onPageChange, onSelectService, onBookCall }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
@@ -168,19 +169,17 @@ export default function Navbar({ currentPage, onPageChange, onSelectService }: N
 
         {/* Call to Action Desktop */}
         <div className="hidden lg:flex items-center">
-          <a
+          <button
             id="nav-cta-calendly"
-            href="https://calendly.com/vprimedigitalz/30min"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative inline-flex items-center justify-center bg-brand text-white font-sans text-xs font-semibold uppercase tracking-wider px-6 py-3 rounded-lg overflow-hidden transition-all duration-300 shadow-xs hover:shadow-md hover:-translate-y-0.5"
+            onClick={onBookCall}
+            className="group relative inline-flex items-center justify-center bg-brand text-white font-sans text-xs font-semibold uppercase tracking-wider px-6 py-3 rounded-lg overflow-hidden transition-all duration-300 shadow-xs hover:shadow-md hover:-translate-y-0.5 cursor-pointer"
           >
             <span className="relative z-10 flex items-center space-x-1">
               <span>Book Strategy Call</span>
               <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </span>
             <div className="absolute inset-0 bg-brand-dark scale-x-0 origin-right group-hover:scale-x-100 group-hover:origin-left transition-transform duration-500 ease-out" />
-          </a>
+          </button>
         </div>
 
         {/* Mobile Hamburger Trigger */}
@@ -236,16 +235,17 @@ export default function Navbar({ currentPage, onPageChange, onSelectService }: N
             </div>
 
             <div className="px-6 pt-12 space-y-6">
-              <a
+              <button
                 id="mobile-nav-cta-calendly"
-                href="https://calendly.com/vprimedigitalz/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex items-center justify-center space-x-2 bg-brand text-white font-sans text-sm font-semibold uppercase tracking-wider py-4 rounded-xl shadow-xs"
+                onClick={() => {
+                  setIsOpen(false);
+                  onBookCall();
+                }}
+                className="w-full flex items-center justify-center space-x-2 bg-brand text-white font-sans text-sm font-semibold uppercase tracking-wider py-4 rounded-xl shadow-xs cursor-pointer"
               >
                 <span>Free Strategy Call</span>
                 <ArrowUpRight size={16} />
-              </a>
+              </button>
               <div className="text-center text-xs font-mono text-slate-400">
                 INFO@VPRIMEDIGITALZ.COM
               </div>

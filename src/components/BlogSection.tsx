@@ -4,7 +4,11 @@ import { motion, AnimatePresence } from "motion/react";
 import { blogPostsData } from "../data";
 import { BlogPost } from "../types";
 
-export default function BlogSection() {
+interface BlogSectionProps {
+  onBookCall: () => void;
+}
+
+export default function BlogSection({ onBookCall }: BlogSectionProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
@@ -375,15 +379,13 @@ export default function BlogSection() {
                   We implement these exact SEO optimizations and conversion designs for our active clients. Learn how we can build a high-performance content engine for your business.
                 </p>
                 <div className="flex justify-center">
-                  <a
-                    href="https://calendly.com/vprimedigitalz/30min"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 bg-brand hover:bg-brand-dark text-white font-sans text-xs font-semibold uppercase tracking-wider px-6 py-3.5 rounded-xl shadow-xs hover:shadow-md transition-all duration-300"
+                  <button
+                    onClick={onBookCall}
+                    className="inline-flex items-center space-x-2 bg-brand hover:bg-brand-dark text-white font-sans text-xs font-semibold uppercase tracking-wider px-6 py-3.5 rounded-xl shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer"
                   >
                     <span>SCHEDULE FREE GROWTH CONSULTATION</span>
                     <ArrowRight size={12} />
-                  </a>
+                  </button>
                 </div>
               </div>
 

@@ -4,9 +4,10 @@ import { motion } from "motion/react";
 
 interface HeroProps {
   onPageChange: (page: string) => void;
+  onBookCall: () => void;
 }
 
-export default function Hero({ onPageChange }: HeroProps) {
+export default function Hero({ onPageChange, onBookCall }: HeroProps) {
   const [time, setTime] = useState("");
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export default function Hero({ onPageChange }: HeroProps) {
   return (
     <section id="hero" className="relative pt-32 pb-20 md:pt-40 md:pb-32 bg-white overflow-hidden">
       {/* Decorative Blueprint Background Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0037fd06_1px,transparent_1px),linear-gradient(to_bottom,#0037fd06_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#06cf9c0c_1px,transparent_1px),linear-gradient(to_bottom,#06cf9c0c_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
 
       {/* Radial Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-brand/5 blur-[120px] rounded-full pointer-events-none" />
@@ -97,18 +98,16 @@ export default function Hero({ onPageChange }: HeroProps) {
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
             >
-              <a
-                href="https://calendly.com/vprimedigitalz/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group w-full sm:w-auto relative inline-flex items-center justify-center bg-brand text-white font-sans text-xs font-semibold uppercase tracking-widest px-8 py-4.5 rounded-xl overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-brand/20 hover:-translate-y-0.5"
+              <button
+                onClick={onBookCall}
+                className="group w-full sm:w-auto relative inline-flex items-center justify-center bg-brand text-white font-sans text-xs font-semibold uppercase tracking-widest px-8 py-4.5 rounded-xl overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-brand/20 hover:-translate-y-0.5 cursor-pointer"
               >
                 <span className="relative z-10 flex items-center space-x-2">
                   <span>Book Free Consultation</span>
                   <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
                 <div className="absolute inset-0 bg-brand-dark scale-x-0 origin-right group-hover:scale-x-100 group-hover:origin-left transition-transform duration-500 ease-out" />
-              </a>
+              </button>
 
               <button
                 onClick={() => onPageChange("portfolio")}
@@ -148,7 +147,7 @@ export default function Hero({ onPageChange }: HeroProps) {
               className="relative aspect-video lg:aspect-square bg-slate-50 border border-slate-100 rounded-3xl p-4 md:p-6 shadow-2xl flex items-center justify-center overflow-hidden group"
             >
               {/* Geometric Grid Element inside Graphic */}
-              <div className="absolute inset-0 bg-[radial-gradient(#0037fd0a_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(#06cf9c15_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
 
               {/* Central Premium Mockup Card */}
               <div className="relative w-full h-full bg-white rounded-2xl border border-slate-100 shadow-md p-6 flex flex-col justify-between overflow-hidden">
@@ -163,17 +162,23 @@ export default function Hero({ onPageChange }: HeroProps) {
                   </div>
                 </div>
 
-                <div className="my-auto space-y-5 py-4">
-                  <div className="inline-flex items-center space-x-1.5 bg-brand/5 border border-brand/10 text-brand font-mono text-[10px] px-2.5 py-1 rounded-full font-semibold">
-                    <span>AGENCY ENGINE V1.4</span>
+                <div className="my-auto space-y-4 py-3">
+                  <div className="relative overflow-hidden rounded-xl border border-slate-100/80 aspect-video shrink-0 bg-slate-50 shadow-inner">
+                    <img 
+                      src="/src/assets/images/hero_dashboard_mockup_1784639799645.jpg" 
+                      alt="Vprime Growth Analytics Dashboard" 
+                      className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500" 
+                      referrerPolicy="no-referrer"
+                    />
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-display font-bold text-slate-800 tracking-tight leading-snug">
-                    Redefining Digital Authority for Ambitious Teams.
-                  </h3>
-                  <div className="h-[2px] w-12 bg-brand" />
-                  <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
-                    Hover card elements to reveal physical metrics. Drag and drop assets directly to prompt global conversions.
-                  </p>
+                  <div className="space-y-1.5">
+                    <div className="inline-flex items-center space-x-1.5 bg-brand/5 border border-brand/10 text-brand font-mono text-[9px] px-2.5 py-0.5 rounded-full font-bold">
+                      <span>VPRIME LIVE SYSTEM</span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-normal">
+                      Sleek high-converting customer portals and lightning-fast digital dashboards engineered for modern organic performance.
+                    </p>
+                  </div>
                 </div>
 
                 {/* Simulated Waveform / Analytics Tracker */}

@@ -48,12 +48,14 @@ interface ServicesSectionProps {
   selectedServiceSlug: string | null;
   onClearSelectedService: () => void;
   onPageChange: (page: string) => void;
+  onBookCall: () => void;
 }
 
 export default function ServicesSection({ 
   selectedServiceSlug, 
   onClearSelectedService,
-  onPageChange
+  onPageChange,
+  onBookCall
 }: ServicesSectionProps) {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -194,6 +196,19 @@ export default function ServicesSection({
                     {selectedService.description}
                   </p>
 
+                  {/* Dynamic Service Specific Image Illustration */}
+                  <div className="aspect-video max-w-2xl rounded-2xl overflow-hidden border border-slate-100 shadow-md bg-slate-50">
+                    <img 
+                      src={selectedService.id === "seo-opt" || selectedService.category === "Strategy" || selectedService.id.includes("seo")
+                        ? "/src/assets/images/seo_growth_illustration_1784639833956.jpg"
+                        : "/src/assets/images/hero_dashboard_mockup_1784639799645.jpg"
+                      }
+                      alt={selectedService.title} 
+                      className="w-full h-full object-cover hover:scale-101 transition-transform duration-500" 
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+
                   {/* Benefit Checklist */}
                   <div className="pt-4 space-y-3">
                     <h4 className="text-xs font-mono tracking-widest text-slate-400 uppercase font-bold">KEY BENEFITS</h4>
@@ -245,15 +260,13 @@ export default function ServicesSection({
 
                   {/* Book Quick Call CTA Inside card */}
                   <div className="pt-4 border-t border-slate-100">
-                    <a
-                      href="https://calendly.com/vprimedigitalz/30min"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center space-x-2 bg-brand hover:bg-brand-dark text-white font-sans text-xs font-semibold uppercase tracking-wider py-4 rounded-xl shadow-xs hover:shadow-md transition-all duration-300"
+                    <button
+                      onClick={onBookCall}
+                      className="w-full flex items-center justify-center space-x-2 bg-brand hover:bg-brand-dark text-white font-sans text-xs font-semibold uppercase tracking-wider py-4 rounded-xl shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer"
                     >
                       <Calendar size={14} />
                       <span>Book Free Strategy Call</span>
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -365,15 +378,13 @@ export default function ServicesSection({
                   Connect with Vikram and the Vprime team for a free 30-minute discovery call to map out a clear growth strategy.
                 </p>
                 <div className="flex justify-center">
-                  <a
-                    href="https://calendly.com/vprimedigitalz/30min"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 bg-white text-brand hover:bg-slate-50 font-sans text-xs font-semibold uppercase tracking-wider px-8 py-4 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+                  <button
+                    onClick={onBookCall}
+                    className="inline-flex items-center space-x-2 bg-white text-brand hover:bg-slate-50 font-sans text-xs font-semibold uppercase tracking-wider px-8 py-4 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
                   >
                     <span>SCHEDULE CALL NOW</span>
                     <ArrowRight size={14} />
-                  </a>
+                  </button>
                 </div>
               </div>
 

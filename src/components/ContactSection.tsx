@@ -15,7 +15,11 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import { globalFaqs } from "../data";
 
-export default function ContactSection() {
+interface ContactSectionProps {
+  onBookCall: () => void;
+}
+
+export default function ContactSection({ onBookCall }: ContactSectionProps) {
   const [activeFaqIdx, setActiveFaqIdx] = useState<number | null>(null);
 
   // Form states
@@ -122,21 +126,19 @@ export default function ContactSection() {
               <p className="text-xs text-slate-500 leading-relaxed">
                 Skip the back-and-forth emails. Pick a 30-minute slot on Vikram's calendar to talk design, scope, and goals.
               </p>
-              <a
-                href="https://calendly.com/vprimedigitalz/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex items-center justify-center space-x-2 bg-brand hover:bg-brand-dark text-white font-sans text-xs font-bold uppercase tracking-wider py-4 rounded-xl shadow-xs transition-all"
+              <button
+                onClick={onBookCall}
+                className="w-full flex items-center justify-center space-x-2 bg-brand hover:bg-brand-dark text-white font-sans text-xs font-bold uppercase tracking-wider py-4 rounded-xl shadow-xs transition-all cursor-pointer"
               >
                 <span>Book 30-Min Discovery</span>
                 <ArrowRight size={14} />
-              </a>
+              </button>
             </div>
 
             {/* Styled vector map placeholder matching our branding */}
             <div className="relative h-44 rounded-2xl overflow-hidden border border-slate-100 shadow-xs bg-slate-50 flex items-center justify-center">
               {/* Electric blue abstract graphic representation representing coordinates */}
-              <div className="absolute inset-0 bg-[radial-gradient(#0037fd10_1px,transparent_1px)] bg-[size:1rem_1rem] opacity-75" />
+              <div className="absolute inset-0 bg-[radial-gradient(#06cf9c15_1px,transparent_1px)] bg-[size:1rem_1rem] opacity-75" />
               <div className="absolute w-24 h-24 rounded-full bg-brand/5 blur-xl top-1/2 left-1/4" />
               <div className="absolute w-16 h-16 rounded-full bg-brand/5 blur-lg top-1/3 right-1/4" />
               

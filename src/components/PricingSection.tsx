@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Check, HelpCircle, X, ShieldCheck, ArrowRight, Star } from "lucide-react";
 import { pricingPlans } from "../data";
 
-export default function PricingSection() {
+interface PricingSectionProps {
+  onBookCall: () => void;
+}
+
+export default function PricingSection({ onBookCall }: PricingSectionProps) {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "annual">("monthly");
 
   // Calculate price discount for annual (let's say 20% off)
@@ -121,11 +125,9 @@ export default function PricingSection() {
 
               {/* Call to Action Button */}
               <div className="pt-8">
-                <a
-                  href="https://calendly.com/vprimedigitalz/30min"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`w-full flex items-center justify-center space-x-2 font-sans text-xs font-semibold uppercase tracking-wider py-4 rounded-xl shadow-xs transition-all duration-300 ${
+                <button
+                  onClick={onBookCall}
+                  className={`w-full flex items-center justify-center space-x-2 font-sans text-xs font-semibold uppercase tracking-wider py-4 rounded-xl shadow-xs transition-all duration-300 cursor-pointer ${
                     plan.popular
                       ? "bg-brand text-white hover:bg-brand-dark hover:shadow-md hover:shadow-brand/10"
                       : "bg-slate-50 hover:bg-slate-100 text-slate-800 border border-slate-100"
@@ -133,7 +135,7 @@ export default function PricingSection() {
                 >
                   <span>{plan.ctaText}</span>
                   <ArrowRight size={14} />
-                </a>
+                </button>
               </div>
             </div>
           ))}

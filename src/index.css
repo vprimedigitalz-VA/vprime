@@ -6,11 +6,11 @@
   --font-display: "Space Grotesk", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   
-  --color-brand: #0037FD;
-  --color-brand-light: #446efd;
-  --color-brand-dark: #0023a3;
-  --color-bg-light: #ffffff;
-  --color-bg-dark: #090a0f;
+  --color-brand: #06CF9C;
+  --color-brand-light: rgba(6, 207, 156, 0.1);
+  --color-brand-dark: #048F6C;
+  --color-bg-light: #090a0f;
+  --color-bg-dark: #050608;
   
   --animate-marquee: marquee 35s linear infinite;
   --animate-marquee-reverse: marquee-reverse 35s linear infinite;
@@ -43,8 +43,8 @@ html {
 }
 
 body {
-  background-color: #ffffff;
-  color: #0c0d12;
+  background-color: #090a0f;
+  color: #f8fafc;
   font-family: var(--font-sans);
   overflow-x: hidden;
 }
@@ -54,48 +54,183 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #f8fafc;
+  background: #090a0f;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #1e2538;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #0037FD;
+  background: #06CF9C;
+}
+
+/* Global Dark Theme override for sections and elements */
+.bg-white {
+  background-color: #090a0f !important;
+}
+
+/* Sub-cards, containers, interactive grids and dropdown panels in dark mode should stand out with a lighter background */
+.bg-white .bg-white,
+.bg-white .bg-slate-50,
+section .bg-white,
+section .bg-slate-50,
+header .bg-white,
+header .bg-slate-50,
+footer .bg-white,
+footer .bg-slate-50,
+#services-megamenu .bg-white,
+#mobile-nav-overlay .bg-white,
+.rounded-3xl.bg-white,
+.rounded-2xl.bg-white,
+.rounded-xl.bg-white,
+.rounded-lg.bg-white,
+.bg-slate-50 {
+  background-color: #121520 !important;
+}
+
+/* Light opacity background classes */
+.bg-slate-50\/30 {
+  background-color: rgba(18, 21, 32, 0.3) !important;
+}
+.bg-slate-50\/50 {
+  background-color: rgba(18, 21, 32, 0.5) !important;
+}
+.bg-brand-light\/25 {
+  background-color: rgba(6, 207, 156, 0.04) !important;
+}
+.bg-brand-light\/15 {
+  background-color: rgba(6, 207, 156, 0.02) !important;
+}
+
+/* Inputs, textareas and forms */
+input, textarea, select {
+  background-color: #161926 !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: #06CF9C !important;
+  background-color: #1a1f33 !important;
+}
+
+/* Redefine text colors for dark mode high contrast and legibility */
+.text-slate-950 { color: #ffffff !important; }
+.text-slate-900 { color: #f8fafc !important; }
+.text-slate-800 { color: #f1f5f9 !important; }
+.text-slate-700 { color: #cbd5e1 !important; }
+.text-slate-600 { color: #94a3b8 !important; }
+.text-slate-500 { color: #64748b !important; }
+.text-slate-400 { color: #475569 !important; }
+
+/* Keep white text white */
+.text-white { color: #ffffff !important; }
+
+/* Border color mapping for sharp, subtle separation in dark mode */
+.border-slate-50 { border-color: rgba(255, 255, 255, 0.04) !important; }
+.border-slate-100 { border-color: rgba(255, 255, 255, 0.08) !important; }
+.border-slate-200 { border-color: rgba(255, 255, 255, 0.12) !important; }
+.border-slate-300 { border-color: rgba(255, 255, 255, 0.2) !important; }
+
+/* Tactile & Physics-based Interactivity Engine for Buttons */
+button, 
+.btn, 
+a[role="button"],
+[role="button"] {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Base button hovers */
+button:hover,
+.btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px -4px rgba(6, 207, 156, 0.25) !important;
+}
+
+/* Active touch/click state */
+button:active,
+.btn:active {
+  transform: translateY(1px) scale(0.97) !important;
+  box-shadow: 0 4px 12px -2px rgba(6, 207, 156, 0.1) !important;
+}
+
+/* Ensure secondary buttons with bg-white inside dark sections are highly legible and hover-responsive */
+button.bg-white,
+a.bg-white,
+.bg-white button {
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+button.bg-white:hover,
+a.bg-white:hover {
+  background-color: #1a1e2f !important;
+  color: #ffffff !important;
+  border-color: rgba(6, 207, 156, 0.3) !important;
+}
+
+/* Glow effects for Brand CTAs */
+.bg-brand:hover,
+button.bg-brand:hover {
+  background-color: #05be8f !important;
+  box-shadow: 0 0 30px rgba(6, 207, 156, 0.45) !important;
+}
+
+/* Custom interactive selectors (like testimonial avatars) */
+.testimonial-selector-avatar {
+  transition: all 0.2s ease-in-out;
+}
+.testimonial-selector-avatar:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 15px rgba(6, 207, 156, 0.3);
 }
 
 /* Glassmorphism Classes */
 .glass {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 55, 253, 0.08);
+  background: rgba(9, 10, 15, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(6, 207, 156, 0.15) !important;
 }
 
 .glass-dark {
-  background: rgba(9, 10, 15, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(9, 10, 15, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 /* Custom Gradients */
 .text-gradient {
-  background: linear-gradient(135deg, #0c0d12 40%, #0037FD 100%);
+  background: linear-gradient(135deg, #ffffff 40%, #06CF9C 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-brand {
-  background: linear-gradient(135deg, #0037FD 0%, #0023a3 100%);
+  background: linear-gradient(135deg, #06CF9C 0%, #048F6C 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 /* Selection */
 ::selection {
-  background: #0037FD;
-  color: #ffffff;
+  background: #06CF9C;
+  color: #090a0f;
+}
+
+/* High Contrast Override for Brand Background Elements (Lighter brand color needs dark text) */
+.bg-brand, 
+.hover\:bg-brand:hover, 
+[class*="bg-brand-light"],
+[class*="bg-brand/"] {
+  /* Let text classes specify, but provide clean default contrast on solid brand backgrounds */
+}
+
+/* Solid Brand Backgrounds get sharp dark slate-950 text */
+.bg-brand {
+  color: #090a0f !important;
+}
+.bg-brand svg {
+  stroke: #090a0f !important;
 }
 
 /* Shimmer animation for card items */
@@ -103,7 +238,7 @@ body {
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.15) 50%,
     rgba(255, 255, 255, 0) 100%
   );
   background-size: 200% 100%;

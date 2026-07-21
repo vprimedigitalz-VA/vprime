@@ -3,9 +3,10 @@ import { ArrowUp, Mail, Phone, MapPin, ExternalLink, ShieldCheck, Heart, Linkedi
 
 interface FooterProps {
   onPageChange: (pageId: string) => void;
+  onBookCall: () => void;
 }
 
-export default function Footer({ onPageChange }: FooterProps) {
+export default function Footer({ onPageChange, onBookCall }: FooterProps) {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -235,10 +236,10 @@ export default function Footer({ onPageChange }: FooterProps) {
             <a href="#" className="hover:text-white transition-colors" aria-label="LinkedIn Profile"><Linkedin size={14} /></a>
             <a href="#" className="hover:text-white transition-colors" aria-label="Twitter Feed"><Twitter size={14} /></a>
             <a href="#" className="hover:text-white transition-colors" aria-label="Instagram Feed"><Instagram size={14} /></a>
-            <a href="https://calendly.com/vprimedigitalz/30min" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center space-x-0.5" aria-label="Calendly Slot">
+            <button onClick={onBookCall} className="hover:text-white transition-colors flex items-center space-x-0.5 cursor-pointer" aria-label="Calendly Slot">
               <span>Calendly</span>
               <ExternalLink size={10} />
-            </a>
+            </button>
           </div>
         </div>
 
