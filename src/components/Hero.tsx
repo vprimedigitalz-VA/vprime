@@ -144,68 +144,48 @@ export default function Hero({ onPageChange, onBookCall }: HeroProps) {
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="relative aspect-video lg:aspect-square bg-slate-50 border border-slate-100 rounded-3xl p-4 md:p-6 shadow-2xl flex items-center justify-center overflow-hidden group"
+              className="relative aspect-video lg:aspect-[5/6] bg-slate-50 border border-slate-200/60 rounded-3xl p-3 shadow-2xl flex items-center justify-center overflow-hidden group select-none"
             >
               {/* Geometric Grid Element inside Graphic */}
-              <div className="absolute inset-0 bg-[radial-gradient(#06cf9c15_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(#06cf9c10_1px,transparent_1px)] bg-[size:1.5rem_1.5rem]" />
 
-              {/* Central Premium Mockup Card */}
-              <div className="relative w-full h-full bg-white rounded-2xl border border-slate-100 shadow-md p-6 flex flex-col justify-between overflow-hidden">
-                <div className="flex items-center justify-between border-b border-slate-50 pb-4">
-                  <div className="flex items-center space-x-2">
+              {/* Central Premium Mockup Frame */}
+              <div className="relative w-full h-full bg-white rounded-2xl border border-slate-100 shadow-md flex flex-col overflow-hidden">
+                {/* Browser top-bar */}
+                <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/50 px-4 py-3 shrink-0">
+                  <div className="flex items-center space-x-1.5">
                     <div className="w-2.5 h-2.5 rounded-full bg-rose-400" />
                     <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
                     <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
                   </div>
-                  <div className="text-[10px] font-mono tracking-widest text-slate-400">
+                  <div className="text-[9px] font-mono tracking-widest text-slate-400 font-bold select-all">
                     HTTPS://VPRIMEDIGITALZ.COM
                   </div>
+                  <div className="w-12" /> {/* Spacer to balance */}
                 </div>
 
-                <div className="my-auto space-y-4 py-3">
-                  <div className="relative overflow-hidden rounded-xl border border-slate-100/80 aspect-video shrink-0 bg-slate-50 shadow-inner">
-                    <img 
-                      src="/src/assets/images/hero_dashboard_mockup_1784639799645.jpg" 
-                      alt="Vprime Growth Analytics Dashboard" 
-                      className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500" 
-                      referrerPolicy="no-referrer"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <div className="inline-flex items-center space-x-1.5 bg-brand/5 border border-brand/10 text-brand font-mono text-[9px] px-2.5 py-0.5 rounded-full font-bold">
-                      <span>VPRIME LIVE SYSTEM</span>
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-normal">
-                      Sleek high-converting customer portals and lightning-fast digital dashboards engineered for modern organic performance.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Simulated Waveform / Analytics Tracker */}
-                <div className="flex items-end justify-between h-14 bg-slate-50 border border-slate-100/50 rounded-xl px-4 py-2">
-                  <div className="space-y-1">
-                    <div className="text-[9px] font-mono text-slate-400">ORGANIC REACH</div>
-                    <div className="text-sm font-semibold text-brand font-mono">+340.24%</div>
-                  </div>
-                  <div className="flex space-x-1 items-end h-full">
-                    <div className="w-1.5 bg-slate-200 rounded-t-sm h-[30%]" />
-                    <div className="w-1.5 bg-slate-200 rounded-t-sm h-[45%]" />
-                    <div className="w-1.5 bg-slate-200 rounded-t-sm h-[20%]" />
-                    <div className="w-1.5 bg-brand rounded-t-sm h-[60%] animate-pulse" />
-                    <div className="w-1.5 bg-brand rounded-t-sm h-[85%] animate-pulse" />
-                    <div className="w-1.5 bg-brand-light rounded-t-sm h-[100%] animate-pulse" />
-                  </div>
+                {/* Full-bleed mock-up presentation image */}
+                <div className="relative flex-1 w-full h-full overflow-hidden bg-slate-950">
+                  <img 
+                    src="https://res.cloudinary.com/iuczvp68/image/upload/v1784648495/25332547_web_pages_presentation_mock_up_051_ajiuts.jpg" 
+                    alt="Vprime Web Pages Presentation Mockup" 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
+                    referrerPolicy="no-referrer"
+                  />
+                  
+                  {/* Subtle Elegant Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-60 pointer-events-none" />
                 </div>
               </div>
 
               {/* Decorative Accent Badges */}
-              <div className="absolute top-10 -right-4 bg-white border border-slate-100 shadow-lg px-4 py-3 rounded-2xl flex items-center space-x-3 -rotate-3 hover:rotate-0 transition-transform duration-300 pointer-events-none">
+              <div className="absolute top-8 -right-3 bg-white border border-slate-100 shadow-xl px-4 py-3 rounded-2xl flex items-center space-x-3 -rotate-3 hover:rotate-0 transition-transform duration-300 pointer-events-none">
                 <div className="w-8 h-8 rounded-full bg-brand/10 flex items-center justify-center text-brand font-display font-bold text-sm">
                   ★
                 </div>
                 <div>
-                  <div className="text-[10px] font-mono text-slate-400">AWARDS WINNER</div>
-                  <div className="text-xs font-semibold text-slate-800">SITE OF THE DAY</div>
+                  <div className="text-[9px] font-mono text-slate-400 font-bold">AWARDS WINNER</div>
+                  <div className="text-[11px] font-sans font-bold text-slate-800 uppercase">SITE OF THE DAY</div>
                 </div>
               </div>
             </motion.div>
