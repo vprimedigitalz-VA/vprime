@@ -201,46 +201,145 @@ html.light input:focus, html.light textarea:focus, html.light select:focus {
 html.light .border-slate-800 { border-color: #e2e8f0 !important; }
 html.light .border-slate-700 { border-color: #cbd5e1 !important; }
 
+/* LIGHT THEME OVERRIDES FOR CTA BANNER (#home-cta) */
+html.light #home-cta {
+  background-color: #ffffff !important;
+}
 
-/* Tactile & Physics-based Interactivity Engine for Buttons */
+html.light #home-cta .bg-slate-950 {
+  background-color: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light #home-cta h3 {
+  color: #0f172a !important;
+}
+
+html.light #home-cta p {
+  color: #334155 !important;
+}
+
+html.light #home-cta button.border-white\/20,
+html.light #home-cta button.border-white\/55 {
+  border-color: #94a3b8 !important;
+  color: #0f172a !important;
+  background-color: #ffffff !important;
+}
+
+html.light #home-cta button.border-white\/20:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #06CF9C !important;
+  color: #0f172a !important;
+}
+
+html.light #home-cta .border-white\/5 {
+  border-color: #e2e8f0 !important;
+}
+
+html.light #home-cta .text-white\/50 {
+  color: #334155 !important;
+  font-weight: 600 !important;
+}
+
+/* LIGHT THEME OVERRIDES FOR FOOTER (#main-footer) */
+html.light #main-footer,
+html.light footer {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light #main-footer .border-white\/5,
+html.light #main-footer .border-white\/10 {
+  border-color: #e2e8f0 !important;
+}
+
+html.light #main-footer h4,
+html.light #main-footer h5 {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+html.light #main-footer p,
+html.light #main-footer span.text-white\/60,
+html.light #main-footer ul.text-white\/60,
+html.light #main-footer .text-white\/60 {
+  color: #334155 !important;
+}
+
+html.light #main-footer span.text-white\/40,
+html.light #main-footer div.text-white\/40,
+html.light #main-footer h5.text-white\/40 {
+  color: #475569 !important;
+  font-weight: 600 !important;
+}
+
+html.light #main-footer .text-white {
+  color: #0f172a !important;
+}
+
+html.light #main-footer button.text-white\/60 {
+  color: #334155 !important;
+}
+
+html.light #main-footer button.text-white\/60:hover {
+  color: #0f172a !important;
+}
+
+html.light #main-footer .bg-white\/5 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light #main-footer input {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light #main-footer input::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.light #main-footer a.bg-white\/5 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #1e293b !important;
+}
+
+html.light #main-footer a.bg-white\/5:hover {
+  background-color: #f1f5f9 !important;
+}
+
+html.light #main-footer .bg-slate-900 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #334155 !important;
+}
+
+html.light #main-footer .bg-slate-900:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+html.light #main-footer .text-slate-400 {
+  color: #475569 !important;
+}
+
+
+/* Tactile & Smooth Interactivity Engine for Buttons */
 button, 
 .btn, 
 a[role="button"],
 [role="button"] {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-/* Base button hovers */
-button:hover,
-.btn:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 24px -4px rgba(6, 207, 156, 0.25) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Active touch/click state */
 button:active,
 .btn:active {
-  transform: translateY(1px) scale(0.97) !important;
-  box-shadow: 0 4px 12px -2px rgba(6, 207, 156, 0.1) !important;
-}
-
-/* Ensure secondary buttons inside dark sections are highly legible */
-html.dark button.bg-white,
-html.dark a.bg-white,
-html.dark .bg-white button,
-html:not(.light) button.bg-white,
-html:not(.light) a.bg-white,
-html:not(.light) .bg-white button {
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-html.dark button.bg-white:hover,
-html.dark a.bg-white:hover,
-html:not(.light) button.bg-white:hover,
-html:not(.light) a.bg-white:hover {
-  background-color: #1a1e2f !important;
-  color: #ffffff !important;
-  border-color: rgba(6, 207, 156, 0.3) !important;
+  transform: translateY(1px) scale(0.98);
 }
 
 /* Shimmer animation keyframes for skeleton screens */
