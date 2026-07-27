@@ -1,6 +1,6 @@
-import { useState, FormEvent } from "react";
-import { Search, Calendar, Clock, ArrowRight, ArrowLeft, Mail, CheckCircle } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { useState, FormEvent, useRef } from "react";
+import { Search, Calendar, Clock, ArrowRight, ArrowLeft, Mail, CheckCircle, BookOpen, CheckCircle2 } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useSpring, useMotionValueEvent } from "motion/react";
 import { blogPostsData } from "../data";
 import { BlogPost } from "../types";
 
@@ -13,6 +13,25 @@ export default function BlogSection({ onBookCall }: BlogSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   
+  // Reading scroll progress tracker for blog detail view
+  const articleRef = useRef<HTMLDivElement>(null);
+  const [readingProgress, setReadingProgress] = useState(0);
+
+  const { scrollYProgress } = useScroll({
+    target: selectedPost ? articleRef : undefined,
+    offset: ["start start", "end end"],
+  });
+
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 150,
+    damping: 25,
+    restDelta: 0.001,
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    setReadingProgress(Math.min(100, Math.max(0, Math.round(latest * 100))));
+  });
+
   // Newsletter state
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
@@ -21,11 +40,13 @@ export default function BlogSection({ onBookCall }: BlogSectionProps) {
 
   const handlePostClick = (post: BlogPost) => {
     setSelectedPost(post);
+    setReadingProgress(0);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleBackToGrid = () => {
     setSelectedPost(null);
+    setReadingProgress(0);
   };
 
   const handleSubscribe = (e: FormEvent) => {
@@ -318,98 +339,141 @@ export default function BlogSection({ onBookCall }: BlogSectionProps) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-12 max-w-4xl mx-auto"
+              className="space-y-10 max-w-4xl mx-auto relative"
             >
-              {/* Back Button */}
-              <button
-                id="back-to-index-btn"
-                onClick={handleBackToGrid}
-                className="inline-flex items-center space-x-2 text-xs font-mono tracking-wider text-slate-400 hover:text-brand font-semibold uppercase cursor-pointer"
+              {/* Fixed Top Screen Reading Progress Line */}
+              <motion.div
+                style={{ scaleX }}
+                className="fixed top-0 left-0 right-0 h-[4px] bg-brand origin-left z-[130] pointer-events-none shadow-[0_1px_12px_rgba(6,207,156,0.9)]"
+              />
+
+              {/* Floating Sticky Reading Header & Progress Tracker */}
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="sticky top-20 z-30 bg-slate-900/90 backdrop-blur-md border border-slate-800/80 text-white p-3 sm:px-5 sm:py-3.5 rounded-2xl shadow-2xl flex items-center justify-between gap-4"
               >
-                <ArrowLeft size={14} />
-                <span>BACK TO ARTICLES LIST</span>
-              </button>
-
-              {/* Title Header */}
-              <div className="space-y-6">
-                <div className="flex items-center space-x-3 text-xs font-mono text-slate-400 font-semibold uppercase">
-                  <span className="bg-brand/5 border border-brand/10 text-brand px-2.5 py-1 rounded-md font-bold">
-                    {selectedPost.category}
-                  </span>
-                  <span>•</span>
-                  <span>{selectedPost.date}</span>
-                  <span>•</span>
-                  <span>{selectedPost.readTime}</span>
-                </div>
-
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-slate-900 tracking-tight leading-none">
-                  {selectedPost.title}
-                </h1>
-
-                {/* Author profile */}
-                <div className="flex items-center space-x-4 border-y border-slate-100 py-4">
-                  <img src={selectedPost.author.avatar} alt={selectedPost.author.name} className="w-10 h-10 rounded-full object-cover shrink-0" referrerPolicy="no-referrer" />
-                  <div>
-                    <div className="text-xs font-bold text-slate-800">{selectedPost.author.name}</div>
-                    <div className="text-[10px] font-mono text-slate-400">{selectedPost.author.role} at VprimeDigitalz</div>
+                <div className="flex items-center space-x-3 min-w-0">
+                  <div className="w-8 h-8 rounded-xl bg-brand/20 border border-brand/30 flex items-center justify-center shrink-0 text-brand">
+                    <BookOpen size={16} />
+                  </div>
+                  <div className="min-w-0 hidden sm:block">
+                    <p className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-semibold">READING ARTICLE</p>
+                    <h4 className="text-xs font-display font-bold text-white truncate max-w-xs md:max-w-md">{selectedPost.title}</h4>
                   </div>
                 </div>
-              </div>
 
-              {/* Post Thumbnail */}
-              <div className="aspect-video rounded-3xl overflow-hidden border border-slate-100 shadow-xl">
-                <img src={selectedPost.image} alt={selectedPost.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-              </div>
+                <div className="flex items-center space-x-3 shrink-0">
+                  {/* Reading Progress Badge */}
+                  <div className="flex items-center space-x-2 bg-slate-800/90 border border-slate-700/80 px-3 py-1.5 rounded-xl font-mono text-xs font-bold shadow-xs">
+                    {readingProgress >= 95 ? (
+                      <span className="text-emerald-400 flex items-center space-x-1">
+                        <CheckCircle2 size={13} />
+                        <span>100% READ</span>
+                      </span>
+                    ) : (
+                      <span className="text-brand flex items-center space-x-1.5">
+                        <span>{readingProgress}%</span>
+                        <span className="text-[10px] text-slate-400 font-normal uppercase">Progress</span>
+                      </span>
+                    )}
+                  </div>
 
-              {/* Formatted body prose */}
-              <div className="prose prose-slate max-w-none text-slate-600 text-xs sm:text-sm leading-relaxed space-y-6 pt-4">
-                {selectedPost.content.split("\n\n").map((para, i) => {
-                  if (para.startsWith("###")) {
-                    return (
-                      <h3 key={i} className="text-lg font-display font-bold text-slate-900 pt-4 pb-1">
-                        {para.replace("###", "").trim()}
-                      </h3>
-                    );
-                  }
-                  return (
-                    <p key={i} className="font-normal">
-                      {para}
-                    </p>
-                  );
-                })}
-              </div>
-
-              {/* Tag row */}
-              <div className="flex items-center space-x-2 pt-6 border-t border-slate-100">
-                <span className="text-[10px] font-mono tracking-widest text-slate-400 font-bold uppercase">ARTICLES TAGS:</span>
-                <div className="flex flex-wrap gap-1.5">
-                  {selectedPost.tags.map(tag => (
-                    <span 
-                      key={tag} 
-                      className="bg-slate-50 border border-slate-100 text-[10px] font-mono text-slate-500 px-2.5 py-1 rounded-md"
-                    >
-                      #{tag.toUpperCase()}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Related CTA Banner */}
-              <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8 text-center space-y-6 relative overflow-hidden">
-                <h4 className="text-xl font-display font-bold text-slate-900">
-                  Enjoyed this technical playbook?
-                </h4>
-                <p className="text-xs text-slate-500 max-w-xl mx-auto leading-relaxed">
-                  We implement these exact SEO optimizations and conversion designs for our active clients. Learn how we can build a high-performance content engine for your business.
-                </p>
-                <div className="flex justify-center">
+                  {/* Back to List Button */}
                   <button
-                    onClick={onBookCall}
-                    className="inline-flex items-center space-x-2 bg-brand hover:bg-brand-dark text-white font-sans text-xs font-semibold uppercase tracking-wider px-6 py-3.5 rounded-xl shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer"
+                    id="back-to-index-btn"
+                    onClick={handleBackToGrid}
+                    className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl transition-all cursor-pointer text-xs font-mono font-semibold flex items-center space-x-1.5 border border-slate-700/60"
                   >
-                    <span>SCHEDULE FREE GROWTH CONSULTATION</span>
-                    <ArrowRight size={12} />
+                    <ArrowLeft size={13} />
+                    <span>Back</span>
                   </button>
+                </div>
+              </motion.div>
+
+              {/* Main Article Container with Scroll Target Ref */}
+              <div ref={articleRef} className="space-y-10 pt-2">
+                {/* Title Header */}
+                <div className="space-y-6">
+                  <div className="flex items-center space-x-3 text-xs font-mono text-slate-400 font-semibold uppercase">
+                    <span className="bg-brand/5 border border-brand/10 text-brand px-2.5 py-1 rounded-md font-bold">
+                      {selectedPost.category}
+                    </span>
+                    <span>•</span>
+                    <span>{selectedPost.date}</span>
+                    <span>•</span>
+                    <span>{selectedPost.readTime}</span>
+                  </div>
+
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-slate-900 tracking-tight leading-none">
+                    {selectedPost.title}
+                  </h1>
+
+                  {/* Author profile */}
+                  <div className="flex items-center space-x-4 border-y border-slate-100 py-4">
+                    <img src={selectedPost.author.avatar} alt={selectedPost.author.name} className="w-10 h-10 rounded-full object-cover shrink-0" referrerPolicy="no-referrer" />
+                    <div>
+                      <div className="text-xs font-bold text-slate-800">{selectedPost.author.name}</div>
+                      <div className="text-[10px] font-mono text-slate-400">{selectedPost.author.role} at VprimeDigitalz</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Post Thumbnail */}
+                <div className="aspect-video rounded-3xl overflow-hidden border border-slate-100 shadow-xl">
+                  <img src={selectedPost.image} alt={selectedPost.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                </div>
+
+                {/* Formatted body prose */}
+                <div className="prose prose-slate max-w-none text-slate-600 text-xs sm:text-sm leading-relaxed space-y-6 pt-4">
+                  {selectedPost.content.split("\n\n").map((para, i) => {
+                    if (para.startsWith("###")) {
+                      return (
+                        <h3 key={i} className="text-lg font-display font-bold text-slate-900 pt-4 pb-1">
+                          {para.replace("###", "").trim()}
+                        </h3>
+                      );
+                    }
+                    return (
+                      <p key={i} className="font-normal">
+                        {para}
+                      </p>
+                    );
+                  })}
+                </div>
+
+                {/* Tag row */}
+                <div className="flex items-center space-x-2 pt-6 border-t border-slate-100">
+                  <span className="text-[10px] font-mono tracking-widest text-slate-400 font-bold uppercase">ARTICLES TAGS:</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedPost.tags.map(tag => (
+                      <span 
+                        key={tag} 
+                        className="bg-slate-50 border border-slate-100 text-[10px] font-mono text-slate-500 px-2.5 py-1 rounded-md"
+                      >
+                        #{tag.toUpperCase()}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Related CTA Banner */}
+                <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8 text-center space-y-6 relative overflow-hidden">
+                  <h4 className="text-xl font-display font-bold text-slate-900">
+                    Enjoyed this technical playbook?
+                  </h4>
+                  <p className="text-xs text-slate-500 max-w-xl mx-auto leading-relaxed">
+                    We implement these exact SEO optimizations and conversion designs for our active clients. Learn how we can build a high-performance content engine for your business.
+                  </p>
+                  <div className="flex justify-center">
+                    <button
+                      onClick={onBookCall}
+                      className="inline-flex items-center space-x-2 bg-brand hover:bg-brand-dark text-white font-sans text-xs font-semibold uppercase tracking-wider px-6 py-3.5 rounded-xl shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer"
+                    >
+                      <span>SCHEDULE FREE GROWTH CONSULTATION</span>
+                      <ArrowRight size={12} />
+                    </button>
+                  </div>
                 </div>
               </div>
 
