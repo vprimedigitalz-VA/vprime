@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { BrandedSpinner, MetricsSkeleton } from "./BrandedLoader";
+import { useToast } from "./ToastContext";
 
 interface VanalystSectionProps {
   onBookCall: () => void;
@@ -28,6 +29,7 @@ interface VanalystSectionProps {
 }
 
 export default function VanalystSection({ onBookCall, defaultUrl = "" }: VanalystSectionProps) {
+  const { showToast } = useToast();
   const [inputUrl, setInputUrl] = useState(defaultUrl || "");
   const [activeUrl, setActiveUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -122,6 +124,12 @@ export default function VanalystSection({ onBookCall, defaultUrl = "" }: Vanalys
             { item: "Core Web Vitals Speed Rating", status: perf > 80 ? "pass" : "fail", desc: perf > 80 ? "Fast load velocity passing Google PageSpeed standards." : "Page load bottlenecks impacting search rankings." }
           ]
         });
+
+        showToast({
+          type: "audit",
+          title: "Website Audit Completed!",
+          message: `Vanalyst analysis for ${hostname} finished with an SEO score of ${seo}/100.`
+        });
       } else {
         throw new Error("API fallback");
       }
@@ -153,6 +161,12 @@ export default function VanalystSection({ onBookCall, defaultUrl = "" }: Vanalys
           { item: "Image Compression & Alt Tags", status: "warn", desc: "Some images lack webp compression and descriptive alt tags." },
           { item: "Core Web Vitals Speed", status: "fail", desc: "Page Speed optimization required to pass Google Lighthouse standards." }
         ]
+      });
+
+      showToast({
+        type: "audit",
+        title: "Website Audit Completed!",
+        message: `Vanalyst 100-point SEO analysis for ${hostname} finished with a score of ${seo}/100.`
       });
     } finally {
       clearInterval(interval);

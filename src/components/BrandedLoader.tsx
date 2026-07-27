@@ -164,52 +164,113 @@ export const MetricsSkeleton: React.FC = () => {
 
 /* ================= FULL PAGE INITIALIZING OVERLAY ================= */
 
-export const PageLoaderOverlay: React.FC<{ message?: string; onComplete?: () => void }> = ({
-  message = "Initializing VprimeDigitalz Runtime...",
+export const PageLoaderOverlay: React.FC<{ message?: string; durationMs?: number }> = ({
+  durationMs = 3500,
 }) => {
+  const [progress, setProgress] = React.useState(0);
+  const [stepIndex, setStepIndex] = React.useState(0);
+
+  const steps = [
+    "Initializing VprimeDigitalz Core Engine...",
+    "Configuring Vanalyst SEO & Asset Pipeline...",
+    "Loading Component System & Interactive UI...",
+    "Finalizing High-Speed Responsive Layouts...",
+    "System Ready. Launching Experience..."
+  ];
+
+  React.useEffect(() => {
+    const startTime = Date.now();
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const pct = Math.min(100, Math.floor((elapsed / durationMs) * 100));
+      setProgress(pct);
+
+      if (pct < 25) setStepIndex(0);
+      else if (pct < 50) setStepIndex(1);
+      else if (pct < 75) setStepIndex(2);
+      else if (pct < 95) setStepIndex(3);
+      else setStepIndex(4);
+
+      if (elapsed >= durationMs) {
+        clearInterval(interval);
+      }
+    }, 30);
+
+    return () => clearInterval(interval);
+  }, [durationMs]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-slate-950/90 backdrop-blur-xl text-white"
+      exit={{ opacity: 0, transition: { duration: 0.5 } }}
+      className="fixed inset-0 z-[999] flex flex-col items-center justify-center bg-slate-950 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand/20 via-slate-950 to-slate-950 text-white select-none px-4"
     >
-      <div className="p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-2xl flex flex-col items-center space-y-6 max-w-md w-full mx-4 text-center">
+      <div className="p-8 sm:p-10 rounded-3xl bg-slate-900/90 border border-brand/30 shadow-[0_0_50px_rgba(6,207,156,0.15)] flex flex-col items-center space-y-7 max-w-lg w-full text-center relative overflow-hidden backdrop-blur-2xl">
+        {/* Top Glowing Ambient Light */}
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-48 h-48 bg-brand/30 blur-3xl rounded-full pointer-events-none" />
+
         {/* Animated Brand Mark */}
         <div className="relative">
-          <div className="w-20 h-20 rounded-3xl bg-gradient-to-tr from-brand/20 to-emerald-500/10 border border-brand/30 flex items-center justify-center shadow-[0_0_30px_rgba(6,207,156,0.2)]">
-            <span className="font-display font-black text-2xl tracking-tighter text-brand">
+          {/* Outer Pulsing Aura */}
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.7, 0.3] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -inset-4 rounded-3xl bg-brand/20 blur-xl pointer-events-none"
+          />
+
+          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-slate-950 border border-brand/40 flex items-center justify-center shadow-[0_0_35px_rgba(6,207,156,0.25)] relative z-10">
+            <span className="font-display font-black text-3xl sm:text-4xl tracking-tighter text-brand">
               VP
             </span>
           </div>
 
           <motion.div
             animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="absolute -inset-2 rounded-[28px] border-2 border-transparent border-t-brand border-b-brand/40"
+            transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
+            className="absolute -inset-2.5 rounded-[32px] border-2 border-transparent border-t-brand border-r-brand/50"
+          />
+
+          <motion.div
+            animate={{ rotate: -360 }}
+            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+            className="absolute -inset-5 rounded-[38px] border border-dashed border-brand/30"
           />
         </div>
 
-        <div className="space-y-2">
-          <h3 className="font-display font-bold text-lg text-white">
+        {/* Brand Name & Dynamic Loading Step */}
+        <div className="space-y-2 relative z-10">
+          <h3 className="font-display font-black text-2xl tracking-tight text-white">
             Vprime<span className="text-brand">Digitalz</span>
           </h3>
-          <p className="text-xs font-mono text-slate-400 animate-pulse">{message}</p>
+          <p className="text-xs font-mono text-brand font-semibold min-h-[20px] transition-all">
+            {steps[stepIndex]}
+          </p>
         </div>
 
-        {/* Progress Line */}
-        <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden relative">
-          <motion.div
-            initial={{ width: "0%" }}
-            animate={{ width: "100%" }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="h-full bg-brand rounded-full shadow-[0_0_12px_#06CF9C]"
-          />
+        {/* Progress Bar & Percentage */}
+        <div className="w-full space-y-2 relative z-10">
+          <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 font-bold uppercase tracking-wider">
+            <span>PRELOADING ASSETS</span>
+            <span className="text-brand font-extrabold">{progress}%</span>
+          </div>
+
+          <div className="w-full bg-slate-950 h-3 rounded-full overflow-hidden border border-slate-800 relative">
+            <motion.div
+              style={{ width: `${progress}%` }}
+              className="h-full bg-brand rounded-full shadow-[0_0_16px_#06CF9C] relative"
+            >
+              {/* Shimmer light over progress bar */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-[shimmer_1.5s_infinite]" />
+            </motion.div>
+          </div>
         </div>
 
-        <div className="flex items-center space-x-2 text-[10px] font-mono text-slate-500">
-          <Loader2 size={12} className="animate-spin text-brand" />
-          <span>POWERING DIGITAL EXCELLENCE</span>
+        {/* Footer Technical Badges */}
+        <div className="flex items-center justify-center space-x-3 text-[10px] font-mono text-slate-400 pt-1 border-t border-slate-800/80 w-full">
+          <span className="bg-slate-800/80 px-2.5 py-1 rounded-md border border-slate-700/50">REACT 18</span>
+          <span className="bg-slate-800/80 px-2.5 py-1 rounded-md border border-slate-700/50 text-brand">VANALYST SEO</span>
+          <span className="bg-slate-800/80 px-2.5 py-1 rounded-md border border-slate-700/50">CORE WEB VITALS 100%</span>
         </div>
       </div>
     </motion.div>

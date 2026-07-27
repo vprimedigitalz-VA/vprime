@@ -18,6 +18,7 @@ import {
 import Hero from "./Hero";
 import PricingSection from "./PricingSection";
 import BlogSection from "./BlogSection";
+import FaqSection from "./FaqSection";
 import { servicesData, projectsData, testimonialsData } from "../data";
 
 interface HomeViewProps {
@@ -97,13 +98,35 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.7, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="group bg-white rounded-2xl border border-slate-100/80 p-8 shadow-xs hover:shadow-xl hover:shadow-slate-100/50 transition-all duration-300 flex flex-col justify-between"
+                whileHover="hover"
+                variants={{
+                  hover: { y: -8, scale: 1.015 }
+                }}
+                className="group relative bg-white rounded-2xl border border-slate-200/80 p-8 shadow-xs hover:shadow-2xl hover:shadow-brand/10 hover:border-brand/30 transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer"
+                onClick={() => onSelectService(service.slug)}
               >
-                <div className="space-y-5">
-                  <div className="w-11 h-11 bg-brand/5 group-hover:bg-brand text-brand group-hover:text-white rounded-xl flex items-center justify-center transition-all duration-300">
-                    {service.id === "web-design" ? <Layout size={20} /> : service.id === "webflow-dev" ? <Code size={20} /> : <Sparkles size={20} />}
-                  </div>
+                {/* Motion Accent Bar on Hover */}
+                <motion.div
+                  variants={{
+                    hover: { scaleX: 1, opacity: 1 },
+                  }}
+                  initial={{ scaleX: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand via-emerald-400 to-brand origin-left"
+                />
+
+                <div className="space-y-5 relative z-10">
+                  {/* Motion-animated Icon Container */}
+                  <motion.div
+                    variants={{
+                      hover: { scale: 1.1, rotate: 3, y: -2 },
+                    }}
+                    transition={{ type: "spring", stiffness: 350, damping: 20 }}
+                    className="w-12 h-12 bg-brand/10 group-hover:bg-brand text-brand group-hover:text-white rounded-xl flex items-center justify-center transition-colors duration-300 shadow-xs"
+                  >
+                    {service.id === "web-design" ? <Layout size={22} /> : service.id === "webflow-dev" ? <Code size={22} /> : <Sparkles size={22} />}
+                  </motion.div>
+
                   <div className="space-y-2">
                     <span className="text-[9px] font-mono tracking-widest text-slate-400 uppercase font-semibold">
                       {service.category}
@@ -117,13 +140,17 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
                   </div>
                 </div>
 
-                <button
-                  onClick={() => onSelectService(service.slug)}
-                  className="mt-6 inline-flex items-center space-x-1 text-xs font-semibold uppercase tracking-wider text-slate-800 hover:text-brand transition-colors cursor-pointer self-start"
-                >
+                <div className="mt-6 inline-flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider text-slate-800 group-hover:text-brand transition-colors cursor-pointer self-start relative z-10">
                   <span>Learn More</span>
-                  <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-0.5" />
-                </button>
+                  <motion.div
+                    variants={{
+                      hover: { x: 5 },
+                    }}
+                    transition={{ type: "spring", stiffness: 400, damping: 22 }}
+                  >
+                    <ArrowRight size={14} />
+                  </motion.div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -570,7 +597,10 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
       {/* 9. Blog Insights Section */}
       <BlogSection onBookCall={onBookCall} />
 
-      {/* 10. Call to Action Banner section */}
+      {/* 10. Frequently Asked Questions Section */}
+      <FaqSection onBookCall={onBookCall} />
+
+      {/* 11. Call to Action Banner section */}
       <section id="home-cta" className="py-12 bg-white overflow-hidden">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div 

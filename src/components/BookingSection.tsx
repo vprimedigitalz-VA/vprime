@@ -1,9 +1,45 @@
-import { useState } from "react";
-import { Loader2, Calendar, Clock, Star, Users, CheckCircle } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Loader2, Calendar, Clock, Star, Users, CheckCircle, CheckCircle2 } from "lucide-react";
 import { motion } from "motion/react";
+import { useToast } from "./ToastContext";
 
 export default function BookingSection() {
+  const { showToast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
+
+  // Auto-dismiss loading spinner after 500ms so Calendly renders immediately
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Listen for Calendly event scheduled messages
+  useEffect(() => {
+    const handleMessage = (e: MessageEvent) => {
+      if (e.data && e.data.event === "calendly.event_scheduled") {
+        showToast({
+          type: "booking",
+          title: "Strategy Session Confirmed!",
+          message: "Your 30-minute discovery call with Vikram Malhotra is reserved. Check your inbox for Google Meet details.",
+          duration: 6000
+        });
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [showToast]);
+
+  const handleSimulateBooking = () => {
+    showToast({
+      type: "booking",
+      title: "Strategy Session Confirmed!",
+      message: "Your 30-minute growth discovery call with Vikram Malhotra has been reserved. Calendar invite sent!",
+      duration: 6000
+    });
+  };
 
   return (
     <section id="embedded-booking-page" className="py-24 bg-white relative">
@@ -55,14 +91,25 @@ export default function BookingSection() {
               <p className="text-xs italic text-slate-600 leading-normal">
                 "Vikram's team didn't just design a website; they structured our entire digital funnel. We scaled from $0 to $1.2M in annual organic pipeline within 9 months."
               </p>
-              <div className="flex items-center space-x-2.5 pt-1">
-                <div className="w-6 h-6 rounded-full bg-slate-300 flex items-center justify-center font-display text-[10px] font-bold text-slate-700">
-                  ML
+              <div className="flex items-center justify-between pt-1 border-t border-slate-200/50">
+                <div className="flex items-center space-x-2.5">
+                  <div className="w-6 h-6 rounded-full bg-slate-300 flex items-center justify-center font-display text-[10px] font-bold text-slate-700">
+                    ML
+                  </div>
+                  <div>
+                    <div className="text-[10px] font-bold text-slate-800">Marcus L.</div>
+                    <div className="text-[9px] font-mono text-slate-400">FOUNDER, NESTIFY INC</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-[10px] font-bold text-slate-800">Marcus L.</div>
-                  <div className="text-[9px] font-mono text-slate-400">FOUNDER, NESTIFY INC</div>
-                </div>
+
+                <button
+                  onClick={handleSimulateBooking}
+                  className="inline-flex items-center space-x-1.5 bg-brand/10 hover:bg-brand text-brand hover:text-white px-2.5 py-1.5 rounded-lg text-[10px] font-mono font-semibold transition-all cursor-pointer"
+                  title="Simulate booking confirmation toast"
+                >
+                  <CheckCircle2 size={12} />
+                  <span>Test Toast</span>
+                </button>
               </div>
             </div>
           </div>

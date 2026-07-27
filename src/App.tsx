@@ -14,6 +14,7 @@ import BookingModal from "./components/BookingModal";
 import VanalystSection from "./components/VanalystSection";
 import VhelpChatbot from "./components/VhelpChatbot";
 import { PageLoaderOverlay } from "./components/BrandedLoader";
+import { ToastProvider } from "./components/ToastContext";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -24,7 +25,7 @@ export default function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsInitialLoading(false);
-    }, 1100);
+    }, 1600);
     return () => clearTimeout(timer);
   }, []);
 
@@ -127,49 +128,51 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-brand selection:text-white flex flex-col justify-between">
-      {/* App Initialization Branded Overlay Loader */}
-      <AnimatePresence>
-        {isInitialLoading && <PageLoaderOverlay message="Initializing VprimeDigitalz Runtime..." />}
-      </AnimatePresence>
-
-      {/* Dynamic Scroll Progress Bar */}
-      <motion.div 
-        style={{ scaleX }} 
-        className="fixed top-0 left-0 right-0 h-[3.5px] bg-brand origin-left z-[100] pointer-events-none shadow-[0_1px_10px_rgba(0,55,253,0.5)]" 
-      />
-
-      {/* 1. Header Navigation */}
-      <Navbar 
-        currentPage={currentPage} 
-        onPageChange={handlePageChange} 
-        onSelectService={handleSelectService} 
-        onBookCall={handleBookCall}
-      />
-
-      {/* 2. Main Active Area with transitions */}
-      <main className="flex-1">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentPage}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {renderPage()}
-          </motion.div>
+    <ToastProvider>
+      <div className="min-h-screen bg-white text-slate-900 selection:bg-brand selection:text-white flex flex-col justify-between">
+        {/* App Initialization Branded Overlay Loader */}
+        <AnimatePresence>
+          {isInitialLoading && <PageLoaderOverlay durationMs={1600} />}
         </AnimatePresence>
-      </main>
 
-      {/* 3. Footer Segment */}
-      <Footer onPageChange={handlePageChange} onBookCall={handleBookCall} />
+        {/* Dynamic Scroll Progress Bar */}
+        <motion.div 
+          style={{ scaleX }} 
+          className="fixed top-0 left-0 right-0 h-[3.5px] bg-brand origin-left z-[100] pointer-events-none shadow-[0_1px_10px_rgba(0,55,253,0.5)]" 
+        />
 
-      {/* 4. Global Calendly Booking Overlay Modal */}
-      <BookingModal isOpen={isBookingModalOpen} onClose={() => setIsBookingModalOpen(false)} />
+        {/* 1. Header Navigation */}
+        <Navbar 
+          currentPage={currentPage} 
+          onPageChange={handlePageChange} 
+          onSelectService={handleSelectService} 
+          onBookCall={handleBookCall}
+        />
 
-      {/* 5. Floating Vhelp AI Chatbot */}
-      <VhelpChatbot />
-    </div>
+        {/* 2. Main Active Area with motion page transitions */}
+        <main className="flex-1">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentPage + (selectedServiceSlug ? `-${selectedServiceSlug}` : "")}
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -20, filter: "blur(4px)" }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {renderPage()}
+            </motion.div>
+          </AnimatePresence>
+        </main>
+
+        {/* 3. Footer Segment */}
+        <Footer onPageChange={handlePageChange} onBookCall={handleBookCall} />
+
+        {/* 4. Global Calendly Booking Overlay Modal */}
+        <BookingModal isOpen={isBookingModalOpen} onClose={() => setIsBookingModalOpen(false)} />
+
+        {/* 5. Floating Vhelp AI Chatbot */}
+        <VhelpChatbot />
+      </div>
+    </ToastProvider>
   );
 }

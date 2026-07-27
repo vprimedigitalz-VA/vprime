@@ -131,13 +131,34 @@ export default function ServicesSection({
                     initial={{ opacity: 0, y: 25 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.05 }}
-                    className="group bg-white rounded-2xl border border-slate-100 hover:border-brand/20 p-8 shadow-xs hover:shadow-xl hover:shadow-brand/2 transition-all duration-300 flex flex-col justify-between"
+                    whileHover="hover"
+                    variants={{
+                      hover: { y: -8, scale: 1.015 }
+                    }}
+                    onClick={() => handleServiceClick(service)}
+                    className="group relative bg-white rounded-2xl border border-slate-200/80 p-8 shadow-xs hover:shadow-2xl hover:shadow-brand/10 hover:border-brand/30 transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer"
                   >
-                    <div className="space-y-5">
-                      {/* Icon Container with visual feedback */}
-                      <div className="w-12 h-12 rounded-xl bg-slate-50 text-slate-700 group-hover:bg-brand group-hover:text-white flex items-center justify-center transition-all duration-300">
+                    {/* Top Motion Accent Bar */}
+                    <motion.div
+                      variants={{
+                        hover: { scaleX: 1, opacity: 1 },
+                      }}
+                      initial={{ scaleX: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                      className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand via-emerald-400 to-brand origin-left"
+                    />
+
+                    <div className="space-y-5 relative z-10">
+                      {/* Icon Container with motion spring */}
+                      <motion.div
+                        variants={{
+                          hover: { scale: 1.1, rotate: 3, y: -2 },
+                        }}
+                        transition={{ type: "spring", stiffness: 350, damping: 20 }}
+                        className="w-12 h-12 rounded-xl bg-brand/10 text-brand group-hover:bg-brand group-hover:text-white flex items-center justify-center transition-colors duration-300 shadow-xs"
+                      >
                         {getServiceIcon(service.icon, 22)}
-                      </div>
+                      </motion.div>
                       <div className="space-y-2">
                         <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase font-semibold">
                           {service.category}
@@ -151,14 +172,20 @@ export default function ServicesSection({
                       </div>
                     </div>
 
-                    <button
+                    <div
                       id={`learn-more-${service.id}`}
-                      onClick={() => handleServiceClick(service)}
-                      className="mt-6 inline-flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider text-slate-800 hover:text-brand transition-colors cursor-pointer text-left self-start"
+                      className="mt-6 inline-flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider text-slate-800 group-hover:text-brand transition-colors cursor-pointer text-left self-start relative z-10"
                     >
                       <span>Learn More</span>
-                      <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
-                    </button>
+                      <motion.div
+                        variants={{
+                          hover: { x: 5 },
+                        }}
+                        transition={{ type: "spring", stiffness: 400, damping: 22 }}
+                      >
+                        <ArrowRight size={14} />
+                      </motion.div>
+                    </div>
                   </motion.div>
                 ))}
               </div>
