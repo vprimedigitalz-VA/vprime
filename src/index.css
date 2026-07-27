@@ -42,9 +42,19 @@ html {
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
-body {
+/* Default Dark Mode & html.dark */
+html.dark body,
+html:not(.light) body {
   background-color: #090a0f;
   color: #f8fafc;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Light Mode Body */
+html.light body {
+  background-color: #f8fafc;
+  color: #0f172a;
   font-family: var(--font-sans);
   overflow-x: hidden;
 }
@@ -53,83 +63,144 @@ body {
 ::-webkit-scrollbar {
   width: 8px;
 }
-::-webkit-scrollbar-track {
+html.dark ::-webkit-scrollbar-track,
+html:not(.light) ::-webkit-scrollbar-track {
   background: #090a0f;
 }
-::-webkit-scrollbar-thumb {
+html.light ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+html.dark ::-webkit-scrollbar-thumb,
+html:not(.light) ::-webkit-scrollbar-thumb {
   background: #1e2538;
+  border-radius: 4px;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #06CF9C;
 }
 
-/* Global Dark Theme override for sections and elements */
-.bg-white {
+/* DARK THEME SPECIFIC OVERRIDES (When html.dark or default without .light) */
+html.dark .bg-white,
+html:not(.light) .bg-white {
   background-color: #090a0f !important;
 }
 
-/* Sub-cards, containers, interactive grids and dropdown panels in dark mode should stand out with a lighter background */
-.bg-white .bg-white,
-.bg-white .bg-slate-50,
-section .bg-white,
-section .bg-slate-50,
-header .bg-white,
-header .bg-slate-50,
-footer .bg-white,
-footer .bg-slate-50,
-#services-megamenu .bg-white,
-#mobile-nav-overlay .bg-white,
-.rounded-3xl.bg-white,
-.rounded-2xl.bg-white,
-.rounded-xl.bg-white,
-.rounded-lg.bg-white,
-.bg-slate-50 {
+/* Sub-cards, containers, interactive grids and dropdown panels in dark mode */
+html.dark .bg-white .bg-white,
+html.dark .bg-white .bg-slate-50,
+html.dark section .bg-white,
+html.dark section .bg-slate-50,
+html.dark header .bg-white,
+html.dark header .bg-slate-50,
+html.dark footer .bg-white,
+html.dark footer .bg-slate-50,
+html.dark #services-megamenu .bg-white,
+html.dark #mobile-nav-overlay .bg-white,
+html.dark .rounded-3xl.bg-white,
+html.dark .rounded-2xl.bg-white,
+html.dark .rounded-xl.bg-white,
+html.dark .rounded-lg.bg-white,
+html.dark .bg-slate-50,
+html:not(.light) .bg-white .bg-white,
+html:not(.light) .bg-white .bg-slate-50,
+html:not(.light) section .bg-white,
+html:not(.light) section .bg-slate-50,
+html:not(.light) header .bg-white,
+html:not(.light) header .bg-slate-50,
+html:not(.light) footer .bg-white,
+html:not(.light) footer .bg-slate-50,
+html:not(.light) #services-megamenu .bg-white,
+html:not(.light) #mobile-nav-overlay .bg-white,
+html:not(.light) .rounded-3xl.bg-white,
+html:not(.light) .rounded-2xl.bg-white,
+html:not(.light) .rounded-xl.bg-white,
+html:not(.light) .rounded-lg.bg-white,
+html:not(.light) .bg-slate-50 {
   background-color: #121520 !important;
 }
 
-/* Light opacity background classes */
-.bg-slate-50\/30 {
+/* Light opacity background classes in dark mode */
+html.dark .bg-slate-50\/30, html:not(.light) .bg-slate-50\/30 {
   background-color: rgba(18, 21, 32, 0.3) !important;
 }
-.bg-slate-50\/50 {
+html.dark .bg-slate-50\/50, html:not(.light) .bg-slate-50\/50 {
   background-color: rgba(18, 21, 32, 0.5) !important;
 }
-.bg-brand-light\/25 {
+html.dark .bg-brand-light\/25, html:not(.light) .bg-brand-light\/25 {
   background-color: rgba(6, 207, 156, 0.04) !important;
 }
-.bg-brand-light\/15 {
+html.dark .bg-brand-light\/15, html:not(.light) .bg-brand-light\/15 {
   background-color: rgba(6, 207, 156, 0.02) !important;
 }
 
-/* Inputs, textareas and forms */
-input, textarea, select {
+/* Inputs, textareas and forms in dark mode */
+html.dark input, html.dark textarea, html.dark select,
+html:not(.light) input, html:not(.light) textarea, html:not(.light) select {
   background-color: #161926 !important;
   color: #ffffff !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
-input:focus, textarea:focus, select:focus {
+html.dark input:focus, html.dark textarea:focus, html.dark select:focus,
+html:not(.light) input:focus, html:not(.light) textarea:focus, html:not(.light) select:focus {
   border-color: #06CF9C !important;
   background-color: #1a1f33 !important;
 }
 
-/* Redefine text colors for dark mode high contrast and legibility */
-.text-slate-950 { color: #ffffff !important; }
-.text-slate-900 { color: #f8fafc !important; }
-.text-slate-800 { color: #f1f5f9 !important; }
-.text-slate-700 { color: #cbd5e1 !important; }
-.text-slate-600 { color: #94a3b8 !important; }
-.text-slate-500 { color: #64748b !important; }
-.text-slate-400 { color: #475569 !important; }
+/* Redefine text colors for dark mode high contrast */
+html.dark .text-slate-950, html:not(.light) .text-slate-950 { color: #ffffff !important; }
+html.dark .text-slate-900, html:not(.light) .text-slate-900 { color: #f8fafc !important; }
+html.dark .text-slate-800, html:not(.light) .text-slate-800 { color: #f1f5f9 !important; }
+html.dark .text-slate-700, html:not(.light) .text-slate-700 { color: #cbd5e1 !important; }
+html.dark .text-slate-600, html:not(.light) .text-slate-600 { color: #94a3b8 !important; }
+html.dark .text-slate-500, html:not(.light) .text-slate-500 { color: #64748b !important; }
+html.dark .text-slate-400, html:not(.light) .text-slate-400 { color: #475569 !important; }
 
-/* Keep white text white */
-.text-white { color: #ffffff !important; }
+/* Border color mapping in dark mode */
+html.dark .border-slate-50, html:not(.light) .border-slate-50 { border-color: rgba(255, 255, 255, 0.04) !important; }
+html.dark .border-slate-100, html:not(.light) .border-slate-100 { border-color: rgba(255, 255, 255, 0.08) !important; }
+html.dark .border-slate-200, html:not(.light) .border-slate-200 { border-color: rgba(255, 255, 255, 0.12) !important; }
+html.dark .border-slate-300, html:not(.light) .border-slate-300 { border-color: rgba(255, 255, 255, 0.2) !important; }
 
-/* Border color mapping for sharp, subtle separation in dark mode */
-.border-slate-50 { border-color: rgba(255, 255, 255, 0.04) !important; }
-.border-slate-100 { border-color: rgba(255, 255, 255, 0.08) !important; }
-.border-slate-200 { border-color: rgba(255, 255, 255, 0.12) !important; }
-.border-slate-300 { border-color: rgba(255, 255, 255, 0.2) !important; }
+
+/* LIGHT THEME SPECIFIC OVERRIDES (When html.light) */
+html.light .bg-slate-950 {
+  background-color: #f8fafc !important;
+}
+html.light .bg-slate-900 {
+  background-color: #ffffff !important;
+}
+html.light .bg-slate-850 {
+  background-color: #f1f5f9 !important;
+}
+html.light .bg-slate-800 {
+  background-color: #f1f5f9 !important;
+}
+html.light .text-slate-950 { color: #020617 !important; }
+html.light .text-slate-900 { color: #0f172a !important; }
+html.light .text-slate-800 { color: #1e293b !important; }
+html.light .text-slate-700 { color: #334155 !important; }
+html.light .text-slate-600 { color: #475569 !important; }
+html.light .text-slate-500 { color: #64748b !important; }
+html.light .text-slate-400 { color: #64748b !important; }
+
+html.light input, html.light textarea, html.light select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+html.light input:focus, html.light textarea:focus, html.light select:focus {
+  border-color: #06CF9C !important;
+  background-color: #ffffff !important;
+}
+
+html.light .border-slate-800 { border-color: #e2e8f0 !important; }
+html.light .border-slate-700 { border-color: #cbd5e1 !important; }
+
 
 /* Tactile & Physics-based Interactivity Engine for Buttons */
 button, 
@@ -153,18 +224,30 @@ button:active,
   box-shadow: 0 4px 12px -2px rgba(6, 207, 156, 0.1) !important;
 }
 
-/* Ensure secondary buttons with bg-white inside dark sections are highly legible and hover-responsive */
-button.bg-white,
-a.bg-white,
-.bg-white button {
+/* Ensure secondary buttons inside dark sections are highly legible */
+html.dark button.bg-white,
+html.dark a.bg-white,
+html.dark .bg-white button,
+html:not(.light) button.bg-white,
+html:not(.light) a.bg-white,
+html:not(.light) .bg-white button {
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-button.bg-white:hover,
-a.bg-white:hover {
+html.dark button.bg-white:hover,
+html.dark a.bg-white:hover,
+html:not(.light) button.bg-white:hover,
+html:not(.light) a.bg-white:hover {
   background-color: #1a1e2f !important;
   color: #ffffff !important;
   border-color: rgba(6, 207, 156, 0.3) !important;
+}
+
+/* Shimmer animation keyframes for skeleton screens */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 /* Glow effects for Brand CTAs */
@@ -184,23 +267,43 @@ button.bg-brand:hover {
 }
 
 /* Glassmorphism Classes */
-.glass {
+html.dark .glass,
+html:not(.light) .glass {
   background: rgba(9, 10, 15, 0.8) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
   border: 1px solid rgba(6, 207, 156, 0.15) !important;
 }
+html.light .glass {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(6, 207, 156, 0.25) !important;
+}
 
-.glass-dark {
+html.dark .glass-dark,
+html:not(.light) .glass-dark {
   background: rgba(9, 10, 15, 0.8) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
+html.light .glass-dark {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
 
 /* Custom Gradients */
-.text-gradient {
+html.dark .text-gradient,
+html:not(.light) .text-gradient {
   background: linear-gradient(135deg, #ffffff 40%, #06CF9C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+html.light .text-gradient {
+  background: linear-gradient(135deg, #0f172a 40%, #048F6C 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -215,14 +318,6 @@ button.bg-brand:hover {
 ::selection {
   background: #06CF9C;
   color: #090a0f;
-}
-
-/* High Contrast Override for Brand Background Elements (Lighter brand color needs dark text) */
-.bg-brand, 
-.hover\:bg-brand:hover, 
-[class*="bg-brand-light"],
-[class*="bg-brand/"] {
-  /* Let text classes specify, but provide clean default contrast on solid brand backgrounds */
 }
 
 /* Solid Brand Backgrounds get sharp dark slate-950 text */

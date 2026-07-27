@@ -116,99 +116,123 @@ export default function BlogSection({ onBookCall }: BlogSectionProps) {
                 {/* Left side: Featured & filtered Articles list */}
                 <div className="lg:col-span-8 space-y-12">
                   
-                  {/* Default Featured Banner if category is All and no active search query */}
-                  {!searchQuery && selectedCategory === "All" && (
-                    <div 
-                      className="group bg-slate-50 border border-slate-100 rounded-3xl overflow-hidden hover:border-brand/20 shadow-xs hover:shadow-2xl hover:shadow-slate-100/50 transition-all duration-500 cursor-pointer grid grid-cols-1 md:grid-cols-12"
-                      onClick={() => handlePostClick(featuredPost)}
-                    >
-                      <div className="aspect-video md:aspect-auto md:col-span-5 bg-slate-100 overflow-hidden relative">
-                        <img src={featuredPost.image} alt={featuredPost.title} className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500" referrerPolicy="no-referrer" />
-                        <div className="absolute top-4 left-4 bg-brand text-white text-[9px] font-mono px-2.5 py-1 rounded-md font-bold uppercase tracking-wider shadow-md">
-                          FEATURED
+                  {/* Blog Posts Alternating Two-Grid List */}
+                  <div className="space-y-8">
+                    {filteredPosts.map((post, index) => {
+                      const isTextFirst = index % 2 === 0;
+
+                      return (
+                        <div
+                          key={post.id}
+                          id={`blog-card-${post.id}`}
+                          onClick={() => handlePostClick(post)}
+                          className="group bg-white border border-slate-100 rounded-3xl overflow-hidden hover:border-brand/20 shadow-xs hover:shadow-xl hover:shadow-slate-100/50 transition-all duration-500 cursor-pointer grid grid-cols-1 md:grid-cols-12 items-stretch"
+                        >
+                          {isTextFirst ? (
+                            <>
+                              {/* Grid 1: Text Content | Grid 2: Image */}
+                              <div className="p-6 md:p-8 md:col-span-6 flex flex-col justify-between space-y-5 order-2 md:order-1">
+                                <div className="space-y-3.5">
+                                  <div className="flex items-center justify-between flex-wrap gap-2">
+                                    <span className="text-[10px] font-mono tracking-widest text-brand uppercase font-bold bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md">
+                                      {post.category}
+                                    </span>
+                                    <div className="flex items-center space-x-3 text-[10px] font-mono text-slate-400 font-semibold uppercase">
+                                      <span className="flex items-center space-x-1">
+                                        <Calendar size={10} className="text-brand" />
+                                        <span>{post.date}</span>
+                                      </span>
+                                      <span>•</span>
+                                      <span className="flex items-center space-x-1">
+                                        <Clock size={10} className="text-brand" />
+                                        <span>{post.readTime}</span>
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  <h3 className="text-lg md:text-xl font-display font-bold text-slate-900 group-hover:text-brand transition-colors tracking-tight leading-snug">
+                                    {post.title}
+                                  </h3>
+                                  <p className="text-xs text-slate-500 leading-relaxed font-normal line-clamp-3">
+                                    {post.excerpt}
+                                  </p>
+                                </div>
+
+                                <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                                  <div className="flex items-center space-x-3">
+                                    <img src={post.author.avatar} alt={post.author.name} className="w-8 h-8 rounded-full object-cover shrink-0" referrerPolicy="no-referrer" />
+                                    <div>
+                                      <div className="text-xs font-bold text-slate-800">{post.author.name}</div>
+                                      <div className="text-[9px] font-mono text-slate-400">{post.author.role}</div>
+                                    </div>
+                                  </div>
+                                  <span className="text-[10px] font-mono font-bold text-slate-400 group-hover:text-brand flex items-center space-x-1 transition-colors">
+                                    <span>READ ARTICLE</span>
+                                    <ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div className="aspect-video md:aspect-auto md:col-span-6 bg-slate-100 overflow-hidden relative order-1 md:order-2 min-h-[220px] md:min-h-[260px]">
+                                <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" referrerPolicy="no-referrer" />
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              {/* Grid 1: Image | Grid 2: Text Content */}
+                              <div className="aspect-video md:aspect-auto md:col-span-6 bg-slate-100 overflow-hidden relative order-1 md:order-1 min-h-[220px] md:min-h-[260px]">
+                                <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" referrerPolicy="no-referrer" />
+                              </div>
+
+                              <div className="p-6 md:p-8 md:col-span-6 flex flex-col justify-between space-y-5 order-2 md:order-2">
+                                <div className="space-y-3.5">
+                                  <div className="flex items-center justify-between flex-wrap gap-2">
+                                    <span className="text-[10px] font-mono tracking-widest text-brand uppercase font-bold bg-brand/5 border border-brand/10 px-2.5 py-1 rounded-md">
+                                      {post.category}
+                                    </span>
+                                    <div className="flex items-center space-x-3 text-[10px] font-mono text-slate-400 font-semibold uppercase">
+                                      <span className="flex items-center space-x-1">
+                                        <Calendar size={10} className="text-brand" />
+                                        <span>{post.date}</span>
+                                      </span>
+                                      <span>•</span>
+                                      <span className="flex items-center space-x-1">
+                                        <Clock size={10} className="text-brand" />
+                                        <span>{post.readTime}</span>
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  <h3 className="text-lg md:text-xl font-display font-bold text-slate-900 group-hover:text-brand transition-colors tracking-tight leading-snug">
+                                    {post.title}
+                                  </h3>
+                                  <p className="text-xs text-slate-500 leading-relaxed font-normal line-clamp-3">
+                                    {post.excerpt}
+                                  </p>
+                                </div>
+
+                                <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                                  <div className="flex items-center space-x-3">
+                                    <img src={post.author.avatar} alt={post.author.name} className="w-8 h-8 rounded-full object-cover shrink-0" referrerPolicy="no-referrer" />
+                                    <div>
+                                      <div className="text-xs font-bold text-slate-800">{post.author.name}</div>
+                                      <div className="text-[9px] font-mono text-slate-400">{post.author.role}</div>
+                                    </div>
+                                  </div>
+                                  <span className="text-[10px] font-mono font-bold text-slate-400 group-hover:text-brand flex items-center space-x-1 transition-colors">
+                                    <span>READ ARTICLE</span>
+                                    <ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
+                                  </span>
+                                </div>
+                              </div>
+                            </>
+                          )}
                         </div>
-                      </div>
-
-                      <div className="p-8 md:col-span-7 flex flex-col justify-between space-y-6">
-                        <div className="space-y-3.5">
-                          <span className="text-[10px] font-mono tracking-widest text-brand uppercase font-bold">
-                            {featuredPost.category}
-                          </span>
-                          <h3 className="text-xl md:text-2xl font-display font-bold text-slate-900 group-hover:text-brand transition-colors tracking-tight leading-tight">
-                            {featuredPost.title}
-                          </h3>
-                          <p className="text-xs text-slate-500 leading-relaxed font-normal">
-                            {featuredPost.excerpt}
-                          </p>
-                        </div>
-
-                        <div className="flex items-center justify-between pt-4 border-t border-slate-100/50">
-                          <div className="flex items-center space-x-3">
-                            <img src={featuredPost.author.avatar} alt={featuredPost.author.name} className="w-8 h-8 rounded-full object-cover shrink-0" referrerPolicy="no-referrer" />
-                            <div>
-                              <div className="text-xs font-bold text-slate-800">{featuredPost.author.name}</div>
-                              <div className="text-[9px] font-mono text-slate-400">{featuredPost.author.role}</div>
-                            </div>
-                          </div>
-                          
-                          <span className="text-[10px] font-mono text-slate-400">{featuredPost.date}</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Standard Blog Posts Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {filteredPosts.map((post) => (
-                      <div
-                        key={post.id}
-                        id={`blog-card-${post.id}`}
-                        onClick={() => handlePostClick(post)}
-                        className="group bg-white border border-slate-100 rounded-2xl overflow-hidden hover:border-brand/20 shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between h-full"
-                      >
-                        <div>
-                          <div className="aspect-video relative overflow-hidden bg-slate-50">
-                            <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500" referrerPolicy="no-referrer" />
-                            <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-xs text-slate-800 text-[9px] font-mono px-2.5 py-1 rounded-md font-bold uppercase tracking-wider shadow-xs">
-                              {post.category}
-                            </span>
-                          </div>
-
-                          <div className="p-6 space-y-3">
-                            <div className="flex items-center space-x-3 text-[10px] font-mono text-slate-400 font-semibold uppercase">
-                              <span className="flex items-center space-x-1">
-                                <Calendar size={10} className="text-brand" />
-                                <span>{post.date}</span>
-                              </span>
-                              <span>•</span>
-                              <span className="flex items-center space-x-1">
-                                <Clock size={10} className="text-brand" />
-                                <span>{post.readTime}</span>
-                              </span>
-                            </div>
-
-                            <h4 className="font-display font-bold text-slate-900 group-hover:text-brand transition-colors text-base tracking-tight leading-snug">
-                              {post.title}
-                            </h4>
-                            <p className="text-xs text-slate-500 leading-relaxed line-clamp-3">
-                              {post.excerpt}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Card Footer Author summary */}
-                        <div className="px-6 pb-6 pt-4 border-t border-slate-50 flex items-center space-x-3.5">
-                          <img src={post.author.avatar} alt={post.author.name} className="w-7 h-7 rounded-full object-cover shrink-0" referrerPolicy="no-referrer" />
-                          <div>
-                            <div className="text-xs font-bold text-slate-800">{post.author.name}</div>
-                            <div className="text-[9px] font-mono text-slate-400">{post.author.role}</div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                     
                     {filteredPosts.length === 0 && (
-                      <div className="col-span-2 text-center py-12 border border-dashed border-slate-200 rounded-2xl space-y-2">
+                      <div className="text-center py-12 border border-dashed border-slate-200 rounded-2xl space-y-2">
                         <p className="text-sm font-semibold text-slate-600">No articles matched your criteria.</p>
                         <p className="text-xs text-slate-400">Try adjusting your filters or search keywords.</p>
                       </div>

@@ -23,6 +23,9 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import { servicesData, projectsData } from "../data";
 import { Service } from "../types";
+import ProcessSection from "./ProcessSection";
+import WebsiteBuilderSimulator from "./WebsiteBuilderSimulator";
+import VanalystSection from "./VanalystSection";
 
 // Icon mapper helper
 const getServiceIcon = (iconName: string, size = 24, className = "") => {
@@ -158,6 +161,17 @@ export default function ServicesSection({
                     </button>
                   </motion.div>
                 ))}
+              </div>
+
+              {/* Interactive "See Your Future Website" Simulator */}
+              <WebsiteBuilderSimulator onBookCall={onBookCall} />
+
+              {/* Vanalyst SEO Auditor */}
+              <VanalystSection onBookCall={onBookCall} />
+
+              {/* Engineered Roadmap & Delivery Pipeline */}
+              <div className="pt-12 border-t border-slate-100">
+                <ProcessSection />
               </div>
             </motion.div>
           ) : (

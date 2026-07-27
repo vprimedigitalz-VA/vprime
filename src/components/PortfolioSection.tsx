@@ -12,6 +12,7 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import { projectsData } from "../data";
 import { Project } from "../types";
+import { CardSkeleton, BrandedSpinner } from "./BrandedLoader";
 
 interface PortfolioSectionProps {
   onPageChange: (page: string) => void;
@@ -20,6 +21,7 @@ interface PortfolioSectionProps {
 export default function PortfolioSection({ onPageChange }: PortfolioSectionProps) {
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isFiltering, setIsFiltering] = useState(false);
 
   // Before/After slider states
   const [sliderPosition, setSliderPosition] = useState(50);
@@ -29,8 +31,13 @@ export default function PortfolioSection({ onPageChange }: PortfolioSectionProps
   const filters = ["All", "Web Design", "Webflow/WordPress", "Shopify", "UI/UX"];
 
   const handleFilterClick = (filter: string) => {
+    if (filter === selectedFilter) return;
+    setIsFiltering(true);
     setSelectedFilter(filter);
     setSelectedProject(null);
+    setTimeout(() => {
+      setIsFiltering(false);
+    }, 400);
   };
 
   const handleProjectClick = (project: Project) => {
@@ -129,9 +136,17 @@ export default function PortfolioSection({ onPageChange }: PortfolioSectionProps
                 ))}
               </div>
 
-              {/* Projects Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-6">
-                {filteredProjects.map((project, index) => (
+              {/* Projects Grid or Branded Skeleton Loader */}
+              {isFiltering ? (
+                <div className="pt-6 space-y-6">
+                  <div className="flex justify-center py-4">
+                    <BrandedSpinner size="md" label={`Filtering ${selectedFilter} projects...`} />
+                  </div>
+                  <CardSkeleton count={3} />
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-6">
+                  {filteredProjects.map((project, index) => (
                   <motion.div
                     key={project.id}
                     id={`portfolio-card-${project.id}`}
@@ -209,6 +224,7 @@ export default function PortfolioSection({ onPageChange }: PortfolioSectionProps
                   </motion.div>
                 ))}
               </div>
+              )}
             </motion.div>
           ) : (
             /* ================= PORTFOLIO CASE STUDY VIEW ================= */

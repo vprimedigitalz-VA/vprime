@@ -16,6 +16,8 @@ import {
   ShieldCheck
 } from "lucide-react";
 import Hero from "./Hero";
+import PricingSection from "./PricingSection";
+import BlogSection from "./BlogSection";
 import { servicesData, projectsData, testimonialsData } from "../data";
 
 interface HomeViewProps {
@@ -562,7 +564,13 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
         </div>
       </section>
 
-      {/* 8. Call to Action Banner section */}
+      {/* 8. Pricing Section */}
+      <PricingSection onBookCall={onBookCall} />
+
+      {/* 9. Blog Insights Section */}
+      <BlogSection onBookCall={onBookCall} />
+
+      {/* 10. Call to Action Banner section */}
       <section id="home-cta" className="py-12 bg-white overflow-hidden">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div 
@@ -598,10 +606,10 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
               </button>
 
               <button
-                onClick={() => onPageChange("contact")}
+                onClick={onBookCall}
                 className="inline-flex items-center justify-center border border-white/20 hover:border-white/55 bg-transparent text-white font-sans text-xs font-semibold uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-300 hover:bg-white/5 cursor-pointer"
               >
-                <span>Submit Inquiry Form</span>
+                <span>Schedule Workshop</span>
               </button>
             </div>
 

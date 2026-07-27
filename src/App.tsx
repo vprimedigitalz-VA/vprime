@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
 import Navbar from "./components/Navbar";
 import HomeView from "./components/HomeView";
@@ -8,15 +8,25 @@ import ProcessSection from "./components/ProcessSection";
 import PricingSection from "./components/PricingSection";
 import AboutSection from "./components/AboutSection";
 import BlogSection from "./components/BlogSection";
-import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 import BookingSection from "./components/BookingSection";
 import BookingModal from "./components/BookingModal";
+import VanalystSection from "./components/VanalystSection";
+import VhelpChatbot from "./components/VhelpChatbot";
+import { PageLoaderOverlay } from "./components/BrandedLoader";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [selectedServiceSlug, setSelectedServiceSlug] = useState<string | null>(null);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsInitialLoading(false);
+    }, 1100);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Smooth scroll progress bar at top of screen
   const { scrollYProgress } = useScroll();
@@ -27,8 +37,33 @@ export default function App() {
   });
 
   const handlePageChange = (pageId: string) => {
+    setSelectedServiceSlug(null);
+
+    if (pageId === "process") {
+      setCurrentPage("services");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (pageId === "pricing") {
+      setCurrentPage("home");
+      setTimeout(() => {
+        const el = document.getElementById("pricing-section");
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+      return;
+    }
+
+    if (pageId === "blog") {
+      setCurrentPage("home");
+      setTimeout(() => {
+        const el = document.getElementById("blog-section");
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+      return;
+    }
+
     setCurrentPage(pageId);
-    setSelectedServiceSlug(null); // Reset service slug when switching pages normally
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -76,8 +111,8 @@ export default function App() {
         return <AboutSection onBookCall={handleBookCall} />;
       case "blog":
         return <BlogSection onBookCall={handleBookCall} />;
-      case "contact":
-        return <ContactSection onBookCall={handleBookCall} />;
+      case "vanalyst":
+        return <VanalystSection onBookCall={handleBookCall} />;
       case "booking":
         return <BookingSection />;
       default:
@@ -93,6 +128,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 selection:bg-brand selection:text-white flex flex-col justify-between">
+      {/* App Initialization Branded Overlay Loader */}
+      <AnimatePresence>
+        {isInitialLoading && <PageLoaderOverlay message="Initializing VprimeDigitalz Runtime..." />}
+      </AnimatePresence>
+
       {/* Dynamic Scroll Progress Bar */}
       <motion.div 
         style={{ scaleX }} 
@@ -127,6 +167,9 @@ export default function App() {
 
       {/* 4. Global Calendly Booking Overlay Modal */}
       <BookingModal isOpen={isBookingModalOpen} onClose={() => setIsBookingModalOpen(false)} />
+
+      {/* 5. Floating Vhelp AI Chatbot */}
+      <VhelpChatbot />
     </div>
   );
 }
