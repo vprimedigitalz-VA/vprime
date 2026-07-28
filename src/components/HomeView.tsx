@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import brandWorkspaceImg from "../assets/images/brand_workspace_1784638515102.jpg";
 import { motion, AnimatePresence } from "motion/react";
 import { 
@@ -13,7 +13,10 @@ import {
   Calendar,
   ChevronLeft,
   ChevronRight,
-  ShieldCheck
+  ShieldCheck,
+  Pause,
+  Play,
+  Quote
 } from "lucide-react";
 import Hero from "./Hero";
 import PricingSection from "./PricingSection";
@@ -29,6 +32,8 @@ interface HomeViewProps {
 
 export default function HomeView({ onPageChange, onSelectService, onBookCall }: HomeViewProps) {
   const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
 
   const featuredServices = servicesData.slice(0, 3); // Website Design, Webflow Dev, WordPress Dev
   const featuredProjects = projectsData.slice(0, 3); // Starlight, Apex, Solis
@@ -36,12 +41,23 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
   const activeTestimonial = testimonialsData[activeTestimonialIdx];
 
   const handleNextTestimonial = () => {
-    setActiveTestimonialIdx((activeTestimonialIdx + 1) % testimonialsData.length);
+    setActiveTestimonialIdx((prev) => (prev + 1) % testimonialsData.length);
   };
 
   const handlePrevTestimonial = () => {
-    setActiveTestimonialIdx((activeTestimonialIdx - 1 + testimonialsData.length) % testimonialsData.length);
+    setActiveTestimonialIdx((prev) => (prev - 1 + testimonialsData.length) % testimonialsData.length);
   };
+
+  // Slideshow Auto-play Timer
+  useEffect(() => {
+    if (!isAutoPlay || isHovered) return;
+    
+    const interval = setInterval(() => {
+      setActiveTestimonialIdx((prev) => (prev + 1) % testimonialsData.length);
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlay, isHovered]);
 
   const technologies = [
     { name: "Figma", category: "Design" },
@@ -65,7 +81,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
       <Hero onPageChange={onPageChange} onBookCall={onBookCall} />
 
       {/* 2. Featured Services Preview Grid */}
-      <section id="home-services-preview" className="py-20 bg-brand-light/25 border-y border-slate-100 overflow-hidden">
+      <section id="home-services-preview" className="py-20 bg-[#0f121d] border-y border-slate-800/80 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           
           <motion.div 
@@ -76,14 +92,16 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
             className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12"
           >
             <div className="space-y-3.5">
-              <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase font-bold">Featured Capabilities</span>
-              <h2 className="text-2xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
+              <span className="text-[10px] font-mono tracking-widest text-brand uppercase font-bold bg-brand/10 px-3.5 py-1.5 rounded-full border border-brand/20 shadow-xs">
+                Featured Capabilities
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-display font-black text-white tracking-tight">
                 Our core growth services.
               </h2>
             </div>
             <button
               onClick={() => onPageChange("services")}
-              className="group text-xs font-mono tracking-wider text-slate-400 hover:text-brand font-semibold uppercase mt-4 md:mt-0 cursor-pointer flex items-center space-x-1"
+              className="group text-xs font-mono tracking-wider text-slate-300 hover:text-brand font-bold uppercase mt-4 md:mt-0 cursor-pointer flex items-center space-x-1"
             >
               <span>Explore All 13 Capabilities</span>
               <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
@@ -102,7 +120,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
                 variants={{
                   hover: { y: -8, scale: 1.015 }
                 }}
-                className="group relative bg-white rounded-2xl border border-slate-200/80 p-8 shadow-xs hover:shadow-2xl hover:shadow-brand/10 hover:border-brand/30 transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer"
+                className="group relative bg-slate-900/90 rounded-2xl border border-slate-800 shadow-xl hover:shadow-2xl hover:shadow-brand/20 hover:border-brand/40 transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer"
                 onClick={() => onSelectService(service.slug)}
               >
                 {/* Motion Accent Bar on Hover */}
@@ -112,44 +130,80 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
                   }}
                   initial={{ scaleX: 0, opacity: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand via-emerald-400 to-brand origin-left"
+                  className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand via-emerald-400 to-brand origin-left z-20"
                 />
 
-                <div className="space-y-5 relative z-10">
-                  {/* Motion-animated Icon Container */}
+                {/* Card Top Header Image Container */}
+                <div className="relative h-48 w-full overflow-hidden bg-slate-950 border-b border-slate-800">
+                  {service.image ? (
+                    <img 
+                      src={service.image} 
+                      alt={service.title} 
+                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 flex items-center justify-center">
+                      <Sparkles size={32} className="text-brand/50" />
+                    </div>
+                  )}
+                  
+                  {/* Dark gradient overlay for text contrast & depth */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent" />
+
+                  {/* Top Category Badge */}
+                  <div className="absolute top-3 right-3 bg-slate-950/90 backdrop-blur-md text-emerald-400 border border-emerald-500/30 font-mono text-[9px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider shadow-sm">
+                    {service.category}
+                  </div>
+
+                  {/* Floating Glassmorphic Icon Badge */}
                   <motion.div
                     variants={{
                       hover: { scale: 1.1, rotate: 3, y: -2 },
                     }}
                     transition={{ type: "spring", stiffness: 350, damping: 20 }}
-                    className="w-12 h-12 bg-brand/10 group-hover:bg-brand text-brand group-hover:text-white rounded-xl flex items-center justify-center transition-colors duration-300 shadow-xs"
+                    className="absolute bottom-3 left-4 w-11 h-11 bg-slate-800 text-brand group-hover:bg-brand group-hover:text-slate-950 rounded-xl flex items-center justify-center transition-colors duration-300 shadow-md border border-slate-700"
                   >
-                    {service.id === "web-design" ? <Layout size={22} /> : service.id === "webflow-dev" ? <Code size={22} /> : <Sparkles size={22} />}
+                    {service.id === "web-design" ? <Layout size={20} /> : service.id === "webflow-dev" ? <Code size={20} /> : <Sparkles size={20} />}
                   </motion.div>
+                </div>
 
+                {/* Card Body */}
+                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between bg-slate-900/90 text-white">
                   <div className="space-y-2">
-                    <span className="text-[9px] font-mono tracking-widest text-slate-400 uppercase font-semibold">
-                      {service.category}
-                    </span>
-                    <h3 className="text-base font-display font-bold text-slate-900 group-hover:text-brand transition-colors">
+                    <h3 className="text-xl font-display font-black text-white group-hover:text-brand transition-colors leading-tight">
                       {service.title}
                     </h3>
-                    <p className="text-xs text-slate-500 leading-relaxed">
+                    <p className="text-xs text-slate-300 font-normal leading-relaxed line-clamp-3">
                       {service.description}
                     </p>
                   </div>
-                </div>
 
-                <div className="mt-6 inline-flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider text-slate-800 group-hover:text-brand transition-colors cursor-pointer self-start relative z-10">
-                  <span>Learn More</span>
-                  <motion.div
-                    variants={{
-                      hover: { x: 5 },
-                    }}
-                    transition={{ type: "spring", stiffness: 400, damping: 22 }}
-                  >
-                    <ArrowRight size={14} />
-                  </motion.div>
+                  {/* Key Tech Chips - Dark Background Badges with WHITE Text */}
+                  {service.technologies && service.technologies.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800">
+                      {service.technologies.slice(0, 4).map((tech) => (
+                        <span 
+                          key={tech}
+                          className="bg-slate-800/90 text-white border border-slate-700/80 font-mono text-[10px] font-bold px-2.5 py-1 rounded-md shadow-2xs hover:border-brand/50 transition-colors"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="pt-2 inline-flex items-center space-x-2 text-xs font-black uppercase tracking-wider text-white group-hover:text-brand transition-colors cursor-pointer self-start relative z-10">
+                    <span>Explore Service</span>
+                    <motion.div
+                      variants={{
+                        hover: { x: 5 },
+                      }}
+                      transition={{ type: "spring", stiffness: 400, damping: 22 }}
+                    >
+                      <ArrowRight size={14} className="text-brand" />
+                    </motion.div>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -321,169 +375,244 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
         </div>
       </section>
 
-      {/* 5. Client Testimonials Slider */}
+      {/* 5. Client Testimonials Slideshow */}
       <section id="home-testimonials" className="py-24 bg-white relative overflow-hidden">
         {/* Background decorations */}
-        <div className="absolute top-1/2 left-0 w-72 h-72 bg-brand/3 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-0 w-72 h-72 bg-brand/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
         
-        <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
+        <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10 space-y-12">
           
+          {/* Header & Slideshow Controls Bar */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="text-center space-y-4 mb-16"
+            className="flex flex-col md:flex-row md:items-end justify-between gap-6"
           >
-            <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase font-bold">CLIENT TESTIMONIALS</span>
-            <h2 className="text-2xl sm:text-4xl font-display font-black text-slate-900 tracking-tight leading-none">
-              Client reviews from elite founders.
-            </h2>
-            <div className="h-[2px] w-12 bg-brand mx-auto mt-2" />
+            <div className="space-y-3">
+              <div className="inline-flex items-center space-x-2 bg-brand/10 border border-brand/20 px-3 py-1 rounded-full text-brand text-[10px] font-mono font-bold uppercase tracking-widest">
+                <Sparkles size={12} />
+                <span>CLIENT REVIEWS ({testimonialsData.length} VERIFIED PARTNERS)</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-display font-black text-slate-900 tracking-tight leading-none">
+                Trusted by founders & leaders.
+              </h2>
+            </div>
+
+            {/* Top Autoplay Toggle & Slide Counter */}
+            <div className="flex items-center space-x-3 self-start md:self-auto">
+              <button
+                onClick={() => setIsAutoPlay(!isAutoPlay)}
+                className="inline-flex items-center space-x-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-3.5 py-1.5 rounded-full text-[11px] font-mono font-bold text-slate-600 transition-colors cursor-pointer"
+                title={isAutoPlay ? "Pause automatic slideshow" : "Play automatic slideshow"}
+              >
+                {isAutoPlay ? (
+                  <>
+                    <Pause size={12} className="text-brand animate-pulse" />
+                    <span>AUTOPLAY ON</span>
+                  </>
+                ) : (
+                  <>
+                    <Play size={12} className="text-slate-400" />
+                    <span className="text-slate-400">PAUSED</span>
+                  </>
+                )}
+              </button>
+
+              <div className="text-[11px] font-mono font-bold text-slate-400 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-full">
+                0{activeTestimonialIdx + 1} / 0{testimonialsData.length}
+              </div>
+            </div>
           </motion.div>
 
-          {/* Interactive Split columns layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
-            
-            {/* Left Column: Image Block (Client big portrait card) */}
-            <div className="lg:col-span-4 flex justify-center lg:justify-start">
-              <div className="relative w-full max-w-[280px] aspect-square rounded-3xl overflow-hidden bg-slate-950 border border-slate-200 shadow-2xl group select-none">
-                
-                {/* Image Transition with AnimatePresence */}
-                <AnimatePresence mode="wait">
-                  <motion.img 
-                    key={activeTestimonial.id}
-                    initial={{ opacity: 0, scale: 1.05 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    src={activeTestimonial.avatar} 
-                    alt={activeTestimonial.name} 
-                    className="w-full h-full object-cover brightness-95 group-hover:brightness-100 transition-all duration-500" 
-                    referrerPolicy="no-referrer"
-                  />
-                </AnimatePresence>
+          {/* Main Slideshow Container Box */}
+          <div 
+            className="bg-slate-50/80 border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden backdrop-blur-xs"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            {/* Top progress line indicating slideshow timer */}
+            {isAutoPlay && !isHovered && (
+              <motion.div 
+                key={`progress-${activeTestimonialIdx}`}
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 6, ease: "linear" }}
+                className="absolute top-0 left-0 right-0 h-1 bg-brand z-20"
+              />
+            )}
 
-                {/* Dark Gradient overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-85 pointer-events-none" />
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              
+              {/* Left Column: Client Avatar Card with Metric Highlight */}
+              <div className="lg:col-span-4 flex justify-center">
+                <div className="relative w-full max-w-[280px] aspect-square rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 shadow-xl group select-none">
+                  
+                  {/* Avatar Image Transition */}
+                  <AnimatePresence mode="wait">
+                    <motion.img 
+                      key={activeTestimonial.id}
+                      initial={{ opacity: 0, scale: 1.06 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.94 }}
+                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                      src={activeTestimonial.avatar} 
+                      alt={activeTestimonial.name} 
+                      className="w-full h-full object-cover brightness-95 group-hover:brightness-100 transition-all duration-500" 
+                      referrerPolicy="no-referrer"
+                    />
+                  </AnimatePresence>
 
-                {/* Top Badge */}
-                <div className="absolute top-4 left-4 inline-flex items-center space-x-1.5 bg-brand/90 backdrop-blur-md border border-white/15 text-white font-mono text-[9px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>{activeTestimonial.company}</span>
-                </div>
+                  {/* Dark Overlay Gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/25 to-transparent opacity-90 pointer-events-none" />
 
-                {/* Bottom Overlay Info */}
-                <div className="absolute bottom-6 left-6 right-6 space-y-1.5 text-white">
-                  <span className="text-[9px] font-mono text-brand font-bold uppercase tracking-widest block">VERIFIED PARTNER</span>
-                  <div className="flex items-baseline justify-between">
-                    <h4 className="text-lg font-display font-black leading-none">{activeTestimonial.name}</h4>
-                    <span className="text-[10px] font-mono text-slate-300 font-bold uppercase">{activeTestimonial.logo}</span>
+                  {/* Top Badge: Company Name */}
+                  <div className="absolute top-4 left-4 inline-flex items-center space-x-1.5 bg-brand/90 backdrop-blur-md border border-white/20 text-white font-mono text-[9px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>{activeTestimonial.company}</span>
+                  </div>
+
+                  {/* Bottom Overlay Info */}
+                  <div className="absolute bottom-5 left-5 right-5 space-y-1.5 text-white">
+                    <span className="text-[9px] font-mono text-brand font-bold uppercase tracking-widest block">VERIFIED PARTNER</span>
+                    <div className="flex items-baseline justify-between">
+                      <h4 className="text-lg font-display font-black leading-none">{activeTestimonial.name}</h4>
+                      <span className="text-[10px] font-mono text-slate-300 font-bold uppercase">{activeTestimonial.logo}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Right Column: Text Block and selectors */}
-            <div className="lg:col-span-8 space-y-8">
-              
-              {/* Star rating and badge */}
-              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-                <div className="flex space-x-1 text-amber-400">
-                  {[...Array(activeTestimonial.rating)].map((_, i) => (
-                    <Star key={i} size={15} fill="currentColor" />
-                  ))}
-                </div>
-                <span className="text-[9px] font-mono text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full font-bold uppercase tracking-wider">
-                  AVERAGE REVENUE RISE +35%
-                </span>
-              </div>
-
-              {/* Dynamic Interactive Testimonial Quote */}
-              <div className="min-h-[160px] relative">
-                <span className="text-7xl font-display font-bold text-brand/5 absolute -top-10 -left-4 pointer-events-none">“</span>
+              {/* Right Column: Quote Content */}
+              <div className="lg:col-span-8 space-y-6 flex flex-col justify-between">
                 
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeTestimonial.id}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -12 }}
-                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    className="space-y-4 relative z-10"
-                  >
-                    <p className="text-slate-800 text-lg sm:text-xl font-medium italic leading-relaxed">
-                      "{activeTestimonial.quote}"
-                    </p>
-                    
-                    <div>
-                      <h4 className="text-slate-900 font-display font-extrabold text-sm sm:text-base leading-none">
-                        {activeTestimonial.name}
-                      </h4>
-                      <p className="text-[11px] font-mono text-slate-400 uppercase font-semibold mt-1.5 tracking-wider">
-                        {activeTestimonial.role} &mdash; <span className="text-brand">{activeTestimonial.company}</span>
-                      </p>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
+                {/* Header: Star Rating + Key Result Metric Badge */}
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 pb-4">
+                  <div className="flex space-x-1 text-amber-400">
+                    {[...Array(activeTestimonial.rating)].map((_, i) => (
+                      <Star key={i} size={16} fill="currentColor" />
+                    ))}
+                  </div>
 
-              {/* Interactive Selector Controls & Slide Dots */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-6 border-t border-slate-100">
-                
-                {/* Tiny Client Quick Select Avatars - Extremely Interactive */}
-                <div className="flex items-center space-x-2">
-                  {testimonialsData.map((test, index) => {
-                    const isSelected = index === activeTestimonialIdx;
-                    return (
-                      <button
-                        key={test.id}
-                        onClick={() => setActiveTestimonialIdx(index)}
-                        className={`testimonial-selector-avatar group relative w-10 h-10 rounded-full overflow-hidden border-2 transition-all cursor-pointer ${
-                          isSelected ? "border-brand scale-110 shadow-md shadow-brand/10" : "border-transparent hover:border-slate-300 opacity-60 hover:opacity-100"
-                        }`}
-                        title={`View testimonial from ${test.name}`}
-                      >
-                        <img 
-                          src={test.avatar} 
-                          alt={test.name} 
-                          className="w-full h-full object-cover" 
-                          referrerPolicy="no-referrer"
-                        />
-                      </button>
-                    );
-                  })}
-                  <span className="text-[9px] font-mono text-slate-400 font-bold pl-2 uppercase">Jump directly</span>
+                  {activeTestimonial.metric && (
+                    <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-full font-bold uppercase tracking-wider flex items-center space-x-1">
+                      <TrendingUp size={12} className="text-emerald-600" />
+                      <span>{activeTestimonial.metric}</span>
+                    </span>
+                  )}
                 </div>
 
-                {/* Classic Previous / Next Arrows */}
-                <div className="flex items-center space-x-2.5 shrink-0">
-                  <span className="text-[10px] font-mono font-bold text-slate-400">
-                    0{activeTestimonialIdx + 1} / 0{testimonialsData.length}
-                  </span>
+                {/* Animated Testimonial Quote */}
+                <div className="min-h-[140px] relative">
+                  <Quote size={48} className="text-brand/10 absolute -top-4 -left-3 pointer-events-none" />
                   
-                  <div className="flex space-x-2">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeTestimonial.id}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className="space-y-4 relative z-10"
+                    >
+                      <p className="text-slate-800 text-lg sm:text-xl font-medium italic leading-relaxed">
+                        "{activeTestimonial.quote}"
+                      </p>
+                      
+                      <div>
+                        <h4 className="text-slate-900 font-display font-extrabold text-base sm:text-lg leading-none">
+                          {activeTestimonial.name}
+                        </h4>
+                        <p className="text-[11px] font-mono text-slate-500 uppercase font-semibold mt-1.5 tracking-wider">
+                          {activeTestimonial.role} &mdash; <span className="text-brand font-bold">{activeTestimonial.company}</span>
+                        </p>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                {/* Controls Footer: Slide Indicators & Navigation Arrows */}
+                <div className="pt-6 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  
+                  {/* Slide Pill Dots Indicator */}
+                  <div className="flex items-center space-x-2">
+                    {testimonialsData.map((_, index) => {
+                      const isCurrent = index === activeTestimonialIdx;
+                      return (
+                        <button
+                          key={index}
+                          onClick={() => setActiveTestimonialIdx(index)}
+                          className={`transition-all duration-300 cursor-pointer ${
+                            isCurrent 
+                              ? "w-8 h-2.5 bg-brand rounded-full shadow-xs" 
+                              : "w-2.5 h-2.5 bg-slate-300 hover:bg-slate-400 rounded-full"
+                          }`}
+                          aria-label={`Go to slide ${index + 1}`}
+                          title={`Testimonial ${index + 1} of ${testimonialsData.length}`}
+                        />
+                      );
+                    })}
+                  </div>
+
+                  {/* Previous & Next Buttons */}
+                  <div className="flex items-center space-x-2.5">
                     <button
                       onClick={handlePrevTestimonial}
-                      className="w-9 h-9 border border-slate-200 hover:border-brand text-slate-600 hover:text-brand bg-white rounded-full flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                      className="w-10 h-10 border border-slate-300 hover:border-brand text-slate-700 hover:text-white bg-white hover:bg-brand rounded-full flex items-center justify-center transition-all cursor-pointer shadow-xs hover:scale-105 active:scale-95"
                       aria-label="Previous Testimonial"
+                      title="Previous Testimonial"
                     >
-                      <ChevronLeft size={16} />
+                      <ChevronLeft size={18} />
                     </button>
                     <button
                       onClick={handleNextTestimonial}
-                      className="w-9 h-9 border border-slate-200 hover:border-brand text-slate-600 hover:text-brand bg-white rounded-full flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                      className="w-10 h-10 border border-slate-300 hover:border-brand text-slate-700 hover:text-white bg-white hover:bg-brand rounded-full flex items-center justify-center transition-all cursor-pointer shadow-xs hover:scale-105 active:scale-95"
                       aria-label="Next Testimonial"
+                      title="Next Testimonial"
                     >
-                      <ChevronRight size={16} />
+                      <ChevronRight size={18} />
                     </button>
                   </div>
+
                 </div>
 
               </div>
 
             </div>
 
+          </div>
+
+          {/* Quick Avatar Select Strip - All 9 Client Thumbnails */}
+          <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 flex flex-wrap items-center justify-center sm:justify-between gap-3">
+            <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest shrink-0">
+              JUMP TO CLIENT ({testimonialsData.length}):
+            </span>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {testimonialsData.map((test, index) => {
+                const isSelected = index === activeTestimonialIdx;
+                return (
+                  <button
+                    key={test.id}
+                    onClick={() => setActiveTestimonialIdx(index)}
+                    className={`group relative w-10 h-10 rounded-full overflow-hidden border-2 transition-all cursor-pointer ${
+                      isSelected 
+                        ? "border-brand scale-110 shadow-md ring-2 ring-brand/30" 
+                        : "border-slate-200 hover:border-slate-400 opacity-60 hover:opacity-100"
+                    }`}
+                    title={`${test.name} — ${test.company}`}
+                  >
+                    <img 
+                      src={test.avatar} 
+                      alt={test.name} 
+                      className="w-full h-full object-cover" 
+                      referrerPolicy="no-referrer"
+                    />
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
         </div>

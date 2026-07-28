@@ -419,12 +419,28 @@ html.light .text-gradient {
   color: #090a0f;
 }
 
-/* Solid Brand Backgrounds get sharp dark slate-950 text */
-.bg-brand {
-  color: #090a0f !important;
+/* High Contrast Text Rules on Brand Backgrounds (#06CF9C / #05BE8F) */
+.bg-brand.text-white,
+.bg-brand .text-white,
+button.bg-brand.text-white,
+a.bg-brand.text-white {
+  color: #ffffff !important;
+  font-weight: 700 !important;
 }
-.bg-brand svg {
-  stroke: #090a0f !important;
+
+.bg-brand.text-black,
+.bg-brand.text-slate-950,
+.bg-brand.text-slate-900,
+.bg-brand .text-black,
+.bg-brand .text-slate-950,
+.bg-brand .text-slate-900 {
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+html.light .text-brand {
+  color: #048f6c !important;
+  font-weight: 600;
 }
 
 /* Shimmer animation for card items */

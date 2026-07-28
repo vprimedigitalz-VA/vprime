@@ -78,8 +78,8 @@ export default function FaqSection({ onBookCall }: FaqSectionProps) {
   };
 
   return (
-    <section id="faq-section" className="py-24 bg-slate-50/70 border-t border-slate-100 overflow-hidden relative">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-12">
+    <section id="faq-section" className="py-24 bg-[#121520] border-t border-slate-800/80 overflow-hidden relative">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-12 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
@@ -99,7 +99,7 @@ export default function FaqSection({ onBookCall }: FaqSectionProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-slate-900 tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white tracking-tight"
           >
             Frequently Asked Questions
           </motion.h2>
@@ -109,7 +109,7 @@ export default function FaqSection({ onBookCall }: FaqSectionProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-slate-500 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed"
+            className="text-slate-300 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed"
           >
             Everything you need to know about partnering with VprimeDigitalz, our technical capabilities, pricing clarity, and delivery timelines.
           </motion.p>
@@ -126,12 +126,12 @@ export default function FaqSection({ onBookCall }: FaqSectionProps) {
               placeholder="Search questions (e.g., SEO, Webflow, Timeline, Pricing)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white border border-slate-200 rounded-2xl pl-11 pr-4 py-3.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/10 shadow-xs transition-all"
+              className="w-full bg-slate-900/90 border border-slate-800 rounded-2xl pl-11 pr-4 py-3.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 shadow-sm transition-all"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-400 hover:text-slate-600"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-400 hover:text-white"
               >
                 Clear
               </button>
@@ -146,8 +146,8 @@ export default function FaqSection({ onBookCall }: FaqSectionProps) {
                 onClick={() => setActiveCategory(cat)}
                 className={`text-xs font-mono px-4 py-2 rounded-xl transition-all duration-300 cursor-pointer font-semibold ${
                   activeCategory === cat
-                    ? "bg-slate-900 text-white shadow-md"
-                    : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80"
+                    ? "bg-brand text-slate-950 font-bold shadow-md shadow-brand/10"
+                    : "bg-slate-900/90 text-slate-300 hover:bg-slate-800 border border-slate-800"
                 }`}
               >
                 {cat}
@@ -170,10 +170,10 @@ export default function FaqSection({ onBookCall }: FaqSectionProps) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
-                  className={`bg-white border rounded-2xl overflow-hidden transition-all duration-300 ${
+                  className={`bg-slate-900/90 border rounded-2xl overflow-hidden transition-all duration-300 ${
                     isOpen
-                      ? "border-brand/40 shadow-md ring-1 ring-brand/10"
-                      : "border-slate-200/80 hover:border-slate-300 shadow-xs"
+                      ? "border-brand/50 shadow-lg shadow-brand/5 ring-1 ring-brand/20"
+                      : "border-slate-800/80 hover:border-slate-700 shadow-sm"
                   }`}
                 >
                   <button
@@ -183,12 +183,12 @@ export default function FaqSection({ onBookCall }: FaqSectionProps) {
                     <div className="flex items-center space-x-3.5">
                       <div
                         className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
-                          isOpen ? "bg-brand text-white" : "bg-slate-100 text-slate-500 group-hover:bg-slate-200"
+                          isOpen ? "bg-brand text-slate-950 font-bold" : "bg-slate-800 text-slate-400 group-hover:bg-slate-700"
                         }`}
                       >
                         <span className="font-mono text-xs font-bold">{index + 1}</span>
                       </div>
-                      <span className="font-display font-bold text-slate-900 text-sm sm:text-base group-hover:text-brand transition-colors">
+                      <span className="font-display font-bold text-white text-sm sm:text-base group-hover:text-brand transition-colors">
                         {faq.q}
                       </span>
                     </div>
@@ -197,7 +197,7 @@ export default function FaqSection({ onBookCall }: FaqSectionProps) {
                       animate={{ rotate: isOpen ? 180 : 0 }}
                       transition={{ duration: 0.25 }}
                       className={`p-1.5 rounded-full shrink-0 ${
-                        isOpen ? "bg-brand/10 text-brand" : "text-slate-400 group-hover:text-slate-600"
+                        isOpen ? "bg-brand/20 text-brand" : "text-slate-400 group-hover:text-white"
                       }`}
                     >
                       <ChevronDown size={18} />
@@ -213,10 +213,10 @@ export default function FaqSection({ onBookCall }: FaqSectionProps) {
                         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden"
                       >
-                        <div className="px-6 pb-6 pt-2 pl-16 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100/60 font-normal">
+                        <div className="px-6 pb-6 pt-2 pl-16 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/80 font-normal">
                           <p className="mb-3">{faq.a}</p>
                           {faq.category && (
-                            <span className="inline-block text-[9px] font-mono text-slate-400 bg-slate-100 px-2.5 py-0.5 rounded-md font-semibold uppercase tracking-wider">
+                            <span className="inline-block text-[9px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-md font-semibold uppercase tracking-wider">
                               Category: {faq.category}
                             </span>
                           )}
@@ -228,15 +228,15 @@ export default function FaqSection({ onBookCall }: FaqSectionProps) {
               );
             })
           ) : (
-            <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200 space-y-3">
-              <Sparkles size={24} className="text-slate-300 mx-auto" />
-              <p className="text-sm font-bold text-slate-700">No questions found matching your search query.</p>
+            <div className="text-center py-12 bg-slate-900/90 rounded-2xl border border-dashed border-slate-800 space-y-3">
+              <Sparkles size={24} className="text-slate-500 mx-auto" />
+              <p className="text-sm font-bold text-slate-300">No questions found matching your search query.</p>
               <button
                 onClick={() => {
                   setSearchQuery("");
                   setActiveCategory("All");
                 }}
-                className="text-xs font-mono text-brand font-bold uppercase tracking-wider hover:underline"
+                className="text-xs font-mono text-brand font-bold uppercase tracking-wider hover:underline cursor-pointer"
               >
                 Reset Search Filters
               </button>

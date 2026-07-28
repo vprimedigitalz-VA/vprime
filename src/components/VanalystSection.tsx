@@ -22,6 +22,7 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import { BrandedSpinner, MetricsSkeleton } from "./BrandedLoader";
 import { useToast } from "./ToastContext";
+import ProcessSection from "./ProcessSection";
 
 interface VanalystSectionProps {
   onBookCall: () => void;
@@ -504,6 +505,11 @@ export default function VanalystSection({ onBookCall, defaultUrl = "" }: Vanalys
           </motion.div>
         )}
 
+      </div>
+
+      {/* 9-Step Delivery Pipeline Section */}
+      <div className="mt-16 pt-16 border-t border-slate-800">
+        <ProcessSection />
       </div>
     </section>
   );

@@ -4,6 +4,7 @@ export interface Service {
   description: string;
   category: string;
   icon: string; // Lucide icon name
+  image?: string; // Visual thumbnail image URL
   benefits: string[];
   process: string[];
   deliverables: string[];
@@ -21,6 +22,7 @@ export interface Testimonial {
   avatar: string;
   rating: number;
   quote: string;
+  metric?: string;
   videoUrl?: string; // placeholder for video testimonials
 }
 

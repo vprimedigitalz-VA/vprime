@@ -144,22 +144,22 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
   };
 
   return (
-    <section id="about-section" className="py-24 bg-white relative overflow-hidden">
+    <section id="about-section" className="py-24 bg-[#121520] text-slate-100 relative overflow-hidden">
       {/* Visual background details */}
-      <div className="absolute top-0 left-0 right-0 h-96 bg-gradient-to-b from-slate-50/50 to-transparent pointer-events-none" />
-      <div className="absolute -top-40 -right-40 w-96 h-96 bg-brand/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-40 -left-40 w-96 h-96 bg-brand/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-96 bg-gradient-to-b from-slate-900/50 to-transparent pointer-events-none" />
+      <div className="absolute -top-40 -right-40 w-96 h-96 bg-brand/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-40 -left-40 w-96 h-96 bg-brand/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 space-y-28">
         
         {/* 1. Header Manifesto */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end border-b border-slate-100 pb-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end border-b border-slate-800 pb-14">
           <div className="lg:col-span-8 space-y-5">
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center space-x-1.5 bg-brand/5 border border-brand/10 text-brand font-mono text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider"
+              className="inline-flex items-center space-x-1.5 bg-brand/10 border border-brand/20 text-brand font-mono text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider"
             >
               <Sparkles size={11} className="animate-pulse" />
               <span>THE DESIGN MANIFESTO</span>
@@ -168,7 +168,7 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl sm:text-5xl font-display font-black text-slate-900 tracking-tight leading-none"
+              className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight leading-none"
             >
               Where pixel-perfect art meets high-speed engineering.
             </motion.h2>
@@ -178,7 +178,7 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-slate-500 text-sm md:text-base leading-relaxed"
+              className="text-slate-300 text-sm md:text-base leading-relaxed"
             >
               We reject boring, laggy templates. Led by Victor Adebayo, we build immersive, elite digital experiences crafted with extreme visual precision and optimized to load instantly.
             </motion.p>
@@ -186,23 +186,23 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
         </div>
 
         {/* 2. Interactive Workflow Comparison */}
-        <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8 md:p-12 space-y-8 relative overflow-hidden shadow-xs">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000003_1px,transparent_1px),linear-gradient(to_bottom,#00000003_1px,transparent_1px)] bg-[size:1.5rem_1.5rem]" />
+        <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-8 md:p-12 space-y-8 relative overflow-hidden shadow-xl">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:1.5rem_1.5rem]" />
           
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-b border-slate-200/60 pb-8">
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-b border-slate-800 pb-8">
             <div className="space-y-2">
               <span className="text-[10px] font-mono font-bold text-brand uppercase tracking-widest">INTERACTIVE AUDIT</span>
-              <h3 className="text-xl sm:text-2xl font-display font-bold text-slate-900">How we differ from traditional agencies</h3>
+              <h3 className="text-xl sm:text-2xl font-display font-bold text-white">How we differ from traditional agencies</h3>
             </div>
             
             {/* Interactive Toggle Switch */}
-            <div className="flex bg-slate-200/80 p-1.5 rounded-xl border border-slate-300/30 shrink-0 select-none">
+            <div className="flex bg-slate-950 p-1.5 rounded-xl border border-slate-800 shrink-0 select-none">
               <button 
                 onClick={() => setAgencyModel("traditional")}
                 className={`px-4 py-2 rounded-lg font-display text-[10px] font-bold tracking-wider uppercase transition-all cursor-pointer ${
                   agencyModel === "traditional" 
-                    ? "bg-white text-slate-900 shadow-sm" 
-                    : "text-slate-500 hover:text-slate-800"
+                    ? "bg-slate-800 text-white shadow-sm" 
+                    : "text-slate-400 hover:text-white"
                 }`}
               >
                 Traditional Agency
@@ -211,8 +211,8 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                 onClick={() => setAgencyModel("vprime")}
                 className={`px-4 py-2 rounded-lg font-display text-[10px] font-bold tracking-wider uppercase transition-all cursor-pointer ${
                   agencyModel === "vprime" 
-                    ? "bg-brand text-white shadow-md shadow-brand/10" 
-                    : "text-slate-500 hover:text-slate-800"
+                    ? "bg-brand text-slate-950 font-black shadow-md shadow-brand/10" 
+                    : "text-slate-400 hover:text-white"
                 }`}
               >
                 Vprime Workflow
@@ -232,24 +232,24 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                   transition={{ duration: 0.4 }}
                   className="grid grid-cols-1 md:grid-cols-3 gap-6"
                 >
-                  <div className="bg-white rounded-2xl border border-slate-100 p-6 space-y-3.5 shadow-xs">
-                    <div className="w-8 h-8 rounded-lg bg-rose-50 flex items-center justify-center text-rose-500 text-xs font-mono font-bold">01</div>
-                    <h4 className="font-display font-bold text-slate-900 text-sm">Boring Web Templates</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed">
+                  <div className="bg-slate-950/80 rounded-2xl border border-slate-800 p-6 space-y-3.5 shadow-sm">
+                    <div className="w-8 h-8 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-400 text-xs font-mono font-bold">01</div>
+                    <h4 className="font-display font-bold text-white text-sm">Boring Web Templates</h4>
+                    <p className="text-xs text-slate-400 leading-relaxed">
                       Slow visual builder templates heavy with unneeded plugins. Yields low mobile speeds (30-45 score) and constant layout shifts.
                     </p>
                   </div>
-                  <div className="bg-white rounded-2xl border border-slate-100 p-6 space-y-3.5 shadow-xs">
-                    <div className="w-8 h-8 rounded-lg bg-rose-50 flex items-center justify-center text-rose-500 text-xs font-mono font-bold">02</div>
-                    <h4 className="font-display font-bold text-slate-900 text-sm">Low-Cost Outsourcing</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed">
+                  <div className="bg-slate-950/80 rounded-2xl border border-slate-800 p-6 space-y-3.5 shadow-sm">
+                    <div className="w-8 h-8 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-400 text-xs font-mono font-bold">02</div>
+                    <h4 className="font-display font-bold text-white text-sm">Low-Cost Outsourcing</h4>
+                    <p className="text-xs text-slate-400 leading-relaxed">
                       Creative files are sent to cheap junior coders. Resulting sites lose all their initial design polish and look generic.
                     </p>
                   </div>
-                  <div className="bg-white rounded-2xl border border-slate-100 p-6 space-y-3.5 shadow-xs">
-                    <div className="w-8 h-8 rounded-lg bg-rose-50 flex items-center justify-center text-rose-500 text-xs font-mono font-bold">03</div>
-                    <h4 className="font-display font-bold text-slate-900 text-sm">Middleman Bloat</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed">
+                  <div className="bg-slate-950/80 rounded-2xl border border-slate-800 p-6 space-y-3.5 shadow-sm">
+                    <div className="w-8 h-8 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-400 text-xs font-mono font-bold">03</div>
+                    <h4 className="font-display font-bold text-white text-sm">Middleman Bloat</h4>
+                    <p className="text-xs text-slate-400 leading-relaxed">
                       Three layers of junior account managers who copy and paste emails. Requests take days and lead to painful miscommunications.
                     </p>
                   </div>
@@ -263,27 +263,27 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                   transition={{ duration: 0.4 }}
                   className="grid grid-cols-1 md:grid-cols-3 gap-6"
                 >
-                  <div className="bg-white rounded-2xl border border-slate-200/80 p-6 space-y-3.5 shadow-xs hover:border-brand/20 transition-all">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 text-xs font-mono font-bold">01</div>
-                    <h4 className="font-display font-bold text-slate-900 text-sm flex items-center space-x-1.5">
+                  <div className="bg-slate-950/80 rounded-2xl border border-emerald-500/30 p-6 space-y-3.5 shadow-sm hover:border-emerald-500/60 transition-all">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xs font-mono font-bold">01</div>
+                    <h4 className="font-display font-bold text-white text-sm flex items-center space-x-1.5">
                       <span>100% Bespoke Layouts</span>
                       <Sparkles size={12} className="text-brand" />
                     </h4>
-                    <p className="text-xs text-slate-500 leading-relaxed">
+                    <p className="text-xs text-slate-300 leading-relaxed">
                       Every single interface is engineered on clean, customized grids. Mobile speed scores reach an average of 95+ with instant loading.
                     </p>
                   </div>
-                  <div className="bg-white rounded-2xl border border-slate-200/80 p-6 space-y-3.5 shadow-xs hover:border-brand/20 transition-all">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 text-xs font-mono font-bold">02</div>
-                    <h4 className="font-display font-bold text-slate-900 text-sm">Obsessive Creative Code</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed">
+                  <div className="bg-slate-950/80 rounded-2xl border border-emerald-500/30 p-6 space-y-3.5 shadow-sm hover:border-emerald-500/60 transition-all">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xs font-mono font-bold">02</div>
+                    <h4 className="font-display font-bold text-white text-sm">Obsessive Creative Code</h4>
+                    <p className="text-xs text-slate-300 leading-relaxed">
                       No shortcuts. The design grids are translated directly into high-fidelity modular React code with absolute visual integrity.
                     </p>
                   </div>
-                  <div className="bg-white rounded-2xl border border-slate-200/80 p-6 space-y-3.5 shadow-xs hover:border-brand/20 transition-all">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 text-xs font-mono font-bold">03</div>
-                    <h4 className="font-display font-bold text-slate-900 text-sm">Direct Expert Access</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed">
+                  <div className="bg-slate-950/80 rounded-2xl border border-emerald-500/30 p-6 space-y-3.5 shadow-sm hover:border-emerald-500/60 transition-all">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xs font-mono font-bold">03</div>
+                    <h4 className="font-display font-bold text-white text-sm">Direct Expert Access</h4>
+                    <p className="text-xs text-slate-300 leading-relaxed">
                       You collaborate directly with our lead designer Victor Adebayo in shared Slack channels. Fast responses, zero delays.
                     </p>
                   </div>
@@ -297,7 +297,7 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Navigation Tabs */}
-          <div className="lg:col-span-3 flex flex-row lg:flex-col gap-2.5 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 scrollbar-none border-b lg:border-b-0 lg:border-r border-slate-100">
+          <div className="lg:col-span-3 flex flex-row lg:flex-col gap-2.5 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 scrollbar-none border-b lg:border-b-0 lg:border-r border-slate-800">
             {[
               { id: "story", label: "OUR CORE STORY", icon: <History size={15} /> },
               { id: "timeline", label: "DEVELOPMENT TIMELINE", icon: <Clock size={15} /> },
@@ -318,10 +318,10 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                       transition={{ type: "spring", stiffness: 120, damping: 20 }}
                     />
                   )}
-                  <span className={`relative z-10 transition-colors duration-300 ${isSelected ? "text-white" : "text-slate-400 group-hover:text-slate-700"}`}>
+                  <span className={`relative z-10 transition-colors duration-300 ${isSelected ? "text-slate-950 font-bold" : "text-slate-400 group-hover:text-white"}`}>
                     {tab.icon}
                   </span>
-                  <span className={`relative z-10 transition-colors duration-300 ${isSelected ? "text-white" : "text-slate-500 hover:text-slate-800"}`}>
+                  <span className={`relative z-10 transition-colors duration-300 ${isSelected ? "text-slate-950 font-bold" : "text-slate-400 hover:text-white"}`}>
                     {tab.label}
                   </span>
                 </button>
@@ -344,15 +344,15 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-6">
                       <div className="space-y-4">
-                        <h3 className="text-xl font-display font-bold text-slate-900 tracking-tight">Bridging the Creative Gap</h3>
-                        <p className="text-xs text-slate-500 leading-relaxed">
+                        <h3 className="text-xl font-display font-bold text-white tracking-tight">Bridging the Creative Gap</h3>
+                        <p className="text-xs text-slate-300 leading-relaxed">
                           Traditional web agencies construct beautiful screens that load slowly and suffer poor conversion pathways. Technical dev shops write solid security lines but generate sterile, generic layouts.
                         </p>
-                        <p className="text-xs text-slate-500 leading-relaxed">
+                        <p className="text-xs text-slate-300 leading-relaxed">
                           VprimeDigitalz was engineered to dissolve this compromise. Under Victor Adebayo's artistic direction, we assemble elite responsive designs and custom React environments to run flawlessly on modern edge CDNs.
                         </p>
                       </div>
-                      <div className="aspect-video rounded-2xl overflow-hidden border border-slate-100 shadow-sm relative group cursor-crosshair">
+                      <div className="aspect-video rounded-2xl overflow-hidden border border-slate-800 shadow-md relative group cursor-crosshair">
                         <img 
                           src="/src/assets/images/agency_collaboration_1784639816337.jpg" 
                           alt="Bespoke Design & Code at Vprime" 
@@ -360,7 +360,7 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                           referrerPolicy="no-referrer"
                         />
                         <div className="absolute inset-0 bg-brand/5 group-hover:bg-transparent transition-all duration-300" />
-                        <div className="absolute bottom-3 right-3 bg-slate-950/80 backdrop-blur-xs text-white font-mono text-[8px] px-2.5 py-1 rounded-md uppercase tracking-wider border border-white/10">
+                        <div className="absolute bottom-3 right-3 bg-slate-950/90 backdrop-blur-xs text-white font-mono text-[8px] px-2.5 py-1 rounded-md uppercase tracking-wider border border-white/10">
                           Interactive Preview
                         </div>
                       </div>
@@ -369,26 +369,26 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                     <div className="space-y-6">
                       <motion.div 
                         whileHover={{ y: -4 }}
-                        className="bg-slate-50 p-6 rounded-2xl border border-slate-100 space-y-3.5 transition-all"
+                        className="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 space-y-3.5 transition-all"
                       >
                         <div className="flex items-center space-x-3 text-brand">
                           <Target size={18} />
-                          <h4 className="font-display font-bold text-slate-900 text-sm">Our Mission</h4>
+                          <h4 className="font-display font-bold text-white text-sm">Our Mission</h4>
                         </div>
-                        <p className="text-xs text-slate-500 leading-relaxed">
+                        <p className="text-xs text-slate-300 leading-relaxed">
                           To empower fast-growing brands by executing stunning visual art, bulletproof customer portals, and optimized organic SEO architectures that actively boost revenue.
                         </p>
                       </motion.div>
                       
                       <motion.div 
                         whileHover={{ y: -4 }}
-                        className="bg-slate-50 p-6 rounded-2xl border border-slate-100 space-y-3.5 transition-all"
+                        className="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 space-y-3.5 transition-all"
                       >
                         <div className="flex items-center space-x-3 text-brand">
                           <Eye size={18} />
-                          <h4 className="font-display font-bold text-slate-900 text-sm">Our Vision</h4>
+                          <h4 className="font-display font-bold text-white text-sm">Our Vision</h4>
                         </div>
-                        <p className="text-xs text-slate-500 leading-relaxed">
+                        <p className="text-xs text-slate-300 leading-relaxed">
                           To establish the global gold standard for custom web design—proving that uncompromising artistic aesthetics and bleeding-edge system speeds can co-exist perfectly.
                         </p>
                       </motion.div>
@@ -404,7 +404,7 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.4 }}
-                  className="relative border-l border-slate-100 pl-6 space-y-8"
+                  className="relative border-l border-slate-800 pl-6 space-y-8"
                 >
                   {timelineEvents.map((evt, idx) => (
                     <motion.div 
@@ -415,12 +415,12 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                       transition={{ delay: idx * 0.08 }}
                     >
                       {/* Active line point */}
-                      <div className="absolute -left-[31px] top-1.5 w-2.5 h-2.5 rounded-full bg-white border-2 border-brand group-hover:bg-brand group-hover:scale-125 transition-all duration-300 shadow-[0_0_8px_rgba(0,55,253,0.3)]" />
+                      <div className="absolute -left-[31px] top-1.5 w-2.5 h-2.5 rounded-full bg-slate-950 border-2 border-brand group-hover:bg-brand group-hover:scale-125 transition-all duration-300 shadow-[0_0_8px_rgba(0,55,253,0.3)]" />
                       
-                      <div className="space-y-1 bg-slate-50/20 group-hover:bg-slate-50 border border-transparent group-hover:border-slate-100 p-4 rounded-xl transition-all">
+                      <div className="space-y-1 bg-slate-900/50 group-hover:bg-slate-900 border border-slate-800/80 p-4 rounded-xl transition-all">
                         <span className="font-mono text-[10px] font-bold text-brand">{evt.year}</span>
-                        <h4 className="font-display font-bold text-slate-900 text-sm">{evt.title}</h4>
-                        <p className="text-xs text-slate-500 max-w-2xl leading-relaxed">{evt.desc}</p>
+                        <h4 className="font-display font-bold text-white text-sm">{evt.title}</h4>
+                        <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">{evt.desc}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -440,21 +440,21 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                     <motion.div 
                       key={idx} 
                       whileHover={{ scale: 1.01, y: -4 }}
-                      className="bg-slate-50 border border-slate-100 p-6 rounded-2xl space-y-4 transition-all relative group cursor-default overflow-hidden"
+                      className="bg-slate-900/90 border border-slate-800 p-6 rounded-2xl space-y-4 transition-all relative group cursor-default overflow-hidden"
                     >
                       {/* Decorative slide glow */}
-                      <div className="absolute top-0 right-0 w-24 h-24 bg-brand/3 rounded-bl-full pointer-events-none group-hover:scale-150 transition-transform duration-500" />
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-brand/5 rounded-bl-full pointer-events-none group-hover:scale-150 transition-transform duration-500" />
                       
                       <div className="flex items-center justify-between">
                         <span className="text-[10px] font-mono font-bold text-brand uppercase">VALUE 0{idx + 1}</span>
-                        <span className="text-[9px] font-mono font-bold bg-brand/5 border border-brand/10 text-brand px-2 py-0.5 rounded">
+                        <span className="text-[9px] font-mono font-bold bg-brand/10 border border-brand/20 text-brand px-2 py-0.5 rounded">
                           {val.metric}
                         </span>
                       </div>
                       
                       <div className="space-y-1.5">
-                        <h4 className="font-display font-bold text-slate-900 text-sm tracking-tight">{val.title}</h4>
-                        <p className="text-xs text-slate-500 leading-relaxed font-normal">{val.desc}</p>
+                        <h4 className="font-display font-bold text-white text-sm tracking-tight">{val.title}</h4>
+                        <p className="text-xs text-slate-300 leading-relaxed font-normal">{val.desc}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -465,15 +465,15 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
         </div>
 
         {/* 4. The Masterpiece Spotlight - Victor Adebayo Column Showcase */}
-        <div className="space-y-14 pt-8 border-t border-slate-100">
+        <div className="space-y-14 pt-8 border-t border-slate-800">
           
           <div className="text-center max-w-2xl mx-auto space-y-3.5">
             <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase font-bold">THE CREATIVE LEAD</span>
-            <h3 className="text-2xl sm:text-4xl font-display font-black text-slate-900 tracking-tight">
+            <h3 className="text-2xl sm:text-4xl font-display font-black text-white tracking-tight">
               The Mastermind Behind the Design
             </h3>
             <div className="h-[2px] w-12 bg-brand mx-auto" />
-            <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
               We operate as a highly integrated premium boutique, giving your project direct access to elite creative vision with no organizational dilution.
             </p>
           </div>
@@ -515,17 +515,17 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                   
                   <div className="flex space-x-2">
                     {victor.social.linkedin && (
-                      <a href={victor.social.linkedin} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md text-white hover:bg-brand transition-all flex items-center justify-center">
+                      <a href={victor.social.linkedin} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md text-white hover:bg-brand hover:text-slate-950 transition-all flex items-center justify-center">
                         <Linkedin size={14} />
                       </a>
                     )}
                     {victor.social.twitter && (
-                      <a href={victor.social.twitter} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md text-white hover:bg-brand transition-all flex items-center justify-center">
+                      <a href={victor.social.twitter} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md text-white hover:bg-brand hover:text-slate-950 transition-all flex items-center justify-center">
                         <Twitter size={14} />
                       </a>
                     )}
                     {victor.social.github && (
-                      <a href={victor.social.github} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md text-white hover:bg-brand transition-all flex items-center justify-center">
+                      <a href={victor.social.github} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md text-white hover:bg-brand hover:text-slate-950 transition-all flex items-center justify-center">
                         <Github size={14} />
                       </a>
                     )}
@@ -534,19 +534,19 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
               </div>
 
               {/* DESIGN DIALS INTERACTIVE SIMULATOR CARD */}
-              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 space-y-5">
-                <div className="flex items-center justify-between border-b border-slate-200/50 pb-3">
+              <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-5">
+                <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                   <div className="flex items-center space-x-2 text-brand">
                     <Sliders size={15} />
                     <span className="text-[10px] font-mono font-black tracking-widest uppercase">VICTOR'S DESIGN DIALS</span>
                   </div>
-                  <span className="text-[9px] font-mono text-slate-400 bg-slate-200/50 px-2 py-0.5 rounded uppercase font-semibold">Interactive Widget</span>
+                  <span className="text-[9px] font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded uppercase font-semibold">Interactive Widget</span>
                 </div>
 
                 {/* Slider 1: Minimalist style */}
                 <div className="space-y-1.5">
                   <div className="flex justify-between items-center text-[10px] font-mono">
-                    <span className="text-slate-500 font-bold uppercase">Minimalist Aesthetic</span>
+                    <span className="text-slate-400 font-bold uppercase">Minimalist Aesthetic</span>
                     <span className="text-brand font-black">{minimalistStyle}%</span>
                   </div>
                   <input 
@@ -555,10 +555,10 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                     max="100" 
                     value={minimalistStyle}
                     onChange={(e) => setMinimalistStyle(Number(e.target.value))}
-                    className="w-full h-[3.5px] bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand"
+                    className="w-full h-[3.5px] bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand"
                   />
-                  <div className="bg-white p-2.5 rounded-lg border border-slate-100 space-y-0.5">
-                    <div className="text-[9px] font-mono font-bold text-slate-800">{getStyleDialText().title}</div>
+                  <div className="bg-slate-950 p-2.5 rounded-lg border border-slate-800 space-y-0.5">
+                    <div className="text-[9px] font-mono font-bold text-white">{getStyleDialText().title}</div>
                     <p className="text-[9px] text-slate-400 leading-tight">{getStyleDialText().desc}</p>
                   </div>
                 </div>
@@ -566,7 +566,7 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                 {/* Slider 2: Micro interactions */}
                 <div className="space-y-1.5">
                   <div className="flex justify-between items-center text-[10px] font-mono">
-                    <span className="text-slate-500 font-bold uppercase">Micro-Interaction Friction</span>
+                    <span className="text-slate-400 font-bold uppercase">Micro-Interaction Friction</span>
                     <span className="text-brand font-black">{microInteractions}%</span>
                   </div>
                   <input 
@@ -575,10 +575,10 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                     max="100" 
                     value={microInteractions}
                     onChange={(e) => setMicroInteractions(Number(e.target.value))}
-                    className="w-full h-[3.5px] bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand"
+                    className="w-full h-[3.5px] bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand"
                   />
-                  <div className="bg-white p-2.5 rounded-lg border border-slate-100 space-y-0.5">
-                    <div className="text-[9px] font-mono font-bold text-slate-800">{getMotionDialText().title}</div>
+                  <div className="bg-slate-950 p-2.5 rounded-lg border border-slate-800 space-y-0.5">
+                    <div className="text-[9px] font-mono font-bold text-white">{getMotionDialText().title}</div>
                     <p className="text-[9px] text-slate-400 leading-tight">{getMotionDialText().desc}</p>
                   </div>
                 </div>
@@ -586,7 +586,7 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                 {/* Slider 3: Page speed goal */}
                 <div className="space-y-1.5">
                   <div className="flex justify-between items-center text-[10px] font-mono">
-                    <span className="text-slate-500 font-bold uppercase">Page Speed Priority</span>
+                    <span className="text-slate-400 font-bold uppercase">Page Speed Priority</span>
                     <span className="text-brand font-black">{pageSpeed}%</span>
                   </div>
                   <input 
@@ -595,10 +595,10 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                     max="100" 
                     value={pageSpeed}
                     onChange={(e) => setPageSpeed(Number(e.target.value))}
-                    className="w-full h-[3.5px] bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand"
+                    className="w-full h-[3.5px] bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand"
                   />
-                  <div className="bg-white p-2.5 rounded-lg border border-slate-100 space-y-0.5">
-                    <div className="text-[9px] font-mono font-bold text-slate-800">{getSpeedDialText().title}</div>
+                  <div className="bg-slate-950 p-2.5 rounded-lg border border-slate-800 space-y-0.5">
+                    <div className="text-[9px] font-mono font-bold text-white">{getSpeedDialText().title}</div>
                     <p className="text-[9px] text-slate-400 leading-tight">{getSpeedDialText().desc}</p>
                   </div>
                 </div>
@@ -611,21 +611,21 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
               
               <div className="space-y-4">
                 <span className="text-[9px] font-mono text-brand font-black uppercase tracking-widest block">CREATIVE DIRECTOR & LEAD WEB DESIGNER</span>
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 border-b border-slate-100 pb-3">
-                  <h4 className="text-2xl sm:text-3xl font-display font-black text-slate-900 tracking-tight">Victor Adebayo</h4>
+                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 border-b border-slate-800 pb-3">
+                  <h4 className="text-2xl sm:text-3xl font-display font-black text-white tracking-tight">Victor Adebayo</h4>
                   <span className="font-serif italic text-slate-400 text-sm tracking-wide sm:text-base">Victor Adebayo</span>
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed font-normal">
+                <p className="text-xs text-slate-300 leading-relaxed font-normal">
                   {victor.bio}
                 </p>
-                <p className="text-xs text-slate-500 leading-relaxed font-normal">
+                <p className="text-xs text-slate-300 leading-relaxed font-normal">
                   "I believe web interfaces should behave like luxury timepieces: structurally immaculate, beautiful to witness, and engineered to function with effortless physical momentum. Every site I code and layout is treated as a signature masterpiece designed for organic dominance."
                 </p>
               </div>
 
               {/* INTERACTIVE SPECIALTY EXPLORER */}
-              <div className="bg-slate-50 border border-slate-100 rounded-3xl p-6 md:p-8 space-y-6 relative overflow-hidden">
-                <div className="flex items-center space-x-2 text-brand border-b border-slate-200/50 pb-3">
+              <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 md:p-8 space-y-6 relative overflow-hidden">
+                <div className="flex items-center space-x-2 text-brand border-b border-slate-800 pb-3">
                   <Terminal size={14} />
                   <span className="text-[10px] font-mono font-black tracking-widest uppercase">VICTOR'S DESIGN PLAYBOOK</span>
                 </div>
@@ -640,8 +640,8 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                         onClick={() => setSelectedSpecialty(spec)}
                         className={`px-3 py-1.5 rounded-lg font-mono text-[9px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
                           isSelected 
-                            ? "bg-brand text-white shadow-sm" 
-                            : "bg-white border border-slate-200/60 text-slate-500 hover:text-slate-800 hover:border-slate-300"
+                            ? "bg-brand text-slate-950 font-bold shadow-sm" 
+                            : "bg-slate-950 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700"
                         }`}
                       >
                         {playbookInsights[spec]?.icon || "✨"} {spec}
@@ -651,7 +651,7 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                 </div>
 
                 {/* Active Playbook Insight Display Panel with transition */}
-                <div className="bg-white rounded-2xl border border-slate-200/50 p-5 min-h-[140px] flex flex-col justify-between relative">
+                <div className="bg-slate-950 rounded-2xl border border-slate-800 p-5 min-h-[140px] flex flex-col justify-between relative">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={selectedSpecialty}
@@ -663,15 +663,15 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                     >
                       <div className="flex items-center space-x-2">
                         <span className="text-base">{playbookInsights[selectedSpecialty]?.icon}</span>
-                        <h5 className="font-display font-bold text-slate-900 text-xs uppercase tracking-wider">{selectedSpecialty} Standards</h5>
+                        <h5 className="font-display font-bold text-white text-xs uppercase tracking-wider">{selectedSpecialty} Standards</h5>
                       </div>
-                      <p className="text-xs text-slate-500 leading-relaxed">
+                      <p className="text-xs text-slate-300 leading-relaxed">
                         {playbookInsights[selectedSpecialty]?.summary}
                       </p>
                       
-                      <div className="pt-2 flex flex-wrap items-center gap-1.5 border-t border-slate-100 text-[9px] font-mono font-bold text-slate-400">
+                      <div className="pt-2 flex flex-wrap items-center gap-1.5 border-t border-slate-800 text-[9px] font-mono font-bold text-slate-400">
                         <span>UTILITIES:</span>
-                        <span className="text-brand bg-brand/5 px-2 py-0.5 rounded border border-brand/5">
+                        <span className="text-brand bg-brand/10 px-2 py-0.5 rounded border border-brand/20">
                           {playbookInsights[selectedSpecialty]?.tech}
                         </span>
                       </div>
@@ -688,7 +688,7 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                   { label: "Average Mobile", val: "98/100" },
                   { label: "Bespoke React", val: "100%" }
                 ].map((item, idx) => (
-                  <div key={idx} className="bg-slate-50 border border-slate-100 p-4 rounded-2xl text-center space-y-0.5 hover:border-brand/10 hover:bg-white transition-all">
+                  <div key={idx} className="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl text-center space-y-0.5 hover:border-brand/30 transition-all">
                     <div className="text-lg font-display font-black text-brand">{item.val}</div>
                     <span className="text-[9px] font-mono text-slate-400 font-bold block uppercase tracking-wider">{item.label}</span>
                   </div>
@@ -696,16 +696,16 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
               </div>
 
               {/* Call to action Trigger with signature */}
-              <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-6 bg-brand/[0.01] border border-brand/5 p-6 rounded-2xl">
+              <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-6 bg-slate-900/90 border border-slate-800 p-6 rounded-2xl">
                 <div className="space-y-1 text-center sm:text-left">
                   <span className="text-[10px] font-mono text-slate-400 font-bold block uppercase">DIRECT COLLABORATION</span>
-                  <h5 className="font-display font-bold text-slate-900 text-sm">Want Victor to review your current website design?</h5>
+                  <h5 className="font-display font-bold text-white text-sm">Want Victor to review your current website design?</h5>
                 </div>
                 
                 {onBookCall && (
                   <button
                     onClick={onBookCall}
-                    className="group bg-brand text-white font-mono text-[10px] font-bold uppercase tracking-widest px-5 py-3 rounded-xl hover:bg-brand/90 transition-all shadow-md shadow-brand/10 shrink-0 inline-flex items-center space-x-2 cursor-pointer"
+                    className="group bg-brand text-slate-950 font-mono text-[10px] font-black uppercase tracking-widest px-5 py-3 rounded-xl hover:bg-brand-dark transition-all shadow-md shadow-brand/10 shrink-0 inline-flex items-center space-x-2 cursor-pointer"
                   >
                     <span>Schedule Review</span>
                     <ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
@@ -730,10 +730,10 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 space-y-6"
           >
-            <h3 className="text-2xl font-display font-bold text-slate-900 tracking-tight">
+            <h3 className="text-2xl font-display font-bold text-white tracking-tight">
               Agency Milestones
             </h3>
-            <p className="text-xs text-slate-500 leading-relaxed font-normal">
+            <p className="text-xs text-slate-300 leading-relaxed font-normal">
               Our dedication to pristine custom design and server-side performance optimization delivers substantial direct-tracked revenue results for our high-end business clients.
             </p>
 
@@ -744,9 +744,9 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
                 { value: "$45M+", desc: "Tracked customer revenue" },
                 { value: "14", desc: "Design & speed nominations" }
               ].map((achievement, idx) => (
-                <div key={idx} className="bg-slate-50 border border-slate-100/50 p-5 rounded-xl space-y-1 hover:shadow-md transition-shadow">
+                <div key={idx} className="bg-slate-900/90 border border-slate-800 p-5 rounded-xl space-y-1 hover:border-slate-700 transition-all">
                   <div className="text-2xl font-display font-bold text-brand">{achievement.value}</div>
-                  <p className="text-[10px] font-medium text-slate-500 uppercase tracking-wide leading-tight">
+                  <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wide leading-tight">
                     {achievement.desc}
                   </p>
                 </div>
@@ -760,12 +760,12 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 bg-brand/[0.01] border border-brand/5 p-8 md:p-10 rounded-3xl space-y-6"
+            className="lg:col-span-7 bg-slate-900/90 border border-slate-800 p-8 md:p-10 rounded-3xl space-y-6"
           >
-            <h3 className="text-2xl font-display font-bold text-slate-900 tracking-tight">
+            <h3 className="text-2xl font-display font-bold text-white tracking-tight">
               Why Choose VprimeDigitalz?
             </h3>
-            <p className="text-xs text-slate-500 leading-relaxed font-normal">
+            <p className="text-xs text-slate-300 leading-relaxed font-normal">
               We completely eliminate standard visual page builders, bloated scripts, and communication barriers, letting you collaborate directly with your creative director.
             </p>
 
@@ -773,7 +773,7 @@ export default function AboutSection({ onBookCall }: AboutSectionProps) {
               {whyChooseUsPoints.map((point, idx) => (
                 <div key={idx} className="flex items-start space-x-3">
                   <CheckCircle size={15} className="text-brand shrink-0 mt-0.5" />
-                  <span className="text-xs font-medium text-slate-700 leading-snug">{point}</span>
+                  <span className="text-xs font-medium text-slate-200 leading-snug">{point}</span>
                 </div>
               ))}
             </div>

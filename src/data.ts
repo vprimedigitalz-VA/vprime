@@ -7,6 +7,7 @@ export const servicesData: Service[] = [
     description: "Bespoke digital design that elevates your brand and engages your target audience.",
     category: "Design",
     icon: "Layout",
+    image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=800&q=80",
     benefits: [
       "Custom visual design tailored precisely to your brand guidelines.",
       "Conversion-focused layouts optimized for user experience (UX).",
@@ -44,6 +45,7 @@ export const servicesData: Service[] = [
     description: "Stunning, robust, and clean Webflow sites designed for performance and simple content editing.",
     category: "Development",
     icon: "Layers",
+    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
     benefits: [
       "Blazing fast page load speeds out-of-the-box.",
       "Intuitive client editor allowing you to make updates instantly.",
@@ -81,6 +83,7 @@ export const servicesData: Service[] = [
     description: "Enterprise-grade, secure, and fully customized WordPress solutions built with Gutenberg and clean code.",
     category: "Development",
     icon: "Code",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
     benefits: [
       "Highly scalable architecture matching enterprise requirements.",
       "Infinite flexibility with custom plugins and headless integrations.",
@@ -118,6 +121,7 @@ export const servicesData: Service[] = [
     description: "High-converting, bespoke e-commerce experiences that turn visitors into loyal customers.",
     category: "Development",
     icon: "ShoppingBag",
+    image: "https://images.unsplash.com/photo-1556742049-0a67d268537c?auto=format&fit=crop&w=800&q=80",
     benefits: [
       "Sleek custom Liquid themes engineered for peak conversion rates.",
       "Optimized checkout funnels and integrated upsells.",
@@ -155,6 +159,7 @@ export const servicesData: Service[] = [
     description: "High-impact, single-page funnels designed for maximum conversions and campaign performance.",
     category: "Design",
     icon: "Zap",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
     benefits: [
       "Clear, persuasive visual storytelling that drives action.",
       "A/B testing-ready architecture with clean grid lines.",
@@ -188,6 +193,7 @@ export const servicesData: Service[] = [
     description: "Intuitively designed digital products that solve complex user problems and maximize user retention.",
     category: "Design",
     icon: "Smartphone",
+    image: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=800&q=80",
     benefits: [
       "User-tested flow charts that eliminate interaction friction.",
       "Elegant visual aesthetics that build emotional resonance.",
@@ -221,6 +227,7 @@ export const servicesData: Service[] = [
     description: "Data-driven search engine optimization to rank #1 on Google and capture high-intent organic traffic.",
     category: "Marketing",
     icon: "Search",
+    image: "https://images.unsplash.com/photo-1571721795195-a2ca2d3370a9?auto=format&fit=crop&w=800&q=80",
     benefits: [
       "Comprehensive keyword research targeting buying-intent keywords.",
       "Advanced on-page SEO targeting high search-engine scores.",
@@ -254,6 +261,7 @@ export const servicesData: Service[] = [
     description: "Paid social advertising campaigns on Meta, TikTok, LinkedIn, and Google to drive instant sales.",
     category: "Marketing",
     icon: "TrendingUp",
+    image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80",
     benefits: [
       "Highly persuasive, premium ad creative designs.",
       "Deep audience targeting based on custom conversion data.",
@@ -287,6 +295,7 @@ export const servicesData: Service[] = [
     description: "Organic community building, premium content curation, and brand aesthetic management across all channels.",
     category: "Marketing",
     icon: "Users",
+    image: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&w=800&q=80",
     benefits: [
       "Stunningly curated feed layouts that tell a cohesive brand story.",
       "Consistent, professional posting schedule.",
@@ -320,6 +329,7 @@ export const servicesData: Service[] = [
     description: "Crafting iconic visual identities, logos, voice guidelines, and corporate guidelines that stand the test of time.",
     category: "Design",
     icon: "Compass",
+    image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80",
     benefits: [
       "Instantly recognizable logo systems (primary, secondary, submarks).",
       "Unified typographic guidelines and a premium color palette.",
@@ -353,6 +363,7 @@ export const servicesData: Service[] = [
     description: "Comprehensive multi-channel growth consulting and data-backed digital architecture mapping.",
     category: "Strategy",
     icon: "Globe",
+    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
     benefits: [
       "Custom-built growth blueprints based on detailed competitor intelligence.",
       "Conversion funnel audits pinpointing leakages in your user flow.",
@@ -386,6 +397,7 @@ export const servicesData: Service[] = [
     description: "Worry-free maintenance, security patching, speed audits, and content updates for peace of mind.",
     category: "Strategy",
     icon: "ShieldCheck",
+    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
     benefits: [
       "Weekly automated plugin, theme, and security updates.",
       "Real-time uptime monitoring with immediate crash-handling.",
@@ -419,6 +431,7 @@ export const servicesData: Service[] = [
     description: "Scientific A/B testing and behavioral psychology to maximize sales from your existing web traffic.",
     category: "Strategy",
     icon: "Target",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
     benefits: [
       "Actionable heatmaps and scrollmaps identifying client friction.",
       "Hypothesis-backed A/B testing on headlines, CTA colors, and checkout layouts.",
@@ -931,9 +944,10 @@ export const testimonialsData: Testimonial[] = [
     role: "VP of Growth",
     company: "Starlight Tech Inc.",
     logo: "STARLIGHT",
-    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&h=150&q=80",
+    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&h=300&q=80",
     rating: 5,
-    quote: "VprimeDigitalz completely transformed our online presence. Our conversion rates went through the roof, and our clients constantly compliment our new website design."
+    metric: "+140% Conversion Increase",
+    quote: "VprimeDigitalz completely transformed our online presence. Our conversion rates went through the roof, page load dropped to 0.6 seconds, and enterprise clients constantly compliment our new website design."
   },
   {
     id: "test-2",
@@ -941,9 +955,10 @@ export const testimonialsData: Testimonial[] = [
     role: "Creative Director",
     company: "Apex Apparel Co.",
     logo: "APEX LUXURY",
-    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&h=150&q=80",
+    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&h=300&q=80",
     rating: 5,
-    quote: "The visual polish and code performance that VprimeDigitalz delivered is unparalleled. Our average order value (AOV) grew by 35% almost overnight."
+    metric: "+240% Sales Growth",
+    quote: "The visual polish and code performance that VprimeDigitalz delivered is unparalleled. Our average order value grew by 35% almost overnight, and mobile checkout friction completely vanished."
   },
   {
     id: "test-3",
@@ -951,9 +966,76 @@ export const testimonialsData: Testimonial[] = [
     role: "CTO",
     company: "Solis Power Systems",
     logo: "SOLIS POWER",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&h=150&q=80",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&h=300&q=80",
     rating: 5,
-    quote: "VprimeDigitalz combined technical understanding with world-class visual design. They solved our customer support crisis and built a dashboard our users adore."
+    metric: "-82% Support Tickets",
+    quote: "VprimeDigitalz combined technical understanding with world-class visual design. They solved our customer support crisis by simplifying complex solar telemetry into a dashboard our users adore."
+  },
+  {
+    id: "test-4",
+    name: "Dr. Amanda Ross",
+    role: "Medical Director",
+    company: "Novus Care Network",
+    logo: "NOVUS HEALTH",
+    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&h=300&q=80",
+    rating: 5,
+    metric: "+180% Patient Bookings",
+    quote: "Working with Victor and the team was effortless. They built a custom, 100% HIPAA-compliant WordPress platform that achieved perfect PageSpeed scores and expanded our online patient appointments by 180%."
+  },
+  {
+    id: "test-5",
+    name: "Dmitri Volk",
+    role: "Founder",
+    company: "Zeta Labs",
+    logo: "ZETA WALLET",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&h=300&q=80",
+    rating: 5,
+    metric: "50K+ Waitlist Signups",
+    quote: "VprimeDigitalz is in a class of their own. They took our complex cryptographic protocol and built an award-winning brand identity and web experience that netted over 50,000 signups in two weeks."
+  },
+  {
+    id: "test-6",
+    name: "Elena Petrova",
+    role: "Head of Marketing",
+    company: "Scribe.ai",
+    logo: "SCRIBE AI",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&h=300&q=80",
+    rating: 5,
+    metric: "+320% Organic Search",
+    quote: "VprimeDigitalz didn't just build us a website; they engineered an organic customer acquisition engine. Our Webflow CMS hub drives over 45,000 new organic signups every quarter."
+  },
+  {
+    id: "test-7",
+    name: "Rachel Thorne",
+    role: "Managing Director",
+    company: "Horizon Journeys",
+    logo: "HORIZON TRAVEL",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&h=300&q=80",
+    rating: 5,
+    metric: "+120% Completed Bookings",
+    quote: "The interactive itinerary builder VprimeDigitalz designed eliminated booking drops on mobile viewports. Our conversion flow is silky smooth and customer satisfaction ratings hit an all-time high."
+  },
+  {
+    id: "test-8",
+    name: "Harrison Forde",
+    role: "Chief Executive Officer",
+    company: "Nidus Workspaces",
+    logo: "NIDUS HUB",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&h=300&q=80",
+    rating: 5,
+    metric: "+250% Inbound Tour Leads",
+    quote: "Exceeded all our expectations! The custom desk lookup and real-time tour booking platform brought in a 250% surge in workspace inquiries, completely filling our multi-city office hubs."
+  },
+  {
+    id: "test-9",
+    name: "Sophia Lin",
+    role: "Founder & Lead",
+    company: "Aura Skincare",
+    logo: "AURA BOTANICALS",
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&h=300&q=80",
+    rating: 5,
+    metric: "+290% Revenue Growth",
+    quote: "Every detail from editorial typography to instant slide-out carts was executed flawlessly. Our brand now stands head-and-shoulders above luxury retail competitors."
   }
 ];
 
