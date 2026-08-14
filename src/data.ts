@@ -737,23 +737,6 @@ export const projectsData: Project[] = [
     duration: "5 Weeks"
   },
   {
-    id: "project-15",
-    title: "Nidus Co-Working Spaces Hub",
-    client: "Nidus LLC",
-    category: "WordPress & SEO Strategy",
-    description: "A conversion-optimized multi-location workspace finder with live booking schedules and interactive tour booking.",
-    image: "https://res.cloudinary.com/iuczvp68/image/upload/v1784648477/25332542_website_showcase_mock_up_03_zjpmqa.jpg",
-    results: ["+250% Tour Bookings", "Top Rank for Desk Search", "100% Responsive"],
-    problem: "Nidus was losing prospective renters because their desk booking system was confusing and slow to load on mobile.",
-    strategy: "We developed a clean, bespoke WordPress theme with custom post directories, map integration, and automated email sequences.",
-    designProcess: "Designed using a chic warm slate aesthetic, spacious padding, and high-contrast call-to-action cards.",
-    developmentProcess: "Used optimized PHP loops and API connections, ensuring fast responses even during heavy database queries.",
-    solution: "A beautiful, highly engaging workspace lookup tool that guides renters from search to desk booking seamlessly.",
-    resultsDetail: "Tour bookings increased by 250% within 45 days, filling active desks across all primary coordinates.",
-    technologies: ["WordPress", "PHP", "Tailwind CSS", "ACF Pro"],
-    duration: "6 Weeks"
-  },
-  {
     id: "project-16",
     title: "Beacon Financial Analytics App",
     client: "Beacon Advisory",

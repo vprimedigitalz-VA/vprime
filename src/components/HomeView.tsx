@@ -376,7 +376,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
       </section>
 
       {/* 5. Client Testimonials Slideshow */}
-      <section id="home-testimonials" className="py-24 bg-white relative overflow-hidden">
+      <section id="home-testimonials" className="py-24 bg-[#090E12] border-y border-slate-800/80 relative overflow-hidden text-white">
         {/* Background decorations */}
         <div className="absolute top-1/2 left-0 w-72 h-72 bg-brand/5 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
@@ -396,7 +396,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
                 <Sparkles size={12} />
                 <span>CLIENT REVIEWS ({testimonialsData.length} VERIFIED PARTNERS)</span>
               </div>
-              <h2 className="text-2xl sm:text-4xl font-display font-black text-slate-900 tracking-tight leading-none">
+              <h2 className="text-2xl sm:text-4xl font-display font-black text-white tracking-tight leading-none">
                 Trusted by founders & leaders.
               </h2>
             </div>
@@ -405,7 +405,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
             <div className="flex items-center space-x-3 self-start md:self-auto">
               <button
                 onClick={() => setIsAutoPlay(!isAutoPlay)}
-                className="inline-flex items-center space-x-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-3.5 py-1.5 rounded-full text-[11px] font-mono font-bold text-slate-600 transition-colors cursor-pointer"
+                className="inline-flex items-center space-x-2 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 px-3.5 py-1.5 rounded-full text-[11px] font-mono font-bold text-slate-300 transition-colors cursor-pointer"
                 title={isAutoPlay ? "Pause automatic slideshow" : "Play automatic slideshow"}
               >
                 {isAutoPlay ? (
@@ -421,7 +421,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
                 )}
               </button>
 
-              <div className="text-[11px] font-mono font-bold text-slate-400 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-full">
+              <div className="text-[11px] font-mono font-bold text-slate-400 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-full">
                 0{activeTestimonialIdx + 1} / 0{testimonialsData.length}
               </div>
             </div>
@@ -429,7 +429,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
 
           {/* Main Slideshow Container Box */}
           <div 
-            className="bg-slate-50/80 border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden backdrop-blur-xs"
+            className="bg-[#0e131b] border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-xs"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -448,7 +448,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
               
               {/* Left Column: Client Avatar Card with Metric Highlight */}
               <div className="lg:col-span-4 flex justify-center">
-                <div className="relative w-full max-w-[280px] aspect-square rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 shadow-xl group select-none">
+                <div className="relative w-full max-w-[280px] aspect-square rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-xl group select-none">
                   
                   {/* Avatar Image Transition */}
                   <AnimatePresence mode="wait">
@@ -489,7 +489,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
               <div className="lg:col-span-8 space-y-6 flex flex-col justify-between">
                 
                 {/* Header: Star Rating + Key Result Metric Badge */}
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 pb-4">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/90 pb-4">
                   <div className="flex space-x-1 text-amber-400">
                     {[...Array(activeTestimonial.rating)].map((_, i) => (
                       <Star key={i} size={16} fill="currentColor" />
@@ -497,8 +497,8 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
                   </div>
 
                   {activeTestimonial.metric && (
-                    <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-full font-bold uppercase tracking-wider flex items-center space-x-1">
-                      <TrendingUp size={12} className="text-emerald-600" />
+                    <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-3 py-1 rounded-full font-bold uppercase tracking-wider flex items-center space-x-1">
+                      <TrendingUp size={12} className="text-emerald-400" />
                       <span>{activeTestimonial.metric}</span>
                     </span>
                   )}
@@ -506,7 +506,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
 
                 {/* Animated Testimonial Quote */}
                 <div className="min-h-[140px] relative">
-                  <Quote size={48} className="text-brand/10 absolute -top-4 -left-3 pointer-events-none" />
+                  <Quote size={48} className="text-brand/15 absolute -top-4 -left-3 pointer-events-none" />
                   
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -517,15 +517,15 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
                       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                       className="space-y-4 relative z-10"
                     >
-                      <p className="text-slate-800 text-lg sm:text-xl font-medium italic leading-relaxed">
+                      <p className="text-slate-100 text-lg sm:text-xl font-medium italic leading-relaxed">
                         "{activeTestimonial.quote}"
                       </p>
                       
                       <div>
-                        <h4 className="text-slate-900 font-display font-extrabold text-base sm:text-lg leading-none">
+                        <h4 className="text-white font-display font-extrabold text-base sm:text-lg leading-none">
                           {activeTestimonial.name}
                         </h4>
-                        <p className="text-[11px] font-mono text-slate-500 uppercase font-semibold mt-1.5 tracking-wider">
+                        <p className="text-[11px] font-mono text-slate-400 uppercase font-semibold mt-1.5 tracking-wider">
                           {activeTestimonial.role} &mdash; <span className="text-brand font-bold">{activeTestimonial.company}</span>
                         </p>
                       </div>
@@ -534,7 +534,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
                 </div>
 
                 {/* Controls Footer: Slide Indicators & Navigation Arrows */}
-                <div className="pt-6 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="pt-6 border-t border-slate-800/90 flex flex-col sm:flex-row items-center justify-between gap-4">
                   
                   {/* Slide Pill Dots Indicator */}
                   <div className="flex items-center space-x-2">
@@ -547,7 +547,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
                           className={`transition-all duration-300 cursor-pointer ${
                             isCurrent 
                               ? "w-8 h-2.5 bg-brand rounded-full shadow-xs" 
-                              : "w-2.5 h-2.5 bg-slate-300 hover:bg-slate-400 rounded-full"
+                              : "w-2.5 h-2.5 bg-slate-700 hover:bg-slate-600 rounded-full"
                           }`}
                           aria-label={`Go to slide ${index + 1}`}
                           title={`Testimonial ${index + 1} of ${testimonialsData.length}`}
@@ -560,7 +560,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
                   <div className="flex items-center space-x-2.5">
                     <button
                       onClick={handlePrevTestimonial}
-                      className="w-10 h-10 border border-slate-300 hover:border-brand text-slate-700 hover:text-white bg-white hover:bg-brand rounded-full flex items-center justify-center transition-all cursor-pointer shadow-xs hover:scale-105 active:scale-95"
+                      className="w-10 h-10 border border-slate-700 hover:border-brand text-slate-200 hover:text-slate-950 bg-slate-800/90 hover:bg-brand rounded-full flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
                       aria-label="Previous Testimonial"
                       title="Previous Testimonial"
                     >
@@ -568,7 +568,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
                     </button>
                     <button
                       onClick={handleNextTestimonial}
-                      className="w-10 h-10 border border-slate-300 hover:border-brand text-slate-700 hover:text-white bg-white hover:bg-brand rounded-full flex items-center justify-center transition-all cursor-pointer shadow-xs hover:scale-105 active:scale-95"
+                      className="w-10 h-10 border border-slate-700 hover:border-brand text-slate-200 hover:text-slate-950 bg-slate-800/90 hover:bg-brand rounded-full flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
                       aria-label="Next Testimonial"
                       title="Next Testimonial"
                     >
@@ -585,7 +585,7 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
           </div>
 
           {/* Quick Avatar Select Strip - All 9 Client Thumbnails */}
-          <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 flex flex-wrap items-center justify-center sm:justify-between gap-3">
+          <div className="bg-[#0e131b] border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-center sm:justify-between gap-3">
             <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest shrink-0">
               JUMP TO CLIENT ({testimonialsData.length}):
             </span>
@@ -598,8 +598,8 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
                     onClick={() => setActiveTestimonialIdx(index)}
                     className={`group relative w-10 h-10 rounded-full overflow-hidden border-2 transition-all cursor-pointer ${
                       isSelected 
-                        ? "border-brand scale-110 shadow-md ring-2 ring-brand/30" 
-                        : "border-slate-200 hover:border-slate-400 opacity-60 hover:opacity-100"
+                        ? "border-brand scale-110 shadow-md ring-2 ring-brand/40" 
+                        : "border-slate-800 hover:border-slate-600 opacity-60 hover:opacity-100"
                     }`}
                     title={`${test.name} — ${test.company}`}
                   >
