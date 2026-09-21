@@ -6,10 +6,61 @@ interface FooterProps {
   onBookCall: () => void;
 }
 
+const DARK_LOGO_URL = "https://res.cloudinary.com/iuczvp68/image/upload/e_trim/v1790002396/vprime-full-white_x2wmvq.png";
+const LIGHT_LOGO_URL = "https://res.cloudinary.com/iuczvp68/image/upload/e_make_transparent,e_trim,f_png/v1790002396/WhatsApp_Image_2026-09-21_at_15.23.36_jdwyg6.jpg";
+const DARK_LOGO_FALLBACK = "/vprime-logo-trimmed.png";
+const LIGHT_LOGO_FALLBACK = "/vprime-light-logo-transparent.png";
+
 export default function Footer({ onPageChange, onBookCall }: FooterProps) {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light">(() => {
+    if (typeof window !== "undefined") {
+      if (document.documentElement.classList.contains("light") || document.documentElement.getAttribute("data-theme") === "light") {
+        return "light";
+      }
+      const saved = localStorage.getItem("vprime_theme");
+      if (saved === "light" || saved === "dark") return saved;
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+        return "light";
+      }
+    }
+    return "dark";
+  });
+
+  useEffect(() => {
+    const updateTheme = () => {
+      const isLight =
+        document.documentElement.classList.contains("light") ||
+        document.documentElement.getAttribute("data-theme") === "light";
+      setTheme(isLight ? "light" : "dark");
+    };
+
+    updateTheme();
+
+    const observer = new MutationObserver(() => {
+      updateTheme();
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class", "data-theme"],
+    });
+
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === "vprime_theme" && (e.newValue === "light" || e.newValue === "dark")) {
+        setTheme(e.newValue);
+      }
+    };
+
+    window.addEventListener("storage", handleStorage);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("storage", handleStorage);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -170,14 +221,41 @@ export default function Footer({ onPageChange, onBookCall }: FooterProps) {
           
           {/* Brand Intro info & Company Story & Mission with Vertical Social Media Column */}
           <div className="lg:col-span-5 space-y-5">
-            <div className="flex items-center space-x-2.5">
-              <div className="w-8 h-8 flex items-center justify-center bg-brand rounded-lg font-display font-extrabold text-slate-950 text-lg">
-                V
-              </div>
-              <span className="font-display font-bold text-lg tracking-tight text-white">
-                Vprime<span className="text-brand">Digitalz</span>
-              </span>
-            </div>
+            <a
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                onPageChange("home");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="inline-flex items-center text-left cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-lg py-1"
+              aria-label="VprimeDigitalz Home"
+            >
+              <img
+                src={theme === "light" ? LIGHT_LOGO_URL : DARK_LOGO_URL}
+                alt="VprimeDigitalz"
+                className={`h-auto object-contain transition-transform duration-300 group-hover:scale-105 select-none ${
+                  theme === "light" ? "mix-blend-multiply" : ""
+                }`}
+                style={{
+                  width: "clamp(165px, 20vw, 220px)",
+                  maxHeight: "32px",
+                }}
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (theme === "light") {
+                    if (!target.src.includes("vprime-light-logo-transparent.png")) {
+                      target.src = LIGHT_LOGO_FALLBACK;
+                    }
+                  } else {
+                    if (!target.src.includes("vprime-logo-trimmed.png")) {
+                      target.src = DARK_LOGO_FALLBACK;
+                    }
+                  }
+                }}
+                loading="lazy"
+              />
+            </a>
 
             {/* Company Story & Mission Description */}
             <div className="space-y-1.5">

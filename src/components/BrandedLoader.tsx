@@ -219,10 +219,12 @@ export const PageLoaderOverlay: React.FC<{ message?: string; durationMs?: number
             className="absolute -inset-4 rounded-3xl bg-brand/20 blur-xl pointer-events-none"
           />
 
-          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-slate-950 border border-brand/40 flex items-center justify-center shadow-[0_0_35px_rgba(6,207,156,0.25)] relative z-10">
-            <span className="font-display font-black text-3xl sm:text-4xl tracking-tighter text-brand">
-              VP
-            </span>
+          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-slate-950 border border-brand/40 flex items-center justify-center shadow-[0_0_35px_rgba(6,207,156,0.25)] relative z-10 p-3 overflow-hidden">
+            <img
+              src="https://res.cloudinary.com/iuczvp68/image/upload/v1790002397/vprime-digitalz-logo-01_otkfc1.png"
+              alt="VprimeDigitalz Brand Mark"
+              className="w-full h-full object-contain"
+            />
           </div>
 
           <motion.div

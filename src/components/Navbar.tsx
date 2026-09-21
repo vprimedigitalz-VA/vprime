@@ -66,6 +66,11 @@ interface NavbarProps {
   onBookCall: () => void;
 }
 
+const DARK_LOGO_URL = "https://res.cloudinary.com/iuczvp68/image/upload/e_trim/v1790002396/vprime-full-white_x2wmvq.png";
+const LIGHT_LOGO_URL = "https://res.cloudinary.com/iuczvp68/image/upload/e_make_transparent,e_trim,f_png/v1790002396/WhatsApp_Image_2026-09-21_at_15.23.36_jdwyg6.jpg";
+const DARK_LOGO_FALLBACK = "/vprime-logo-trimmed.png";
+const LIGHT_LOGO_FALLBACK = "/vprime-light-logo-transparent.png";
+
 export default function Navbar({ currentPage, onPageChange, onSelectService, onBookCall }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -75,6 +80,9 @@ export default function Navbar({ currentPage, onPageChange, onSelectService, onB
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("vprime_theme");
       if (saved === "light" || saved === "dark") return saved;
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+        return "light";
+      }
     }
     return "dark";
   });
@@ -86,12 +94,32 @@ export default function Navbar({ currentPage, onPageChange, onSelectService, onB
     if (theme === "light") {
       root.classList.add("light");
       root.classList.remove("dark");
+      root.setAttribute("data-theme", "light");
     } else {
       root.classList.add("dark");
       root.classList.remove("light");
+      root.setAttribute("data-theme", "dark");
     }
     localStorage.setItem("vprime_theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    // Preload both theme logo assets for instant zero-flicker switching
+    const darkImg = new Image();
+    darkImg.src = DARK_LOGO_URL;
+    const lightImg = new Image();
+    lightImg.src = LIGHT_LOGO_URL;
+
+    // Listen for system color-scheme changes if user hasn't explicitly set preference
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
+    const handleSystemThemeChange = (e: MediaQueryListEvent) => {
+      if (!localStorage.getItem("vprime_theme")) {
+        setTheme(e.matches ? "light" : "dark");
+      }
+    };
+    mediaQuery.addEventListener("change", handleSystemThemeChange);
+    return () => mediaQuery.removeEventListener("change", handleSystemThemeChange);
+  }, []);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
@@ -150,19 +178,43 @@ export default function Navbar({ currentPage, onPageChange, onSelectService, onB
           }`}
         >
           {/* Logo Brand */}
-          <button
+          <a
+            href="/"
             id="nav-logo"
-            onClick={() => handleNavClick("home")}
-            className="flex items-center space-x-2.5 text-left cursor-pointer group"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("home");
+            }}
+            className="flex items-center text-left cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-full py-0.5 shrink-0"
+            aria-label="VprimeDigitalz Home"
           >
-            <span
-              className={`font-display font-bold text-base md:text-lg tracking-tight transition-colors group-hover:text-brand ${
-                theme === "light" ? "text-slate-900" : "text-white"
-              }`}
-            >
-              Vprime<span className="text-brand">Digitalz</span>
-            </span>
-          </button>
+            <div className="flex items-center py-0.5 transition-all duration-200">
+              <img
+                src={theme === "light" ? LIGHT_LOGO_URL : DARK_LOGO_URL}
+                alt="VprimeDigitalz"
+                className={`h-auto object-contain transition-transform duration-300 group-hover:scale-105 shrink-0 select-none ${
+                  theme === "light" ? "mix-blend-multiply" : ""
+                }`}
+                style={{
+                  width: "clamp(152px, 18vw, 226px)",
+                  maxHeight: "29px",
+                }}
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (theme === "light") {
+                    if (!target.src.includes("vprime-light-logo-transparent.png")) {
+                      target.src = LIGHT_LOGO_FALLBACK;
+                    }
+                  } else {
+                    if (!target.src.includes("vprime-logo-trimmed.png")) {
+                      target.src = DARK_LOGO_FALLBACK;
+                    }
+                  }
+                }}
+                loading="eager"
+              />
+            </div>
+          </a>
 
           {/* Desktop Navigation - Clean Simple Text Links */}
           <nav id="desktop-nav" className="hidden md:flex items-center space-x-6 lg:space-x-8">

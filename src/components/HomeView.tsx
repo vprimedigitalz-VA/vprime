@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import brandWorkspaceImg from "../assets/images/brand_workspace_1784638515102.jpg";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   ArrowRight, 
@@ -10,19 +9,18 @@ import {
   Code, 
   Layout, 
   TrendingUp, 
-  Calendar,
   ChevronLeft,
   ChevronRight,
+  Quote,
+  Zap,
+  Target,
+  Layers,
   ShieldCheck,
-  Pause,
-  Play,
-  Quote
+  Award
 } from "lucide-react";
-import Hero from "./Hero";
-import PricingSection from "./PricingSection";
-import BlogSection from "./BlogSection";
-import FaqSection from "./FaqSection";
-import { servicesData, projectsData, testimonialsData } from "../data";
+import Hero, { clientLogos } from "./Hero";
+import brandWorkspaceImg from "../assets/images/brand_workspace_1784638515102.jpg";
+import { projectsData, testimonialsData } from "../data";
 
 interface HomeViewProps {
   onPageChange: (page: string) => void;
@@ -32,12 +30,12 @@ interface HomeViewProps {
 
 export default function HomeView({ onPageChange, onSelectService, onBookCall }: HomeViewProps) {
   const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
-  const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
 
-  const featuredServices = servicesData.slice(0, 3); // Website Design, Webflow Dev, WordPress Dev
-  const featuredProjects = projectsData.slice(0, 3); // Starlight, Apex, Solis
+  // Featured 4 strongest projects for the homepage
+  const featuredProjects = projectsData.slice(0, 4);
   
+  // Testimonials list
   const activeTestimonial = testimonialsData[activeTestimonialIdx];
 
   const handleNextTestimonial = () => {
@@ -48,162 +46,254 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
     setActiveTestimonialIdx((prev) => (prev - 1 + testimonialsData.length) % testimonialsData.length);
   };
 
-  // Slideshow Auto-play Timer
+  // Slideshow Auto-play Timer (paused on hover)
   useEffect(() => {
-    if (!isAutoPlay || isHovered) return;
-    
+    if (isHovered) return;
     const interval = setInterval(() => {
       setActiveTestimonialIdx((prev) => (prev + 1) % testimonialsData.length);
-    }, 6000);
-
+    }, 6500);
     return () => clearInterval(interval);
-  }, [isAutoPlay, isHovered]);
+  }, [isHovered]);
 
-  const technologies = [
-    { name: "Figma", category: "Design" },
-    { name: "React", category: "Development" },
-    { name: "TypeScript", category: "Development" },
-    { name: "Webflow", category: "Development" },
-    { name: "WordPress", category: "Development" },
-    { name: "Shopify Liquid", category: "Development" },
-    { name: "Tailwind CSS", category: "Styling" },
-    { name: "Motion (Framer)", category: "Animation" },
-    { name: "Ahrefs", category: "SEO" },
-    { name: "SEMrush", category: "SEO" },
-    { name: "Cloudflare", category: "Security" },
-    { name: "Google Analytics 4", category: "Tracking" }
+  // The 4 Core Growth Services requested by user
+  const coreServices = [
+    {
+      id: "webflow",
+      slug: "webflow-development",
+      title: "Webflow Development",
+      category: "CMS & Development",
+      icon: <Layers size={22} className="text-brand" />,
+      badge: "Webflow Expert",
+      description: "Custom-coded, lightning-fast Webflow websites with clean Client-First architecture, dynamic CMS collections, and zero plugin bloat.",
+      highlights: [
+        "Client-First CSS architecture",
+        "Sub-0.8s global load speeds",
+        "Empowering client CMS editor",
+        "Clean, semantic SEO markup"
+      ],
+      actionText: "Explore Webflow"
+    },
+    {
+      id: "framer",
+      slug: "website-design",
+      title: "Framer Development",
+      category: "Interactive & Motion",
+      icon: <Layout size={22} className="text-brand" />,
+      badge: "Framer Certified",
+      description: "Immersive, motion-driven websites with interactive micro-animations, silky responsive grids, and rapid deployment engineered for modern brands.",
+      highlights: [
+        "Fluid motion & micro-interactions",
+        "Rapid go-to-market speed",
+        "High-converting UX hierarchy",
+        "Pixel-perfect responsive design"
+      ],
+      actionText: "Explore Framer"
+    },
+    {
+      id: "kajabi",
+      slug: "digital-strategy",
+      title: "Kajabi Platforms & Funnels",
+      category: "Funnels & Memberships",
+      icon: <Zap size={22} className="text-brand" />,
+      badge: "Kajabi Specialist",
+      description: "High-converting sales funnels, course platforms, membership portals, and automated digital product infrastructure designed to maximize revenue.",
+      highlights: [
+        "Optimized checkout & upsell paths",
+        "Custom course & membership UI",
+        "Automated email marketing flows",
+        "Built-in affiliate & analytics setup"
+      ],
+      actionText: "Explore Kajabi"
+    },
+    {
+      id: "cro-redesign",
+      slug: "conversion-rate-optimization",
+      title: "Website Redesign & CRO",
+      category: "Growth & Conversion",
+      icon: <Target size={22} className="text-brand" />,
+      badge: "Conversion Focused",
+      description: "Transforming dated, underperforming websites into modern, high-converting growth engines engineered for customer acquisition and trust.",
+      highlights: [
+        "Data-driven UX & friction audit",
+        "95+ Google Core Web Vitals score",
+        "Bespoke Figma design system",
+        "A/B tested conversion funnels"
+      ],
+      actionText: "Explore Redesign"
+    }
+  ];
+
+  // 4 Simple Process Steps
+  const processSteps = [
+    {
+      step: "01",
+      title: "Discovery & Strategy",
+      desc: "Deep analysis of your market, target audience, conversion goals, and technical requirements to create a high-impact roadmap."
+    },
+    {
+      step: "02",
+      title: "UI/UX & Prototyping",
+      desc: "Crafting bespoke, high-converting Figma interfaces, typography scales, design systems, and clickable interactive prototypes."
+    },
+    {
+      step: "03",
+      title: "Development & Speed",
+      desc: "Engineering clean, semantic code in Webflow, Framer, or custom React with rigorous responsiveness, security, and speed tests."
+    },
+    {
+      step: "04",
+      title: "Launch & Optimization",
+      desc: "Flawless deployment with DNS routing, schema structured data, analytics setup, and step-by-step video training for your team."
+    }
   ];
 
   return (
     <div id="home-view-container" className="space-y-0">
       
-      {/* 1. Immersive Hero */}
+      {/* 1. HERO SECTION */}
       <Hero onPageChange={onPageChange} onBookCall={onBookCall} />
 
-      {/* 2. Featured Services Preview Grid */}
-      <section id="home-services-preview" className="py-20 bg-[#0f121d] border-y border-slate-800/80 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
+      {/* 2. QUICK TRUST / RESULTS SECTION */}
+      <section id="home-quick-trust" className="py-14 md:py-18 bg-[#0c1017] border-y border-slate-800/80 text-white relative overflow-hidden">
+        {/* Subtle decorative background glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-28 bg-brand/10 blur-[100px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 space-y-12">
+          
+          {/* Consolidated 4 Primary Proof Metrics */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 text-center md:text-left divide-y md:divide-y-0 md:divide-x divide-slate-800/80">
+            {[
+              { value: "120+", label: "BRANDS SCALED", sub: "Global clients across tech & commerce" },
+              { value: "98%", label: "CLIENT RETENTION", sub: "Long-term growth partners" },
+              { value: "$45M+", label: "REVENUE GENERATED", sub: "Driven by conversion-first layouts" },
+              { value: "4.9★", label: "VERIFIED CLIENT RATING", sub: "Top rated on Clutch & Trustpilot" }
+            ].map((stat, idx) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className={`space-y-1.5 ${idx > 0 ? "pt-6 md:pt-0 md:pl-8" : ""}`}
+              >
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white tracking-tight">
+                  <span className="text-gradient-brand">{stat.value}</span>
+                </div>
+                <div className="text-[11px] font-mono tracking-widest text-slate-300 font-bold uppercase">
+                  {stat.label}
+                </div>
+                <p className="text-[11px] text-slate-400 font-normal">
+                  {stat.sub}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Trusted Brand Platforms Marquee Ticker */}
+          <div className="border-t border-slate-800/80 pt-10">
+            <div className="text-center text-[10px] font-mono tracking-widest text-slate-400 uppercase font-semibold mb-6">
+              TRUSTED PLATFORMS & CLIENT ECOSYSTEMS
+            </div>
+
+            <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_15%,white_85%,transparent)]">
+              <div className="flex w-[200%] gap-12 items-center animate-marquee">
+                {clientLogos.concat(clientLogos).map((logo, i) => (
+                  <div key={i} className="flex-1 flex items-center justify-center opacity-70 hover:opacity-100 transition-all duration-300 py-2 shrink-0 px-4">
+                    {logo.svg}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 3. CORE SERVICES SECTION */}
+      <section id="home-services" className="py-20 md:py-28 bg-[#0f121d] border-b border-slate-800/80 overflow-hidden text-white">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-12">
           
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12"
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6"
           >
-            <div className="space-y-3.5">
-              <span className="text-[10px] font-mono tracking-widest text-brand uppercase font-bold bg-brand/10 px-3.5 py-1.5 rounded-full border border-brand/20 shadow-xs">
-                Featured Capabilities
-              </span>
+            <div className="space-y-3">
+              <div className="inline-flex items-center space-x-2 bg-brand/10 border border-brand/20 px-3.5 py-1.5 rounded-full text-brand text-[10px] font-mono font-bold uppercase tracking-widest">
+                <Sparkles size={12} />
+                <span>Core Growth Capabilities</span>
+              </div>
               <h2 className="text-2xl sm:text-4xl font-display font-black text-white tracking-tight">
-                Our core growth services.
+                Specialized platforms. Measurable impact.
               </h2>
+              <p className="text-slate-300 text-xs sm:text-sm max-w-xl leading-relaxed">
+                We focus on the modern platforms that produce the highest ROI, fastest load speeds, and cleanest client autonomy.
+              </p>
             </div>
+            
             <button
               onClick={() => onPageChange("services")}
-              className="group text-xs font-mono tracking-wider text-slate-300 hover:text-brand font-bold uppercase mt-4 md:mt-0 cursor-pointer flex items-center space-x-1"
+              className="group text-xs font-mono tracking-wider text-slate-300 hover:text-brand font-bold uppercase cursor-pointer flex items-center space-x-2 shrink-0"
             >
               <span>Explore All 13 Capabilities</span>
-              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1 text-brand" />
             </button>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredServices.map((service, idx) => (
+          {/* 4 Core Services Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            {coreServices.map((service, idx) => (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.7, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                whileHover="hover"
-                variants={{
-                  hover: { y: -8, scale: 1.015 }
-                }}
-                className="group relative bg-slate-900/90 rounded-2xl border border-slate-800 shadow-xl hover:shadow-2xl hover:shadow-brand/20 hover:border-brand/40 transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer"
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                whileHover={{ y: -6 }}
                 onClick={() => onSelectService(service.slug)}
+                className="group relative bg-slate-900/90 rounded-2xl border border-slate-800 p-8 shadow-xl hover:shadow-2xl hover:shadow-brand/15 hover:border-brand/40 transition-all duration-300 flex flex-col justify-between cursor-pointer overflow-hidden"
               >
-                {/* Motion Accent Bar on Hover */}
-                <motion.div
-                  variants={{
-                    hover: { scaleX: 1, opacity: 1 },
-                  }}
-                  initial={{ scaleX: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand via-emerald-400 to-brand origin-left z-20"
-                />
+                {/* Top Accent Line on Hover */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand via-emerald-400 to-brand scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
 
-                {/* Card Top Header Image Container */}
-                <div className="relative h-48 w-full overflow-hidden bg-slate-950 border-b border-slate-800">
-                  {service.image ? (
-                    <img 
-                      src={service.image} 
-                      alt={service.title} 
-                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
-                      referrerPolicy="no-referrer"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 flex items-center justify-center">
-                      <Sparkles size={32} className="text-brand/50" />
+                <div className="space-y-5">
+                  <div className="flex items-center justify-between">
+                    <div className="w-12 h-12 rounded-xl bg-slate-800/90 border border-slate-700/80 flex items-center justify-center group-hover:bg-brand group-hover:text-slate-950 transition-colors">
+                      {service.icon}
                     </div>
-                  )}
-                  
-                  {/* Dark gradient overlay for text contrast & depth */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent" />
-
-                  {/* Top Category Badge */}
-                  <div className="absolute top-3 right-3 bg-slate-950/90 backdrop-blur-md text-emerald-400 border border-emerald-500/30 font-mono text-[9px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider shadow-sm">
-                    {service.category}
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-3 py-1 rounded-full">
+                      {service.badge}
+                    </span>
                   </div>
 
-                  {/* Floating Glassmorphic Icon Badge */}
-                  <motion.div
-                    variants={{
-                      hover: { scale: 1.1, rotate: 3, y: -2 },
-                    }}
-                    transition={{ type: "spring", stiffness: 350, damping: 20 }}
-                    className="absolute bottom-3 left-4 w-11 h-11 bg-slate-800 text-brand group-hover:bg-brand group-hover:text-slate-950 rounded-xl flex items-center justify-center transition-colors duration-300 shadow-md border border-slate-700"
-                  >
-                    {service.id === "web-design" ? <Layout size={20} /> : service.id === "webflow-dev" ? <Code size={20} /> : <Sparkles size={20} />}
-                  </motion.div>
-                </div>
-
-                {/* Card Body */}
-                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between bg-slate-900/90 text-white">
                   <div className="space-y-2">
-                    <h3 className="text-xl font-display font-black text-white group-hover:text-brand transition-colors leading-tight">
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-semibold">
+                      {service.category}
+                    </span>
+                    <h3 className="text-xl font-display font-black text-white group-hover:text-brand transition-colors">
                       {service.title}
                     </h3>
-                    <p className="text-xs text-slate-300 font-normal leading-relaxed line-clamp-3">
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
                       {service.description}
                     </p>
                   </div>
 
-                  {/* Key Tech Chips - Dark Background Badges with WHITE Text */}
-                  {service.technologies && service.technologies.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800">
-                      {service.technologies.slice(0, 4).map((tech) => (
-                        <span 
-                          key={tech}
-                          className="bg-slate-800/90 text-white border border-slate-700/80 font-mono text-[10px] font-bold px-2.5 py-1 rounded-md shadow-2xs hover:border-brand/50 transition-colors"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className="pt-2 inline-flex items-center space-x-2 text-xs font-black uppercase tracking-wider text-white group-hover:text-brand transition-colors cursor-pointer self-start relative z-10">
-                    <span>Explore Service</span>
-                    <motion.div
-                      variants={{
-                        hover: { x: 5 },
-                      }}
-                      transition={{ type: "spring", stiffness: 400, damping: 22 }}
-                    >
-                      <ArrowRight size={14} className="text-brand" />
-                    </motion.div>
+                  {/* Highlights Bullet List */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-slate-800">
+                    {service.highlights.map((highlight, hIdx) => (
+                      <div key={hIdx} className="flex items-center space-x-2 text-[11px] text-slate-300">
+                        <CheckCircle size={12} className="text-brand shrink-0" />
+                        <span>{highlight}</span>
+                      </div>
+                    ))}
                   </div>
+                </div>
+
+                <div className="pt-6 mt-6 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono font-bold uppercase tracking-wider text-white group-hover:text-brand transition-colors">
+                  <span>{service.actionText}</span>
+                  <ArrowRight size={14} className="transition-transform group-hover:translate-x-1 text-brand" />
                 </div>
               </motion.div>
             ))}
@@ -212,583 +302,472 @@ export default function HomeView({ onPageChange, onSelectService, onBookCall }: 
         </div>
       </section>
 
-      {/* 3. About Bento Preview */}
-      <section id="home-about-preview" className="py-24 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          <motion.div 
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 space-y-6"
-          >
-            <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase font-bold">ABOUT THE BRAND</span>
-            <h2 className="text-3xl sm:text-5xl font-display font-bold text-slate-900 tracking-tight leading-none">
-              A premium team built on craft & performance.
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
-              VprimeDigitalz represents an integrated boutique collective of award-winning digital artists, full-stack engineers, and search conversion analysts. We dismantle corporate overhead structures to work directly with ambitious creators and deliver clean, responsive digital experiences.
-            </p>
-
-            <div className="grid grid-cols-2 gap-4 pt-2">
-              <div className="space-y-1">
-                <div className="text-xl font-display font-bold text-brand">100% Custom</div>
-                <p className="text-[11px] text-slate-500">Zero template files or sluggish plugin wrappers.</p>
-              </div>
-              <div className="space-y-1">
-                <div className="text-xl font-display font-bold text-brand">Data-Driven</div>
-                <p className="text-[11px] text-slate-500">Designs structured purely for user conversion.</p>
-              </div>
-            </div>
-
-            <button
-              onClick={() => onPageChange("about")}
-              className="group relative inline-flex items-center justify-center bg-brand text-white font-sans text-xs font-semibold uppercase tracking-widest px-7 py-3.5 rounded-lg overflow-hidden transition-all duration-300 shadow-xs hover:shadow-md cursor-pointer"
-            >
-              <span className="relative z-10 flex items-center space-x-2">
-                <span>About Our Manifesto</span>
-                <ArrowRight size={12} />
-              </span>
-            </button>
-          </motion.div>
-
-          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Image Slot Card */}
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="relative group overflow-hidden rounded-3xl border border-slate-100 bg-slate-50 aspect-square flex flex-col justify-end p-6 md:p-8 min-h-[320px] shadow-sm hover:shadow-md transition-shadow"
-            >
-              <img 
-                src={brandWorkspaceImg} 
-                alt="VprimeDigitalz Creative Operations Studio" 
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/30 to-transparent" />
-              
-              <div className="relative z-10 space-y-2">
-                <span className="text-[9px] font-mono tracking-widest text-brand-light font-bold uppercase block">
-                  CRAFT ENVIRONMENT
-                </span>
-                <h4 className="text-base font-display font-bold text-white tracking-tight leading-snug">
-                  Our Operations Studio
-                </h4>
-                <p className="text-[10px] text-slate-200 leading-normal font-normal max-w-[220px]">
-                  Where pixel-perfect design grids meet production-grade React engineering workflows.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Core Promises Card */}
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 md:p-8 flex flex-col justify-between space-y-6"
-            >
-              <div>
-                <h3 className="font-display font-extrabold text-slate-900 text-sm mb-4">Our Core Promises</h3>
-                <div className="space-y-4">
-                  {[
-                    { title: "Surgical Code Quality", desc: "No bulky, slow WordPress layers. We build optimized class structures yielding 0.8s load times." },
-                    { title: "Complete Source Ownership", desc: "Our clients receive 100% Figma master source files, CMS passwords, and code repositories." },
-                    { title: "Durable Strategy Alignment", desc: "We map local SEO, schemas, and tracking pixels into our design grids from day one." }
-                  ].map((promise, idx) => (
-                    <div key={idx} className="flex items-start space-x-3 bg-white p-3.5 rounded-xl border border-slate-100/50">
-                      <CheckCircle size={14} className="text-brand shrink-0 mt-0.5" />
-                      <div className="space-y-0.5">
-                        <h4 className="text-xs font-display font-bold text-slate-900 leading-tight">{promise.title}</h4>
-                        <p className="text-[10px] text-slate-500 leading-normal">{promise.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* 4. Portfolio Showcase Previews */}
-      <section id="home-portfolio-preview" className="py-20 bg-brand-light/15 border-t border-slate-100 overflow-hidden">
+      {/* 4. FEATURED WORK / PORTFOLIO SECTION */}
+      <section id="home-featured-work" className="py-20 md:py-28 bg-white border-b border-slate-100 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-12">
           
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col md:flex-row items-start md:items-end justify-between"
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6"
           >
-            <div className="space-y-3.5">
-              <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase font-bold">Portfolios Highlight</span>
+            <div className="space-y-3">
+              <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase font-bold">
+                PROVEN RESULTS
+              </span>
               <h2 className="text-2xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
-                Success stories related to design.
+                Featured client work.
               </h2>
+              <p className="text-slate-500 text-xs sm:text-sm max-w-xl leading-relaxed">
+                A selection of high-performance websites engineered for speed, conversion, and undeniable brand authority.
+              </p>
             </div>
+
             <button
               onClick={() => onPageChange("portfolio")}
-              className="group text-xs font-mono tracking-wider text-slate-400 hover:text-brand font-semibold uppercase mt-4 md:mt-0 cursor-pointer flex items-center space-x-1"
+              className="group text-xs font-mono tracking-wider text-slate-500 hover:text-brand font-semibold uppercase cursor-pointer flex items-center space-x-1.5 shrink-0"
             >
-              <span>View All Case Studies</span>
-              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+              <span>View All Projects</span>
+              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1 text-brand" />
             </button>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* 4 Featured Projects Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {featuredProjects.map((project, idx) => (
               <motion.div
                 key={project.id}
                 onClick={() => onPageChange("portfolio")}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.7, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="group bg-white border border-slate-100 rounded-2xl overflow-hidden hover:border-brand/20 shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer"
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                whileHover={{ y: -6 }}
+                className="group bg-white border border-slate-100 rounded-2xl overflow-hidden hover:border-brand/30 shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
               >
-                <div className="aspect-video relative overflow-hidden bg-slate-50">
-                  <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" referrerPolicy="no-referrer" />
-                  <div className="absolute inset-0 bg-brand/90 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
-                    <span className="text-xs font-bold text-white uppercase tracking-widest flex items-center space-x-1">
+                <div className="aspect-[16/10] relative overflow-hidden bg-slate-900">
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
+                    referrerPolicy="no-referrer" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+                  
+                  {/* Category Pill */}
+                  <div className="absolute top-4 left-4 bg-slate-950/80 backdrop-blur-md text-white font-mono text-[9px] px-3 py-1 rounded-full font-bold uppercase tracking-wider border border-white/15">
+                    {project.category}
+                  </div>
+
+                  {/* Top Key Result Metric Pill */}
+                  {project.results && project.results.length > 0 && (
+                    <div className="absolute top-4 right-4 bg-emerald-500/90 backdrop-blur-md text-white font-mono text-[9px] px-3 py-1 rounded-full font-bold uppercase tracking-wider flex items-center space-x-1 shadow-md">
+                      <TrendingUp size={10} />
+                      <span>{project.results[0]}</span>
+                    </div>
+                  )}
+
+                  {/* Hover Overlay Prompt */}
+                  <div className="absolute inset-0 bg-brand/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-xs font-bold text-white uppercase tracking-widest flex items-center space-x-1.5 bg-slate-950/40 px-4 py-2 rounded-lg backdrop-blur-xs">
                       <span>View Case Study</span>
                       <ArrowRight size={12} />
                     </span>
                   </div>
                 </div>
-                <div className="p-6 space-y-2">
-                  <div className="text-[9px] font-mono text-brand uppercase font-bold">{project.category}</div>
-                  <h4 className="font-display font-bold text-slate-900 group-hover:text-brand transition-colors text-base tracking-tight line-clamp-1">
+
+                <div className="p-6 md:p-8 space-y-3 bg-white">
+                  <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 font-semibold uppercase">
+                    <span>{project.client}</span>
+                    <span>{project.duration}</span>
+                  </div>
+
+                  <h3 className="font-display font-bold text-slate-900 group-hover:text-brand transition-colors text-lg sm:text-xl tracking-tight leading-snug">
                     {project.title}
-                  </h4>
+                  </h3>
+
+                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed font-normal">
+                    {project.description}
+                  </p>
+
+                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono font-bold text-brand uppercase tracking-wider">
+                    <span>Read Study & Metrics</span>
+                    <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </div>
                 </div>
               </motion.div>
             ))}
           </div>
 
+          {/* Centered Primary CTA to Full Portfolio */}
+          <div className="text-center pt-4">
+            <button
+              id="featured-work-view-all-btn"
+              onClick={() => onPageChange("portfolio")}
+              className="group inline-flex items-center justify-center bg-brand hover:bg-[#048F6C] text-white font-sans text-xs font-bold uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-300 shadow-md shadow-brand/20 hover:shadow-xl hover:shadow-brand/35 hover:-translate-y-0.5 cursor-pointer"
+            >
+              <span className="flex items-center space-x-2">
+                <span>View All Projects</span>
+                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+              </span>
+            </button>
+          </div>
+
         </div>
       </section>
 
-      {/* 5. Client Testimonials Slideshow */}
-      <section id="home-testimonials" className="py-24 bg-[#090E12] border-y border-slate-800/80 relative overflow-hidden text-white">
-        {/* Background decorations */}
-        <div className="absolute top-1/2 left-0 w-72 h-72 bg-brand/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
-        
-        <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10 space-y-12">
+      {/* 5. ABOUT / WHY WORK WITH ME (ONE CONCISE SECTION) */}
+      <section id="home-about" className="py-20 md:py-28 bg-[#0c1017] border-b border-slate-800/80 text-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Header & Slideshow Controls Bar */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col md:flex-row md:items-end justify-between gap-6"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-6 space-y-6"
           >
-            <div className="space-y-3">
-              <div className="inline-flex items-center space-x-2 bg-brand/10 border border-brand/20 px-3 py-1 rounded-full text-brand text-[10px] font-mono font-bold uppercase tracking-widest">
-                <Sparkles size={12} />
-                <span>CLIENT REVIEWS ({testimonialsData.length} VERIFIED PARTNERS)</span>
-              </div>
-              <h2 className="text-2xl sm:text-4xl font-display font-black text-white tracking-tight leading-none">
-                Trusted by founders & leaders.
-              </h2>
+            <div className="inline-flex items-center space-x-2 bg-brand/10 border border-brand/20 px-3.5 py-1.5 rounded-full text-brand text-[10px] font-mono font-bold uppercase tracking-widest">
+              <ShieldCheck size={12} />
+              <span>Why Work With VprimeDigitalz</span>
             </div>
 
-            {/* Top Autoplay Toggle & Slide Counter */}
-            <div className="flex items-center space-x-3 self-start md:self-auto">
-              <button
-                onClick={() => setIsAutoPlay(!isAutoPlay)}
-                className="inline-flex items-center space-x-2 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 px-3.5 py-1.5 rounded-full text-[11px] font-mono font-bold text-slate-300 transition-colors cursor-pointer"
-                title={isAutoPlay ? "Pause automatic slideshow" : "Play automatic slideshow"}
-              >
-                {isAutoPlay ? (
-                  <>
-                    <Pause size={12} className="text-brand animate-pulse" />
-                    <span>AUTOPLAY ON</span>
-                  </>
-                ) : (
-                  <>
-                    <Play size={12} className="text-slate-400" />
-                    <span className="text-slate-400">PAUSED</span>
-                  </>
-                )}
-              </button>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black text-white tracking-tight leading-tight">
+              Senior craft. Proven execution. Zero agency bloat.
+            </h2>
 
-              <div className="text-[11px] font-mono font-bold text-slate-400 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-full">
-                0{activeTestimonialIdx + 1} / 0{testimonialsData.length}
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+              Ambitious businesses deserve direct collaboration with elite digital designers and engineers without the sluggish layers, inflated invoices, and junior delegation of traditional agencies.
+            </p>
+
+            {/* 4 Core Value Pillars */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              {[
+                {
+                  title: "Direct Senior Partnership",
+                  desc: "Work directly with lead builders. Fast feedback loops and clear communication with zero middle managers."
+                },
+                {
+                  title: "Conversion & Speed First",
+                  desc: "Sub-0.8s load times, perfect Core Web Vitals, and layouts scientifically structured to convert traffic into revenue."
+                },
+                {
+                  title: "100% Asset Ownership",
+                  desc: "You own all Figma master files, Webflow/code repositories, and CMS credentials with comprehensive handover videos."
+                },
+                {
+                  title: "Multi-Platform Mastery",
+                  desc: "Certified expertise across Webflow, Framer, Kajabi, and React—selecting the exact right tool for your model."
+                }
+              ].map((pillar, pIdx) => (
+                <div key={pIdx} className="bg-slate-900/90 border border-slate-800 p-4 rounded-xl space-y-1.5">
+                  <div className="flex items-center space-x-2">
+                    <CheckCircle size={14} className="text-brand shrink-0" />
+                    <h4 className="text-xs font-display font-bold text-white">{pillar.title}</h4>
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-relaxed pl-5">
+                    {pillar.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-2">
+              <button
+                onClick={() => onPageChange("about")}
+                className="group inline-flex items-center space-x-2 text-xs font-mono font-bold text-brand uppercase tracking-widest cursor-pointer hover:underline"
+              >
+                <span>Learn More About Our Philosophy</span>
+                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Right Visual Studio Card */}
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-6 relative"
+          >
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-slate-800 bg-slate-900 shadow-2xl group">
+              <img 
+                src={brandWorkspaceImg} 
+                alt="VprimeDigitalz Operations Studio" 
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
+              
+              <div className="absolute bottom-6 left-6 right-6 space-y-2">
+                <span className="text-[9px] font-mono tracking-widest text-brand font-bold uppercase block">
+                  CRAFT & DEDICATION
+                </span>
+                <h3 className="text-lg font-display font-bold text-white tracking-tight">
+                  Engineered in our creative operations studio.
+                </h3>
+                <p className="text-[11px] text-slate-300 max-w-sm">
+                  Every interaction, breakpoint, and conversion path is sculpted to perfection before launch.
+                </p>
               </div>
             </div>
           </motion.div>
 
-          {/* Main Slideshow Container Box */}
-          <div 
-            className="bg-[#0e131b] border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-xs"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            {/* Top progress line indicating slideshow timer */}
-            {isAutoPlay && !isHovered && (
-              <motion.div 
-                key={`progress-${activeTestimonialIdx}`}
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 6, ease: "linear" }}
-                className="absolute top-0 left-0 right-0 h-1 bg-brand z-20"
-              />
-            )}
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-              
-              {/* Left Column: Client Avatar Card with Metric Highlight */}
-              <div className="lg:col-span-4 flex justify-center">
-                <div className="relative w-full max-w-[280px] aspect-square rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-xl group select-none">
-                  
-                  {/* Avatar Image Transition */}
-                  <AnimatePresence mode="wait">
-                    <motion.img 
-                      key={activeTestimonial.id}
-                      initial={{ opacity: 0, scale: 1.06 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.94 }}
-                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                      src={activeTestimonial.avatar} 
-                      alt={activeTestimonial.name} 
-                      className="w-full h-full object-cover brightness-95 group-hover:brightness-100 transition-all duration-500" 
-                      referrerPolicy="no-referrer"
-                    />
-                  </AnimatePresence>
-
-                  {/* Dark Overlay Gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/25 to-transparent opacity-90 pointer-events-none" />
-
-                  {/* Top Badge: Company Name */}
-                  <div className="absolute top-4 left-4 inline-flex items-center space-x-1.5 bg-brand/90 backdrop-blur-md border border-white/20 text-white font-mono text-[9px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>{activeTestimonial.company}</span>
-                  </div>
-
-                  {/* Bottom Overlay Info */}
-                  <div className="absolute bottom-5 left-5 right-5 space-y-1.5 text-white">
-                    <span className="text-[9px] font-mono text-brand font-bold uppercase tracking-widest block">VERIFIED PARTNER</span>
-                    <div className="flex items-baseline justify-between">
-                      <h4 className="text-lg font-display font-black leading-none">{activeTestimonial.name}</h4>
-                      <span className="text-[10px] font-mono text-slate-300 font-bold uppercase">{activeTestimonial.logo}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column: Quote Content */}
-              <div className="lg:col-span-8 space-y-6 flex flex-col justify-between">
-                
-                {/* Header: Star Rating + Key Result Metric Badge */}
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/90 pb-4">
-                  <div className="flex space-x-1 text-amber-400">
-                    {[...Array(activeTestimonial.rating)].map((_, i) => (
-                      <Star key={i} size={16} fill="currentColor" />
-                    ))}
-                  </div>
-
-                  {activeTestimonial.metric && (
-                    <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-3 py-1 rounded-full font-bold uppercase tracking-wider flex items-center space-x-1">
-                      <TrendingUp size={12} className="text-emerald-400" />
-                      <span>{activeTestimonial.metric}</span>
-                    </span>
-                  )}
-                </div>
-
-                {/* Animated Testimonial Quote */}
-                <div className="min-h-[140px] relative">
-                  <Quote size={48} className="text-brand/15 absolute -top-4 -left-3 pointer-events-none" />
-                  
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeTestimonial.id}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                      className="space-y-4 relative z-10"
-                    >
-                      <p className="text-slate-100 text-lg sm:text-xl font-medium italic leading-relaxed">
-                        "{activeTestimonial.quote}"
-                      </p>
-                      
-                      <div>
-                        <h4 className="text-white font-display font-extrabold text-base sm:text-lg leading-none">
-                          {activeTestimonial.name}
-                        </h4>
-                        <p className="text-[11px] font-mono text-slate-400 uppercase font-semibold mt-1.5 tracking-wider">
-                          {activeTestimonial.role} &mdash; <span className="text-brand font-bold">{activeTestimonial.company}</span>
-                        </p>
-                      </div>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-
-                {/* Controls Footer: Slide Indicators & Navigation Arrows */}
-                <div className="pt-6 border-t border-slate-800/90 flex flex-col sm:flex-row items-center justify-between gap-4">
-                  
-                  {/* Slide Pill Dots Indicator */}
-                  <div className="flex items-center space-x-2">
-                    {testimonialsData.map((_, index) => {
-                      const isCurrent = index === activeTestimonialIdx;
-                      return (
-                        <button
-                          key={index}
-                          onClick={() => setActiveTestimonialIdx(index)}
-                          className={`transition-all duration-300 cursor-pointer ${
-                            isCurrent 
-                              ? "w-8 h-2.5 bg-brand rounded-full shadow-xs" 
-                              : "w-2.5 h-2.5 bg-slate-700 hover:bg-slate-600 rounded-full"
-                          }`}
-                          aria-label={`Go to slide ${index + 1}`}
-                          title={`Testimonial ${index + 1} of ${testimonialsData.length}`}
-                        />
-                      );
-                    })}
-                  </div>
-
-                  {/* Previous & Next Buttons */}
-                  <div className="flex items-center space-x-2.5">
-                    <button
-                      onClick={handlePrevTestimonial}
-                      className="w-10 h-10 border border-slate-700 hover:border-brand text-slate-200 hover:text-slate-950 bg-slate-800/90 hover:bg-brand rounded-full flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
-                      aria-label="Previous Testimonial"
-                      title="Previous Testimonial"
-                    >
-                      <ChevronLeft size={18} />
-                    </button>
-                    <button
-                      onClick={handleNextTestimonial}
-                      className="w-10 h-10 border border-slate-700 hover:border-brand text-slate-200 hover:text-slate-950 bg-slate-800/90 hover:bg-brand rounded-full flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
-                      aria-label="Next Testimonial"
-                      title="Next Testimonial"
-                    >
-                      <ChevronRight size={18} />
-                    </button>
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          {/* Quick Avatar Select Strip - All 9 Client Thumbnails */}
-          <div className="bg-[#0e131b] border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-center sm:justify-between gap-3">
-            <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest shrink-0">
-              JUMP TO CLIENT ({testimonialsData.length}):
-            </span>
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              {testimonialsData.map((test, index) => {
-                const isSelected = index === activeTestimonialIdx;
-                return (
-                  <button
-                    key={test.id}
-                    onClick={() => setActiveTestimonialIdx(index)}
-                    className={`group relative w-10 h-10 rounded-full overflow-hidden border-2 transition-all cursor-pointer ${
-                      isSelected 
-                        ? "border-brand scale-110 shadow-md ring-2 ring-brand/40" 
-                        : "border-slate-800 hover:border-slate-600 opacity-60 hover:opacity-100"
-                    }`}
-                    title={`${test.name} — ${test.company}`}
-                  >
-                    <img 
-                      src={test.avatar} 
-                      alt={test.name} 
-                      className="w-full h-full object-cover" 
-                      referrerPolicy="no-referrer"
-                    />
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
         </div>
       </section>
 
-      {/* 6. Abbreviated Process Pipeline Preview */}
-      <section id="home-process-preview" className="py-20 bg-brand-light/15 border-y border-slate-100 overflow-hidden">
+      {/* 6. PROCESS SECTION (ONE SIMPLE 4-STEP PIPELINE) */}
+      <section id="home-process" className="py-20 md:py-28 bg-white border-b border-slate-100 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-12 text-center space-y-12">
           
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-3.5"
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
+            className="space-y-3 max-w-2xl mx-auto"
           >
-            <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase font-bold">OUR METHODOLOGY</span>
+            <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase font-bold">
+              HOW WE WORK
+            </span>
             <h2 className="text-2xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
-              An engineered roadmap to delivery.
+              A transparent, 4-step delivery pipeline.
             </h2>
-            <p className="text-slate-500 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
-              We structure your projects around a meticulous 9-step development timeline. Explore how we manage delivery milestones.
+            <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
+              No guesswork or unexpected delays. We structure your project into clear, weekly milestones.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {[
-              { id: "01", title: "Discovery", desc: "Understanding objectives, brand vibes, and competitors." },
-              { id: "04", title: "Wireframing", desc: "Building spatial structures inside Figma for click paths." },
-              { id: "06", title: "Development", desc: "Engineering high-speed, secure, custom code solutions." },
-              { id: "08", title: "Deployment", desc: "DNS, SSL activation, schemas configuration, and live launch." }
-            ].map((step, idx) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {processSteps.map((step, idx) => (
               <motion.div 
-                key={step.id} 
+                key={step.step} 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                className="bg-white border border-slate-100 p-6 rounded-2xl relative space-y-2 text-left shadow-xs hover:shadow-lg transition-all"
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                whileHover={{ y: -6 }}
+                className="bg-slate-50 border border-slate-100 p-6 rounded-2xl relative space-y-3 text-left shadow-xs hover:shadow-lg transition-all"
               >
-                <span className="text-3xl font-display font-black text-slate-100 absolute top-4 right-4">{step.id}</span>
-                <span className="text-[10px] font-mono text-brand font-semibold block uppercase">STAGE {step.id}</span>
-                <h4 className="font-display font-bold text-slate-900 text-sm">{step.title}</h4>
-                <p className="text-[11px] text-slate-500 leading-relaxed pr-6">{step.desc}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono text-brand font-bold uppercase tracking-wider">
+                    STAGE {step.step}
+                  </span>
+                  <span className="text-3xl font-display font-black text-slate-200">
+                    {step.step}
+                  </span>
+                </div>
+                <h4 className="font-display font-bold text-slate-900 text-base">{step.title}</h4>
+                <p className="text-[11px] text-slate-500 leading-relaxed">{step.desc}</p>
               </motion.div>
             ))}
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
+          <div className="pt-2">
             <button
               onClick={() => onPageChange("process")}
               className="group inline-flex items-center space-x-2 text-xs font-mono font-bold text-brand uppercase tracking-widest cursor-pointer"
             >
-              <span>VIEW DETAILED 9-STAGE TIMELINE</span>
+              <span>Explore Detailed 9-Stage Methodology</span>
               <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
             </button>
-          </motion.div>
-
-        </div>
-      </section>
-
-      {/* 7. Technologies stack catalog */}
-      <section id="home-technologies" className="py-24 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-12">
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="text-center max-w-2xl mx-auto space-y-4"
-          >
-            <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase font-bold">DIGITAL TOOLKIT</span>
-            <h2 className="text-2xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight leading-none">
-              High-performance technologies.
-            </h2>
-            <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
-              We leverage the world's most robust digital platforms to design, code, secure, and index custom enterprise solutions.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
-            {technologies.map((tech, idx) => (
-              <motion.div
-                key={tech.name}
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: (idx % 6) * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                className="bg-slate-50 border border-slate-100/50 p-5 rounded-2xl text-center space-y-1 hover:border-brand/25 hover:bg-white hover:shadow-md transition-all duration-300"
-              >
-                <div className="font-display font-bold text-slate-800 text-sm">{tech.name}</div>
-                <div className="text-[9px] font-mono text-slate-400 uppercase font-semibold">{tech.category}</div>
-              </motion.div>
-            ))}
           </div>
 
         </div>
       </section>
 
-      {/* 8. Pricing Section */}
-      <PricingSection onBookCall={onBookCall} />
-
-      {/* 9. Blog Insights Section */}
-      <BlogSection onBookCall={onBookCall} />
-
-      {/* 10. Frequently Asked Questions Section */}
-      <FaqSection onBookCall={onBookCall} />
-
-      {/* 11. Call to Action Banner section */}
-      <section id="home-cta" className="py-12 bg-white overflow-hidden">
-        <div className="max-w-5xl mx-auto px-6">
+      {/* 7. TESTIMONIALS / CLIENT RESULTS SECTION */}
+      <section id="home-testimonials" className="py-20 md:py-28 bg-[#090E12] border-b border-slate-800/80 text-white relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute top-1/2 left-0 w-72 h-72 bg-brand/5 rounded-full blur-3xl pointer-events-none" />
+        
+        <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10 space-y-10">
+          
           <motion.div 
-            initial={{ opacity: 0, y: 40, scale: 0.98 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="bg-slate-950 text-white rounded-3xl p-8 md:p-12 text-center space-y-6 relative overflow-hidden shadow-2xl"
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-3 max-w-2xl mx-auto"
           >
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] pointer-events-none" />
-            
-            <div className="inline-flex items-center space-x-1.5 bg-brand/10 border border-brand/20 text-brand font-mono text-[9px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
-              <span>BOOK FREE STRATEGY CALL</span>
+            <div className="inline-flex items-center space-x-2 bg-brand/10 border border-brand/20 px-3.5 py-1.5 rounded-full text-brand text-[10px] font-mono font-bold uppercase tracking-widest">
+              <Award size={12} />
+              <span>Verified Client Social Proof</span>
             </div>
-
-            <h3 className="text-2xl md:text-4xl font-display font-bold tracking-tight">
-              Ready to double your search conversions?
-            </h3>
-            
-            <p className="text-white/70 max-w-xl mx-auto text-xs md:text-sm leading-relaxed font-normal">
-              Get in touch with Vikram Malhotra for a free 30-minute discovery workshop. We will draft custom layout, sitemap, and organic traffic targets for your business with zero obligations.
+            <h2 className="text-2xl sm:text-4xl font-display font-black text-white tracking-tight">
+              Trusted by founders & executives.
+            </h2>
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+              Real testimonials and measurable performance improvements from our verified clients.
             </p>
-
-            <div className="flex flex-col sm:flex-row justify-center gap-4 pt-2">
-              <button
-                onClick={onBookCall}
-                className="group inline-flex items-center justify-center bg-brand text-white font-sans text-xs font-semibold uppercase tracking-wider px-8 py-4 rounded-xl overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-brand/25 cursor-pointer"
-              >
-                <span className="relative z-10 flex items-center space-x-2">
-                  <span>Book Strategy Call</span>
-                  <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                </span>
-              </button>
-
-              <button
-                onClick={onBookCall}
-                className="inline-flex items-center justify-center border border-white/20 hover:border-white/55 bg-transparent text-white font-sans text-xs font-semibold uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-300 hover:bg-white/5 cursor-pointer"
-              >
-                <span>Schedule Workshop</span>
-              </button>
-            </div>
-
-            {/* Quick trust metrics checklist */}
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-6 border-t border-white/5 text-[10px] font-mono text-white/50">
-              <span className="flex items-center space-x-1">
-                <CheckCircle size={10} className="text-brand shrink-0" />
-                <span>ZERO OUTSOURCING</span>
-              </span>
-              <span className="flex items-center space-x-1">
-                <CheckCircle size={10} className="text-brand shrink-0" />
-                <span>100% bespoke CRAFT</span>
-              </span>
-              <span className="flex items-center space-x-1">
-                <CheckCircle size={10} className="text-brand shrink-0" />
-                <span>COMPLETE SOURCE ASSETS Handoff</span>
-              </span>
-            </div>
-
           </motion.div>
+
+          {/* Testimonial Presentation Card */}
+          <div 
+            className="bg-[#0e131b] border border-slate-800 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            <Quote size={56} className="text-brand/10 absolute top-6 right-6 pointer-events-none" />
+
+            <div className="space-y-6">
+              
+              {/* Rating + Metric Tag */}
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                <div className="flex space-x-1 text-amber-400">
+                  {[...Array(activeTestimonial.rating)].map((_, i) => (
+                    <Star key={i} size={16} fill="currentColor" />
+                  ))}
+                </div>
+
+                {activeTestimonial.metric && (
+                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-3 py-1 rounded-full font-bold uppercase tracking-wider flex items-center space-x-1">
+                    <TrendingUp size={12} className="text-emerald-400" />
+                    <span>{activeTestimonial.metric}</span>
+                  </span>
+                )}
+              </div>
+
+              {/* Animated Quote */}
+              <div className="min-h-[120px]">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeTestimonial.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.35 }}
+                    className="space-y-5"
+                  >
+                    <p className="text-slate-100 text-base sm:text-xl font-medium italic leading-relaxed">
+                      "{activeTestimonial.quote}"
+                    </p>
+                    
+                    <div className="flex items-center space-x-4">
+                      <img 
+                        src={activeTestimonial.avatar} 
+                        alt={activeTestimonial.name} 
+                        className="w-12 h-12 rounded-full object-cover border-2 border-brand/40"
+                        referrerPolicy="no-referrer"
+                      />
+                      <div>
+                        <h4 className="text-white font-display font-extrabold text-base leading-none">
+                          {activeTestimonial.name}
+                        </h4>
+                        <p className="text-[11px] font-mono text-slate-400 uppercase font-semibold mt-1 tracking-wider">
+                          {activeTestimonial.role} &mdash; <span className="text-brand font-bold">{activeTestimonial.company}</span>
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Controls Footer */}
+              <div className="pt-6 border-t border-slate-800 flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  {testimonialsData.slice(0, 5).map((_, index) => {
+                    const isCurrent = index === (activeTestimonialIdx % 5);
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => setActiveTestimonialIdx(index)}
+                        className={`transition-all duration-300 cursor-pointer ${
+                          isCurrent 
+                            ? "w-7 h-2 bg-brand rounded-full" 
+                            : "w-2 h-2 bg-slate-700 hover:bg-slate-600 rounded-full"
+                        }`}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    );
+                  })}
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={handlePrevTestimonial}
+                    className="w-9 h-9 border border-slate-700 hover:border-brand text-slate-300 hover:text-white bg-slate-800/90 rounded-full flex items-center justify-center transition-all cursor-pointer"
+                    aria-label="Previous Testimonial"
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+                  <button
+                    onClick={handleNextTestimonial}
+                    className="w-9 h-9 border border-slate-700 hover:border-brand text-slate-300 hover:text-white bg-slate-800/90 rounded-full flex items-center justify-center transition-all cursor-pointer"
+                    aria-label="Next Testimonial"
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 8. FINAL CTA / CONTACT SECTION (ONE STRONG FINAL CTA) */}
+      <section id="home-final-cta" className="py-20 md:py-28 bg-[#0b0e14] text-white relative overflow-hidden">
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:2rem_2rem] pointer-events-none" />
+        
+        <div className="max-w-4xl mx-auto px-6 relative z-10 text-center space-y-8">
+          
+          <div className="inline-flex items-center space-x-2 bg-brand/10 border border-brand/20 text-brand font-mono text-[10px] px-3.5 py-1.5 rounded-full font-bold uppercase tracking-wider">
+            <span>START YOUR PROJECT</span>
+          </div>
+
+          <h2 className="text-3xl sm:text-5xl font-display font-black tracking-tight leading-tight">
+            Ready to elevate your digital presence and double your conversions?
+          </h2>
+          
+          <p className="text-slate-300 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed font-normal">
+            Schedule a free 30-minute discovery call with Vikram Malhotra. We'll audit your current site, uncover conversion bottlenecks, and draft an actionable roadmap with zero obligations.
+          </p>
+
+          <div className="flex flex-col sm:flex-row justify-center gap-4 pt-2">
+            <button
+              onClick={onBookCall}
+              className="group inline-flex items-center justify-center bg-brand text-white font-sans text-xs font-semibold uppercase tracking-wider px-8 py-4.5 rounded-xl transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-brand/25 cursor-pointer"
+            >
+              <span className="flex items-center space-x-2">
+                <span>Book Free Strategy Call</span>
+                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+              </span>
+            </button>
+
+            <button
+              onClick={() => onPageChange("pricing")}
+              className="inline-flex items-center justify-center border border-white/20 hover:border-white/50 bg-transparent text-white font-sans text-xs font-semibold uppercase tracking-wider px-8 py-4.5 rounded-xl transition-all duration-300 hover:bg-white/5 cursor-pointer"
+            >
+              <span>Explore Pricing & Plans</span>
+            </button>
+          </div>
+
+          {/* Quick trust reassurance checkmarks */}
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-6 border-t border-slate-800 text-[10px] font-mono text-slate-400">
+            <span className="flex items-center space-x-1.5">
+              <CheckCircle size={12} className="text-brand shrink-0" />
+              <span>30-MIN DISCOVERY SESSION</span>
+            </span>
+            <span className="flex items-center space-x-1.5">
+              <CheckCircle size={12} className="text-brand shrink-0" />
+              <span>100% BESPOKE ARCHITECTURE</span>
+            </span>
+            <span className="flex items-center space-x-1.5">
+              <CheckCircle size={12} className="text-brand shrink-0" />
+              <span>COMPLETE SOURCE ASSETS HANDOFF</span>
+            </span>
+            <span className="flex items-center space-x-1.5">
+              <CheckCircle size={12} className="text-brand shrink-0" />
+              <span>ZERO JUNIOR DELEGATION</span>
+            </span>
+          </div>
+
         </div>
       </section>
 

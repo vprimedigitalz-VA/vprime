@@ -44,18 +44,17 @@
   --color-brand-hex: #06CF9C;
   --color-brand-dark-hex: #048F6C;
   
-  /* Light Mode Defaults */
-  --theme-bg-page: #f8fafc;
-  --theme-bg-surface: #ffffff;
-  --theme-bg-surface-elevated: #f1f5f9;
-  --theme-bg-card: #ffffff;
-  --theme-bg-card-subtle: #f8fafc;
-  --theme-bg-card-hover: #f1f5f9;
-  --theme-border-subtle: #e2e8f0;
-  --theme-border-strong: #cbd5e1;
-  --theme-text-primary: #090d16;
-  --theme-text-secondary: #334155;
-  --theme-text-muted: #64748b;
+  /* Centralized Light Theme Design System Tokens */
+  --bg-primary: #ffffff;             /* Primary Website Background across all major sections */
+  --bg-secondary: #f8fafc;           /* Single subtle secondary background for alternating rhythm */
+  --bg-card: #ffffff;                /* Card and elevated surface background */
+  --bg-card-subtle: #f8fafc;         /* Card secondary / inner pill / badge surface */
+  --bg-card-hover: #f1f5f9;          /* Interactive hover surface */
+  --border-subtle: #e2e8f0;          /* Standard crisp light border */
+  --border-strong: #cbd5e1;          /* High contrast interactive borders */
+  --text-primary: #090d16;           /* Headings & bold titles (WCAG AAA contrast) */
+  --text-secondary: #334155;         /* Body copy & descriptions */
+  --text-muted: #64748b;             /* Meta labels, captions */
   --theme-input-bg: #ffffff;
   --theme-input-border: #cbd5e1;
   --theme-input-text: #090d16;
@@ -63,21 +62,46 @@
 
 html.dark,
 html:not(.light) {
-  /* Dark Mode Variables */
-  --theme-bg-page: #090a0f;
-  --theme-bg-surface: #0f121d;
-  --theme-bg-surface-elevated: #161926;
-  --theme-bg-card: #121520;
-  --theme-bg-card-subtle: #181c2b;
-  --theme-bg-card-hover: #1e2336;
-  --theme-border-subtle: rgba(255, 255, 255, 0.08);
-  --theme-border-strong: rgba(255, 255, 255, 0.16);
-  --theme-text-primary: #f8fafc;
-  --theme-text-secondary: #cbd5e1;
-  --theme-text-muted: #64748b;
+  /* Centralized Dark Theme Tokens (Preserved Exactly) */
+  --bg-primary: #090a0f;
+  --bg-secondary: #0c1017;
+  --bg-card: #121520;
+  --bg-card-subtle: #161926;
+  --bg-card-hover: #1e2336;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
   --theme-input-bg: #121520;
   --theme-input-border: rgba(255, 255, 255, 0.12);
   --theme-input-text: #ffffff;
+}
+
+/* Reusable Theme Classes */
+.bg-theme-main {
+  background-color: var(--bg-primary);
+}
+.bg-theme-alt {
+  background-color: var(--bg-secondary);
+}
+.bg-theme-card {
+  background-color: var(--bg-card);
+}
+.bg-theme-card-subtle {
+  background-color: var(--bg-card-subtle);
+}
+.border-theme {
+  border-color: var(--border-subtle);
+}
+.text-theme-primary {
+  color: var(--text-primary);
+}
+.text-theme-secondary {
+  color: var(--text-secondary);
+}
+.text-theme-muted {
+  color: var(--text-muted);
 }
 
 /* Custom Base Styles */
@@ -103,9 +127,9 @@ html:not(.light) body {
   overflow-x: hidden;
 }
 
-/* Light Mode Body */
+/* Light Mode Body - Unified Clean White */
 html.light body {
-  background-color: #f8fafc;
+  background-color: #ffffff;
   color: #090d16;
   font-family: var(--font-sans);
   overflow-x: hidden;
@@ -233,59 +257,113 @@ html.dark .border-slate-300, html:not(.light) .border-slate-300 { border-color: 
 
 
 /* =========================================================
-   LIGHT MODE ADAPTIVE STYLES
+   LIGHT MODE ADAPTIVE STYLES (UNIFIED DESIGN SYSTEM)
    ========================================================= */
 
-/* Dark background class adaptations in Light Mode */
+/* Primary Light Theme Background (#FFFFFF) across all major sections */
+html.light .bg-theme-main,
+html.light section:not(.bg-theme-alt):not(#home-quick-trust):not(#home-process):not(#home-testimonials):not(#process-section),
 html.light .bg-slate-950,
-html.light .bg-\[\#121520\],
+html.light .bg-\[\#090a0f\],
 html.light .bg-\[\#0f121d\],
-html.light .bg-\[\#090a0f\] {
-  background-color: #f8fafc !important;
-}
-
-html.light .bg-slate-900,
-html.light .bg-\[\#161926\],
-html.light .bg-\[\#181c2b\] {
+html.light .bg-\[\#121520\],
+html.light .bg-\[\#0b0e14\],
+html.light .bg-\[\#0c1017\]:not(#home-quick-trust),
+html.light #services-section,
+html.light #about-section,
+html.light #faq-section,
+html.light #vanalyst-section,
+html.light #blog-section,
+html.light #booking-section,
+html.light #pricing-section,
+html.light #portfolio-section,
+html.light #home-services,
+html.light #home-featured-work,
+html.light #home-about,
+html.light #home-final-cta,
+html.light #home-cta,
+html.light footer,
+html.light #main-footer {
   background-color: #ffffff !important;
 }
 
-html.light .bg-slate-850,
-html.light .bg-slate-800,
-html.light .bg-\[\#1e2336\] {
-  background-color: #f1f5f9 !important;
+/* Single Subtle Secondary Background (#F8FAFC) for alternating sections */
+html.light .bg-theme-alt,
+html.light #home-quick-trust,
+html.light #home-process,
+html.light #home-testimonials,
+html.light #process-section {
+  background-color: #f8fafc !important;
 }
 
+/* Cards & Elevated Surfaces in Light Mode (#FFFFFF) */
+html.light .bg-theme-card,
+html.light .bg-slate-900,
 html.light .bg-slate-900\/90,
 html.light .bg-slate-900\/80,
 html.light .bg-slate-900\/60,
 html.light .bg-slate-950\/90,
 html.light .bg-slate-950\/80,
-html.light .bg-slate-950\/60 {
-  background-color: rgba(255, 255, 255, 0.95) !important;
+html.light .bg-slate-950\/60,
+html.light .bg-\[\#161926\],
+html.light .bg-\[\#181c2b\],
+html.light .bg-\[\#0e131b\],
+html.light #home-testimonials .bg-\[\#0e131b\],
+html.light #home-process .bg-slate-50,
+html.light #process-section .bg-slate-900,
+html.light #services-section .bg-slate-900,
+html.light #services-section .bg-slate-950,
+html.light #about-section .bg-slate-900,
+html.light #about-section .bg-slate-900\/90,
+html.light #blog-section .bg-slate-900,
+html.light #blog-section .bg-slate-900\/90,
+html.light #faq-section .bg-slate-900,
+html.light #faq-section .bg-slate-900\/90,
+html.light #vanalyst-section .bg-slate-900,
+html.light #vanalyst-section .bg-slate-900\/90,
+html.light #booking-section .bg-slate-900,
+html.light #booking-section .bg-slate-900\/90,
+html.light #home-cta .bg-slate-950,
+html.light #main-footer .bg-slate-900 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
 }
 
+/* Subtle inner surfaces, secondary tags & pills (#F8FAFC) */
+html.light .bg-theme-card-subtle,
+html.light .bg-slate-800,
 html.light .bg-slate-800\/90,
 html.light .bg-slate-800\/80,
-html.light .bg-slate-800\/60 {
-  background-color: #f1f5f9 !important;
+html.light .bg-slate-800\/60,
+html.light .bg-slate-850,
+html.light .bg-\[\#1e2336\],
+html.light #services-section .bg-slate-800,
+html.light #about-section .bg-slate-950,
+html.light #blog-section .bg-slate-950,
+html.light #process-section .bg-slate-950,
+html.light #booking-section .bg-slate-950 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
 }
 
-/* Light text adaptations in Light Mode */
-html.light .text-white:not(.bg-brand *):not(button.bg-brand *):not(.bg-brand):not(button.bg-brand):not(#home-testimonials *):not(.badge-dark-override *):not(.keep-white) {
+/* Light text adaptations in Light Mode - High Contrast & Crisp Legibility */
+html.light .text-white:not(.bg-brand *):not(button.bg-brand *):not(.bg-brand):not(button.bg-brand):not(.badge-dark-override *):not(.keep-white) {
   color: #090d16 !important;
 }
 
-html.light .text-slate-100:not(#home-testimonials *),
-html.light .text-slate-200:not(#home-testimonials *) {
+html.light .text-slate-100 {
+  color: #090d16 !important;
+}
+
+html.light .text-slate-200 {
   color: #1e293b !important;
 }
 
-html.light .text-slate-300:not(#home-testimonials *) {
+html.light .text-slate-300 {
   color: #334155 !important;
 }
 
-html.light .text-slate-400:not(#home-testimonials *) {
+html.light .text-slate-400 {
   color: #64748b !important;
 }
 
@@ -313,19 +391,75 @@ html.light .text-slate-950 {
   color: #020617 !important;
 }
 
-/* Border Adaptations in Light Mode */
+/* Border Adaptations in Light Mode - Consistent Crisp #E2E8F0 */
 html.light .border-slate-800,
 html.light .border-slate-800\/80,
 html.light .border-slate-800\/90,
+html.light .border-slate-800\/60,
 html.light .border-slate-700,
 html.light .border-slate-700\/80,
 html.light .border-white\/5,
-html.light .border-white\/10 {
+html.light .border-white\/10,
+html.light .border-white\/15,
+html.light .border-white\/20,
+html.light .border-slate-100 {
+  border-color: #e2e8f0 !important;
+}
+
+html.light .divide-slate-800,
+html.light .divide-slate-800\/80,
+html.light .divide-slate-700 {
   border-color: #e2e8f0 !important;
 }
 
 html.light .border-slate-900 {
   border-color: #cbd5e1 !important;
+}
+
+/* Dark action buttons in light mode maintain high contrast */
+html.light button.bg-slate-900,
+html.light a.bg-slate-900 {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+html.light button.bg-slate-900:hover,
+html.light a.bg-slate-900:hover {
+  background-color: #06CF9C !important;
+  color: #ffffff !important;
+}
+
+/* Featured Client Work CTA Button */
+html.light #featured-work-view-all-btn {
+  background-color: #06CF9C !important;
+  color: #ffffff !important;
+}
+html.light #featured-work-view-all-btn:hover {
+  background-color: #048F6C !important;
+  color: #ffffff !important;
+}
+
+/* Testimonials Carousel Buttons */
+html.light #home-testimonials button.border-slate-700 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #334155 !important;
+}
+html.light #home-testimonials button.border-slate-700:hover {
+  background-color: #f8fafc !important;
+  border-color: #06CF9C !important;
+  color: #090d16 !important;
+}
+
+/* Final CTA Secondary Button */
+html.light #home-final-cta button.border-white\/20 {
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  background-color: #ffffff !important;
+}
+html.light #home-final-cta button.border-white\/20:hover {
+  background-color: #f8fafc !important;
+  border-color: #06CF9C !important;
+  color: #0f172a !important;
 }
 
 /* Form controls in light mode */
@@ -345,113 +479,13 @@ html.light input:focus, html.light textarea:focus, html.light select:focus {
 
 /* Light mode card borders and shadows */
 html.light .shadow-2xl:not(#vhelp-chatbot-window) {
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
 }
 html.light .shadow-xl {
   box-shadow: 0 10px 20px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
 }
 
-/* =========================================================
-   SPECIAL COMPONENT OVERRIDES IN LIGHT MODE
-   ========================================================= */
-
-/* 1. SERVICES PAGE & SECTION */
-html.light #services-section {
-  background-color: #f8fafc !important;
-  border-color: #e2e8f0 !important;
-  color: #090d16 !important;
-}
-
-html.light #services-section h2,
-html.light #services-section h3,
-html.light #services-section h4 {
-  color: #090d16 !important;
-}
-
-html.light #services-section p {
-  color: #475569 !important;
-}
-
-html.light #services-section .bg-slate-900,
-html.light #services-section .bg-slate-950 {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-}
-
-html.light #services-section .bg-slate-800 {
-  background-color: #f1f5f9 !important;
-  border-color: #e2e8f0 !important;
-}
-
-/* 2. PROCESS SECTION & BLUEPRINT */
-html.light #process-section {
-  background-color: #f8fafc !important;
-  border-color: #e2e8f0 !important;
-  color: #090d16 !important;
-}
-
-html.light #process-section .bg-slate-900 {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-}
-
-html.light #process-section .bg-slate-950 {
-  background-color: #f8fafc !important;
-  border-color: #e2e8f0 !important;
-}
-
-/* 3. FAQ SECTION */
-html.light #faq-section {
-  background-color: #f8fafc !important;
-  border-color: #e2e8f0 !important;
-}
-
-html.light #faq-section .bg-slate-900\/90,
-html.light #faq-section .bg-slate-900 {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-}
-
-/* 4. VANALYST SEO SECTION */
-html.light #vanalyst-section {
-  background-color: #f8fafc !important;
-  color: #090d16 !important;
-}
-
-html.light #vanalyst-section .bg-slate-900\/90,
-html.light #vanalyst-section .bg-slate-900,
-html.light #vanalyst-section .bg-slate-950\/80,
-html.light #vanalyst-section .bg-slate-950 {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-}
-
-html.light #vanalyst-section input {
-  background-color: #ffffff !important;
-  color: #090d16 !important;
-  border-color: #cbd5e1 !important;
-}
-
-/* 5. FUTURE WEBSITE SIMULATOR */
-html.light #see-your-future-website {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.06) !important;
-}
-
-html.light #see-your-future-website .bg-slate-900\/80,
-html.light #see-your-future-website .bg-slate-900 {
-  background-color: #f8fafc !important;
-  border-color: #e2e8f0 !important;
-}
-
-html.light #see-your-future-website .bg-slate-950\/60,
-html.light #see-your-future-website .bg-slate-950 {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-}
-
-/* 6. VHELP CHATBOT WINDOW */
+/* VHELP CHATBOT WINDOW */
 html.light #vhelp-chatbot-window {
   background-color: rgba(255, 255, 255, 0.98) !important;
   border-color: #cbd5e1 !important;
@@ -481,81 +515,34 @@ html.light #vhelp-chatbot-window input {
   border-color: #cbd5e1 !important;
 }
 
-/* 6B. ABOUT SECTION */
-html.light #about-section {
-  background-color: #f8fafc !important;
-  color: #090d16 !important;
-  border-color: #e2e8f0 !important;
-}
-
-html.light #about-section h2,
-html.light #about-section h3,
-html.light #about-section h4 {
-  color: #090d16 !important;
-}
-
-html.light #about-section p {
-  color: #475569 !important;
-}
-
-html.light #about-section .bg-slate-900,
-html.light #about-section .bg-slate-900\/90 {
+/* FUTURE WEBSITE SIMULATOR */
+html.light #see-your-future-website {
   background-color: #ffffff !important;
   border-color: #e2e8f0 !important;
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.06) !important;
 }
 
-html.light #about-section .bg-slate-950,
-html.light #about-section .bg-slate-950\/80 {
+html.light #see-your-future-website .bg-slate-900\/80,
+html.light #see-your-future-website .bg-slate-900 {
   background-color: #f8fafc !important;
   border-color: #e2e8f0 !important;
 }
 
-/* 6C. BLOG SECTION */
-html.light #blog-section {
-  background-color: #f8fafc !important;
-  color: #090d16 !important;
-  border-color: #e2e8f0 !important;
-}
-
-html.light #blog-section .bg-slate-900,
-html.light #blog-section .bg-slate-900\/90 {
+html.light #see-your-future-website .bg-slate-950\/60,
+html.light #see-your-future-website .bg-slate-950 {
   background-color: #ffffff !important;
   border-color: #e2e8f0 !important;
 }
 
-html.light #blog-section .bg-slate-950 {
-  background-color: #f8fafc !important;
-  border-color: #e2e8f0 !important;
-}
-
-/* 6D. BOOKING SECTION */
-html.light #booking-section {
-  background-color: #f8fafc !important;
-  color: #090d16 !important;
-  border-color: #e2e8f0 !important;
-}
-
-html.light #booking-section .bg-slate-900,
-html.light #booking-section .bg-slate-900\/90 {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-}
-
-html.light #booking-section .bg-slate-950 {
-  background-color: #f8fafc !important;
-  border-color: #e2e8f0 !important;
-}
-
-/* 7. HOME CTA BANNER (#home-cta) */
+/* HOME CTA BANNER (#home-cta) */
 html.light #home-cta {
   background-color: #ffffff !important;
 }
 
 html.light #home-cta .bg-slate-950 {
-  background-color: #f8fafc !important;
+  background-color: #ffffff !important;
   border: 1px solid #e2e8f0 !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04) !important;
 }
 
 html.light #home-cta h3 {
@@ -568,13 +555,13 @@ html.light #home-cta p {
 
 html.light #home-cta button.border-white\/20,
 html.light #home-cta button.border-white\/55 {
-  border-color: #94a3b8 !important;
+  border-color: #cbd5e1 !important;
   color: #0f172a !important;
   background-color: #ffffff !important;
 }
 
 html.light #home-cta button.border-white\/20:hover {
-  background-color: #f1f5f9 !important;
+  background-color: #f8fafc !important;
   border-color: #06CF9C !important;
   color: #0f172a !important;
 }
@@ -589,10 +576,10 @@ html.light #home-cta .text-white\/70 {
   font-weight: 600 !important;
 }
 
-/* 8. FOOTER (#main-footer) */
+/* FOOTER (#main-footer) */
 html.light #main-footer,
 html.light footer {
-  background-color: #f8fafc !important;
+  background-color: #ffffff !important;
   color: #0f172a !important;
   border-color: #e2e8f0 !important;
 }
@@ -620,7 +607,7 @@ html.light #main-footer span.text-white\/40,
 html.light #main-footer div.text-white\/40,
 html.light #main-footer h5.text-white\/40,
 html.light #main-footer h6.text-white\/50 {
-  color: #475569 !important;
+  color: #64748b !important;
   font-weight: 600 !important;
 }
 
@@ -641,22 +628,12 @@ html.light #main-footer button.text-white\/60:hover {
 }
 
 html.light #main-footer .bg-white\/5 {
-  background-color: #ffffff !important;
+  background-color: #f8fafc !important;
   border-color: #e2e8f0 !important;
 }
 
-html.light #main-footer input {
-  background-color: #ffffff !important;
-  border-color: #cbd5e1 !important;
-  color: #0f172a !important;
-}
-
-html.light #main-footer input::placeholder {
-  color: #94a3b8 !important;
-}
-
 html.light #main-footer a.bg-white\/5 {
-  background-color: #ffffff !important;
+  background-color: #f8fafc !important;
   border-color: #e2e8f0 !important;
   color: #1e293b !important;
 }
@@ -672,12 +649,22 @@ html.light #main-footer .bg-slate-900 {
 }
 
 html.light #main-footer .bg-slate-900:hover {
-  background-color: #f1f5f9 !important;
+  background-color: #f8fafc !important;
   color: #0f172a !important;
 }
 
 html.light #main-footer .text-slate-400 {
-  color: #475569 !important;
+  color: #64748b !important;
+}
+
+html.light #main-footer input {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light #main-footer input::placeholder {
+  color: #94a3b8 !important;
 }
 
 
