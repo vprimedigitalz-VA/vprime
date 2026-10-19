@@ -88,6 +88,7 @@ export interface PricingPlan {
 
 export interface BlogPost {
   id: string;
+  slug: string;
   title: string;
   category: string;
   excerpt: string;
@@ -101,4 +102,8 @@ export interface BlogPost {
   date: string;
   readTime: string;
   tags: string[];
+  faq?: { q: string; a: string }[];
+  seoTitle?: string;
+  metaDescription?: string;
+  featured?: boolean;
 }

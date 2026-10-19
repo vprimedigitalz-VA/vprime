@@ -16,17 +16,71 @@ import VhelpChatbot from "./components/VhelpChatbot";
 import { PageLoaderOverlay } from "./components/BrandedLoader";
 import { ToastProvider } from "./components/ToastContext";
 
+function parsePathname(): { page: string; serviceSlug: string | null; articleSlug: string | null } {
+  if (typeof window === "undefined") {
+    return { page: "home", serviceSlug: null, articleSlug: null };
+  }
+  const path = window.location.pathname.replace(/\/$/, "");
+  if (!path || path === "") {
+    return { page: "home", serviceSlug: null, articleSlug: null };
+  }
+  if (path === "/blog") {
+    return { page: "blog", serviceSlug: null, articleSlug: null };
+  }
+  if (path.startsWith("/blog/")) {
+    const slug = path.replace("/blog/", "");
+    return { page: "blog", serviceSlug: null, articleSlug: slug };
+  }
+  if (path === "/services") {
+    return { page: "services", serviceSlug: null, articleSlug: null };
+  }
+  if (path.startsWith("/services/")) {
+    const slug = path.replace("/services/", "");
+    return { page: "services", serviceSlug: slug, articleSlug: null };
+  }
+  if (path === "/portfolio" || path === "/work") {
+    return { page: "portfolio", serviceSlug: null, articleSlug: null };
+  }
+  if (path === "/about") {
+    return { page: "about", serviceSlug: null, articleSlug: null };
+  }
+  if (path === "/pricing") {
+    return { page: "pricing", serviceSlug: null, articleSlug: null };
+  }
+  if (path === "/vanalyst") {
+    return { page: "vanalyst", serviceSlug: null, articleSlug: null };
+  }
+  if (path === "/booking") {
+    return { page: "booking", serviceSlug: null, articleSlug: null };
+  }
+  return { page: "home", serviceSlug: null, articleSlug: null };
+}
+
 export default function App() {
-  const [currentPage, setCurrentPage] = useState("home");
-  const [selectedServiceSlug, setSelectedServiceSlug] = useState<string | null>(null);
+  const initialRoute = parsePathname();
+  const [currentPage, setCurrentPage] = useState(initialRoute.page);
+  const [selectedServiceSlug, setSelectedServiceSlug] = useState<string | null>(initialRoute.serviceSlug);
+  const [selectedArticleSlug, setSelectedArticleSlug] = useState<string | null>(initialRoute.articleSlug);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsInitialLoading(false);
-    }, 1600);
+    }, 1200);
     return () => clearTimeout(timer);
+  }, []);
+
+  // Listen to browser forward/backward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      const route = parsePathname();
+      setCurrentPage(route.page);
+      setSelectedServiceSlug(route.serviceSlug);
+      setSelectedArticleSlug(route.articleSlug);
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
   // Smooth scroll progress bar at top of screen
@@ -37,45 +91,98 @@ export default function App() {
     restDelta: 0.001
   });
 
-  const handlePageChange = (pageId: string) => {
+  const handlePageChange = (pageId: string, subSlug?: string) => {
     setSelectedServiceSlug(null);
+    setSelectedArticleSlug(null);
 
     if (pageId === "process") {
       setCurrentPage("services");
+      window.history.pushState(null, "", "/services");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (pageId === "home") {
+      setCurrentPage("home");
+      window.history.pushState(null, "", "/");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (pageId === "blog") {
+      setCurrentPage("blog");
+      if (subSlug) {
+        setSelectedArticleSlug(subSlug);
+        window.history.pushState(null, "", `/blog/${subSlug}`);
+      } else {
+        window.history.pushState(null, "", "/blog");
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (pageId === "services") {
+      setCurrentPage("services");
+      if (subSlug) {
+        setSelectedServiceSlug(subSlug);
+        window.history.pushState(null, "", `/services/${subSlug}`);
+      } else {
+        window.history.pushState(null, "", "/services");
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (pageId === "portfolio") {
+      setCurrentPage("portfolio");
+      window.history.pushState(null, "", "/portfolio");
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
     if (pageId === "pricing") {
-      setCurrentPage("home");
-      setTimeout(() => {
-        const el = document.getElementById("pricing-section");
-        if (el) el.scrollIntoView({ behavior: "smooth" });
-      }, 100);
+      setCurrentPage("pricing");
+      window.history.pushState(null, "", "/pricing");
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
-    if (pageId === "blog") {
-      setCurrentPage("home");
-      setTimeout(() => {
-        const el = document.getElementById("blog-section");
-        if (el) el.scrollIntoView({ behavior: "smooth" });
-      }, 100);
+    if (pageId === "about") {
+      setCurrentPage("about");
+      window.history.pushState(null, "", "/about");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (pageId === "vanalyst") {
+      setCurrentPage("vanalyst");
+      window.history.pushState(null, "", "/vanalyst");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (pageId === "booking") {
+      setCurrentPage("booking");
+      window.history.pushState(null, "", "/booking");
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
     setCurrentPage(pageId);
+    window.history.pushState(null, "", `/${pageId}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleSelectService = (slug: string) => {
     setSelectedServiceSlug(slug);
     setCurrentPage("services");
+    window.history.pushState(null, "", `/services/${slug}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleClearSelectedService = () => {
     setSelectedServiceSlug(null);
+    window.history.pushState(null, "", "/services");
   };
 
   const handleBookCall = () => {
@@ -111,7 +218,13 @@ export default function App() {
       case "about":
         return <AboutSection onBookCall={handleBookCall} />;
       case "blog":
-        return <BlogSection onBookCall={handleBookCall} />;
+        return (
+          <BlogSection 
+            onBookCall={handleBookCall} 
+            onPageChange={handlePageChange}
+            initialPostSlug={selectedArticleSlug}
+          />
+        );
       case "vanalyst":
         return <VanalystSection onBookCall={handleBookCall} />;
       case "booking":

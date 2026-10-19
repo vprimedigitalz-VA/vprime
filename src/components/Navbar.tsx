@@ -137,6 +137,7 @@ export default function Navbar({ currentPage, onPageChange, onSelectService, onB
     { name: "Home", id: "home" },
     { name: "Work", id: "portfolio" },
     { name: "Services", id: "services" },
+    { name: "Blog", id: "blog" },
     { name: "Vanalyst SEO", id: "vanalyst" },
     { name: "About", id: "about" }
   ];

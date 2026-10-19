@@ -58,6 +58,34 @@
   --theme-input-bg: #ffffff;
   --theme-input-border: #cbd5e1;
   --theme-input-text: #090d16;
+
+  /* Dedicated Scoped Blog Design Tokens — Light Mode (Clean, Minimal, High Contrast) */
+  --blog-main-bg: #ffffff;
+  --blog-secondary-bg: #f7f9f8;
+  --blog-card-bg: #ffffff;
+  --blog-card-hover: #f1f5f9;
+  --blog-heading: #0f121d;
+  --blog-body: #374151;
+  --blog-muted: #64748b;
+  --blog-border: #e5e7eb;
+  --blog-border-strong: #cbd5e1;
+  --blog-accent: #05bb8d;
+  --blog-accent-hover: #066b54;
+  --blog-link: #087f65;
+  --blog-btn-primary-bg: #0f121d;
+  --blog-btn-primary-text: #ffffff;
+  --blog-btn-primary-hover-bg: #05bb8d;
+  --blog-btn-primary-hover-text: #ffffff;
+  --blog-btn-secondary-bg: #ffffff;
+  --blog-btn-secondary-text: #0f121d;
+  --blog-btn-secondary-border: #e5e7eb;
+  --blog-btn-secondary-hover-bg: #f7f9f8;
+  --blog-badge-bg: rgba(5, 187, 141, 0.08);
+  --blog-badge-border: rgba(5, 187, 141, 0.22);
+  --blog-badge-text: #087f65;
+  --blog-hero-card-bg: #ffffff;
+  --blog-hero-card-border: #e5e7eb;
+  --blog-hero-card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.07);
 }
 
 html.dark,
@@ -76,6 +104,34 @@ html:not(.light) {
   --theme-input-bg: #121520;
   --theme-input-border: rgba(255, 255, 255, 0.12);
   --theme-input-text: #ffffff;
+
+  /* Dedicated Scoped Blog Design Tokens — Dark Mode (Elegant, Deep, Soft Text) */
+  --blog-main-bg: #0f121d;
+  --blog-secondary-bg: #171c29;
+  --blog-card-bg: #1c2230;
+  --blog-card-hover: #222938;
+  --blog-heading: #f8fafc;
+  --blog-body: #d1d5db;
+  --blog-muted: #a6b1c2;
+  --blog-border: #303847;
+  --blog-border-strong: #434e62;
+  --blog-accent: #05bb8d;
+  --blog-accent-hover: #76f0cf;
+  --blog-link: #45e0b8;
+  --blog-btn-primary-bg: #05bb8d;
+  --blog-btn-primary-text: #0f121d;
+  --blog-btn-primary-hover-bg: #45e0b8;
+  --blog-btn-primary-hover-text: #0f121d;
+  --blog-btn-secondary-bg: #171c29;
+  --blog-btn-secondary-text: #f8fafc;
+  --blog-btn-secondary-border: #303847;
+  --blog-btn-secondary-hover-bg: #222938;
+  --blog-badge-bg: rgba(5, 187, 141, 0.16);
+  --blog-badge-border: rgba(5, 187, 141, 0.35);
+  --blog-badge-text: #45e0b8;
+  --blog-hero-card-bg: #1c2230;
+  --blog-hero-card-border: #303847;
+  --blog-hero-card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
 }
 
 /* Reusable Theme Classes */
@@ -102,6 +158,82 @@ html:not(.light) {
 }
 .text-theme-muted {
   color: var(--text-muted);
+}
+
+/* Scoped Blog Semantic Utility Classes */
+.blog-page-root {
+  background-color: var(--blog-main-bg) !important;
+  color: var(--blog-body) !important;
+}
+.blog-heading-primary {
+  color: var(--blog-heading) !important;
+}
+.blog-body-text {
+  color: var(--blog-body) !important;
+}
+.blog-muted-text {
+  color: var(--blog-muted) !important;
+}
+.blog-border-color {
+  border-color: var(--blog-border) !important;
+}
+.blog-border-strong-color {
+  border-color: var(--blog-border-strong) !important;
+}
+.blog-card-surface {
+  background-color: var(--blog-card-bg) !important;
+  border-color: var(--blog-border) !important;
+}
+.blog-card-subtle-surface {
+  background-color: var(--blog-secondary-bg) !important;
+  border-color: var(--blog-border) !important;
+}
+.blog-hero-card {
+  background-color: var(--blog-hero-card-bg) !important;
+  border-color: var(--blog-hero-card-border) !important;
+  box-shadow: var(--blog-hero-card-shadow);
+}
+.blog-badge-pill {
+  background-color: var(--blog-badge-bg) !important;
+  border-color: var(--blog-badge-border) !important;
+  color: var(--blog-badge-text) !important;
+}
+.blog-link-text {
+  color: var(--blog-link) !important;
+}
+.blog-link-text:hover {
+  color: var(--blog-accent-hover) !important;
+}
+.blog-primary-btn {
+  background-color: var(--blog-btn-primary-bg) !important;
+  color: var(--blog-btn-primary-text) !important;
+}
+.blog-primary-btn:hover {
+  background-color: var(--blog-btn-primary-hover-bg) !important;
+  color: var(--blog-btn-primary-hover-text) !important;
+}
+.blog-secondary-btn {
+  background-color: var(--blog-btn-secondary-bg) !important;
+  color: var(--blog-btn-secondary-text) !important;
+  border-color: var(--blog-btn-secondary-border) !important;
+}
+.blog-secondary-btn:hover {
+  background-color: var(--blog-btn-secondary-hover-bg) !important;
+  border-color: var(--blog-border-strong) !important;
+}
+.blog-input-field {
+  background-color: var(--blog-main-bg) !important;
+  border-color: var(--blog-border) !important;
+  color: var(--blog-heading) !important;
+}
+.blog-input-field::placeholder {
+  color: var(--blog-muted) !important;
+  opacity: 0.85;
+}
+.blog-input-field:focus {
+  border-color: var(--blog-accent) !important;
+  background-color: var(--blog-card-bg) !important;
+  outline: none !important;
 }
 
 /* Custom Base Styles */
@@ -315,8 +447,6 @@ html.light #services-section .bg-slate-900,
 html.light #services-section .bg-slate-950,
 html.light #about-section .bg-slate-900,
 html.light #about-section .bg-slate-900\/90,
-html.light #blog-section .bg-slate-900,
-html.light #blog-section .bg-slate-900\/90,
 html.light #faq-section .bg-slate-900,
 html.light #faq-section .bg-slate-900\/90,
 html.light #vanalyst-section .bg-slate-900,
@@ -339,7 +469,6 @@ html.light .bg-slate-850,
 html.light .bg-\[\#1e2336\],
 html.light #services-section .bg-slate-800,
 html.light #about-section .bg-slate-950,
-html.light #blog-section .bg-slate-950,
 html.light #process-section .bg-slate-950,
 html.light #booking-section .bg-slate-950 {
   background-color: #f8fafc !important;
