@@ -235,6 +235,35 @@ html:not(.light) {
   background-color: var(--blog-card-bg) !important;
   outline: none !important;
 }
+.blog-callout-box {
+  background-color: var(--blog-secondary-bg) !important;
+  border-color: var(--blog-border) !important;
+}
+.blog-quote-box {
+  background-color: var(--blog-secondary-bg) !important;
+  border-left-color: var(--blog-accent) !important;
+}
+.blog-table-container {
+  background-color: var(--blog-card-bg) !important;
+  border-color: var(--blog-border) !important;
+}
+.blog-table-header {
+  background-color: var(--blog-secondary-bg) !important;
+  color: var(--blog-heading) !important;
+  border-color: var(--blog-border) !important;
+}
+.blog-table-cell {
+  border-color: var(--blog-border) !important;
+  color: var(--blog-body) !important;
+}
+.blog-checklist-item {
+  background-color: var(--blog-card-bg) !important;
+  border-color: var(--blog-border) !important;
+}
+.blog-checklist-item:hover {
+  background-color: var(--blog-card-hover) !important;
+  border-color: var(--blog-border-strong) !important;
+}
 
 /* Custom Base Styles */
 html {

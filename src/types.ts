@@ -106,4 +106,10 @@ export interface BlogPost {
   seoTitle?: string;
   metaDescription?: string;
   featured?: boolean;
+  cta?: {
+    heading: string;
+    description: string;
+    primaryBtnText: string;
+    secondaryBtnText: string;
+  };
 }

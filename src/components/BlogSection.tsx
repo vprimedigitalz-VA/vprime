@@ -1,4 +1,4 @@
-import { useState, FormEvent, useRef, useEffect } from "react";
+import { useState, FormEvent, useRef, useEffect, useMemo, ReactNode } from "react";
 import { 
   Search, 
   Calendar, 
@@ -16,7 +16,11 @@ import {
   ExternalLink,
   Sparkles,
   HelpCircle,
-  FolderOpen
+  FolderOpen,
+  ListOrdered,
+  Layers,
+  FileCheck2,
+  Check
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { blogPostsData } from "../data";
@@ -49,6 +53,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
 
   const [expandedFaqIndex, setExpandedFaqIndex] = useState<number | null>(0);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [checklistProgress, setChecklistProgress] = useState<Record<number, boolean>>({});
   
   // Reading scroll progress tracker for blog detail view
   const articleRef = useRef<HTMLDivElement>(null);
@@ -88,10 +93,12 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         setSelectedPost(match);
         setReadingProgress(0);
       }
+    } else if (initialPostSlug === null && typeof window !== "undefined" && window.location.pathname === "/blog") {
+      setSelectedPost(null);
     }
   }, [initialPostSlug]);
 
-  // Handle SEO Meta Tags & JSON-LD dynamically
+  // Handle SEO Meta Tags, Canonical Link & JSON-LD dynamically
   useEffect(() => {
     if (typeof document === "undefined") return;
 
@@ -99,17 +106,36 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
     const metaDesc = document.querySelector('meta[name="description"]');
     const previousDesc = metaDesc ? metaDesc.getAttribute("content") : "";
 
+    let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonicalLink) {
+      canonicalLink = document.createElement("link");
+      canonicalLink.rel = "canonical";
+      document.head.appendChild(canonicalLink);
+    }
+    const previousCanonical = canonicalLink.href;
+
     let schemaScript = document.getElementById("vprime-article-schema") as HTMLScriptElement | null;
 
     if (selectedPost) {
       document.title = selectedPost.seoTitle || `${selectedPost.title} | Vprime Digitalz`;
 
+      const descriptionText = selectedPost.metaDescription || selectedPost.excerpt;
       if (metaDesc) {
-        metaDesc.setAttribute(
-          "content",
-          selectedPost.metaDescription || selectedPost.excerpt
-        );
+        metaDesc.setAttribute("content", descriptionText);
       }
+
+      const postUrl = `https://vprimedigitalz.com/blog/${selectedPost.slug}`;
+      canonicalLink.setAttribute("href", postUrl);
+
+      // OpenGraph & Twitter tags
+      let ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute("content", selectedPost.title);
+      let ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute("content", descriptionText);
+      let ogUrl = document.querySelector('meta[property="og:url"]');
+      if (ogUrl) ogUrl.setAttribute("content", postUrl);
+      let ogImage = document.querySelector('meta[property="og:image"]');
+      if (ogImage) ogImage.setAttribute("content", selectedPost.image);
 
       if (!schemaScript) {
         schemaScript = document.createElement("script");
@@ -118,15 +144,19 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         document.head.appendChild(schemaScript);
       }
 
-      const postUrl = `https://vprimedigitalz.com/blog/${selectedPost.slug}`;
+      // Format ISO Date for Schema
+      const isoDate = selectedPost.date.includes("20") 
+        ? "2026-10-20T00:00:00+00:00" 
+        : "2026-10-19T00:00:00+00:00";
+
       const schemaData: Record<string, any> = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "headline": selectedPost.title,
-        "description": selectedPost.metaDescription || selectedPost.excerpt,
+        "description": descriptionText,
         "image": selectedPost.image,
-        "datePublished": "2026-10-19T00:00:00+00:00",
-        "dateModified": "2026-10-19T00:00:00+00:00",
+        "datePublished": isoDate,
+        "dateModified": isoDate,
         "author": {
           "@type": "Organization",
           "name": selectedPost.author.name,
@@ -170,6 +200,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
           "In-depth articles, conversion blueprints, Webflow engineering strategies, and technical SEO guides for high-growth modern businesses."
         );
       }
+      canonicalLink.setAttribute("href", "https://vprimedigitalz.com/blog");
       if (schemaScript) {
         schemaScript.remove();
       }
@@ -180,19 +211,25 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       if (metaDesc && previousDesc) {
         metaDesc.setAttribute("content", previousDesc);
       }
+      if (canonicalLink && previousCanonical) {
+        canonicalLink.setAttribute("href", previousCanonical);
+      }
       if (schemaScript) {
         schemaScript.remove();
       }
     };
   }, [selectedPost]);
 
-  const categories = ["All", "Business Growth", "Case Study", "Design", "SEO"];
+  const categories = ["All", "Website Design", "Business Growth", "Case Study", "Design", "SEO"];
 
   const handlePostClick = (post: BlogPost) => {
     setSelectedPost(post);
     setReadingProgress(0);
     setExpandedFaqIndex(0);
-    if (typeof window !== "undefined") {
+    setChecklistProgress({});
+    if (onPageChange) {
+      onPageChange("blog", post.slug);
+    } else if (typeof window !== "undefined") {
       window.history.pushState(null, "", `/blog/${post.slug}`);
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -201,7 +238,10 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
   const handleBackToGrid = () => {
     setSelectedPost(null);
     setReadingProgress(0);
-    if (typeof window !== "undefined") {
+    setChecklistProgress({});
+    if (onPageChange) {
+      onPageChange("blog");
+    } else if (typeof window !== "undefined") {
       window.history.pushState(null, "", "/blog");
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -232,37 +272,311 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
     }
   };
 
+  const toggleChecklistItem = (idx: number) => {
+    setChecklistProgress((prev) => ({
+      ...prev,
+      [idx]: !prev[idx]
+    }));
+  };
+
   // Filter blog posts mapping
   const filteredPosts = blogPostsData.filter((post) => {
     const matchesSearch = 
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
       post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
       post.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesCat = selectedCategory === "All" || post.category === selectedCategory;
+    
+    const matchesCat = 
+      selectedCategory === "All" || 
+      post.category === selectedCategory ||
+      (selectedCategory === "Website Design" && post.category === "Design") ||
+      (selectedCategory === "Design" && post.category === "Website Design");
+    
     return matchesSearch && matchesCat;
   });
 
-  // Featured article is our first article
+  // Featured article is Day 2 (10 Signs) or Day 1
   const featuredArticle = blogPostsData[0];
   const popularPosts = blogPostsData.slice(1, 4);
 
-  // Helper to render markdown content with internal links
+  // Helper to parse markdown inline formatting: [link](url), **bold**, and *italic*
+  const renderInlineFormatting = (text: string): ReactNode => {
+    // Regex for links, bold, and italic tokens
+    const tokenRegex = /(\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*|\*([^*]+)\*)/g;
+    const elements: ReactNode[] = [];
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+
+    while ((match = tokenRegex.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        elements.push(text.substring(lastIndex, match.index));
+      }
+
+      if (match[2] && match[3]) {
+        // Link: [label](url)
+        const label = match[2];
+        const link = match[3];
+        elements.push(
+          <button
+            key={`link-${match.index}`}
+            onClick={(e) => {
+              e.preventDefault();
+              if (link.startsWith("/services")) {
+                onPageChange?.("services");
+              } else if (link.startsWith("/portfolio")) {
+                onPageChange?.("portfolio");
+              } else if (link.startsWith("/booking")) {
+                onBookCall();
+              } else if (link.startsWith("/blog")) {
+                const sub = link.replace("/blog/", "");
+                if (sub && sub !== "/blog") {
+                  onPageChange?.("blog", sub);
+                } else {
+                  handleBackToGrid();
+                }
+              } else {
+                onPageChange?.("home");
+              }
+            }}
+            className="blog-link-text underline font-semibold transition-colors cursor-pointer inline-flex items-center gap-0.5 mx-0.5"
+          >
+            <span>{label}</span>
+            <ExternalLink size={11} className="inline opacity-70" />
+          </button>
+        );
+      } else if (match[4]) {
+        // Bold: **text**
+        elements.push(
+          <strong key={`bold-${match.index}`} className="font-bold blog-heading-primary">
+            {match[4]}
+          </strong>
+        );
+      } else if (match[5]) {
+        // Italic: *text*
+        elements.push(
+          <em key={`italic-${match.index}`} className="italic">
+            {match[5]}
+          </em>
+        );
+      }
+
+      lastIndex = tokenRegex.lastIndex;
+    }
+
+    if (lastIndex < text.length) {
+      elements.push(text.substring(lastIndex));
+    }
+
+    return elements.length > 0 ? elements : text;
+  };
+
+  // Helper to render markdown content with full structural support
   const renderFormattedParagraph = (para: string, idx: number) => {
-    if (para.startsWith("### ")) {
+    const trimmed = para.trim();
+
+    // 1. Horizontal divider
+    if (trimmed === "---") {
+      return <hr key={idx} className="my-8 border-t blog-border-color" />;
+    }
+
+    // 2. Headings with Sign Numbers: "## 1. Your Website Looks Outdated"
+    const signHeadingMatch = trimmed.match(/^##\s+(\d+)\.\s+(.*)$/);
+    if (signHeadingMatch) {
+      const signNum = parseInt(signHeadingMatch[1], 10);
+      const signTitle = signHeadingMatch[2];
+      const signId = `sign-${signNum}`;
+
       return (
-        <h2 key={idx} className="blog-heading-primary text-xl sm:text-2xl font-display font-extrabold pt-8 pb-3 tracking-tight border-b blog-border-color flex items-center gap-2.5">
-          <span className="w-2 h-2 rounded-full bg-[#05BB8D] shrink-0" />
-          <span>{para.replace("### ", "").trim()}</span>
-        </h2>
+        <div key={idx} id={signId} className="pt-8 pb-3 scroll-mt-28 space-y-2">
+          <div className="flex items-center gap-2.5">
+            <span className="blog-badge-pill font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md border tracking-wider">
+              SIGN {signNum < 10 ? `0${signNum}` : signNum}
+            </span>
+            <span className="h-px flex-1 blog-border-color border-t" />
+          </div>
+          <h2 className="blog-heading-primary text-2xl sm:text-3xl font-display font-extrabold tracking-tight">
+            {signTitle}
+          </h2>
+        </div>
       );
     }
 
-    if (para.startsWith("---")) {
-      return <hr key={idx} className="my-8 border blog-border-color" />;
+    // 3. Other H2 Headings: "## Does Your Website Need a Full Redesign?", etc.
+    if (trimmed.startsWith("## ")) {
+      const headingText = trimmed.replace("## ", "").trim();
+
+      // Don't render "## Frequently Asked Questions" or "## Ready to Improve Your Website?" as plain text
+      // because they have dedicated high-converting interactive sections below
+      if (headingText.toLowerCase().includes("frequently asked questions") || 
+          headingText.toLowerCase().includes("ready to improve your website")) {
+        return null;
+      }
+
+      const slugId = headingText.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+      return (
+        <div key={idx} id={slugId} className="pt-10 pb-4 scroll-mt-28 border-b blog-border-color">
+          <h2 className="blog-heading-primary text-xl sm:text-2xl md:text-3xl font-display font-black tracking-tight flex items-center gap-3">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#05BB8D] shrink-0" />
+            <span>{headingText}</span>
+          </h2>
+        </div>
+      );
     }
 
-    if (para.includes("\n- ") || para.startsWith("- ")) {
-      const items = para.split("\n- ").filter(Boolean);
+    // 4. H3 Headings: "### Heading"
+    if (trimmed.startsWith("### ")) {
+      const headingText = trimmed.replace("### ", "").trim();
+      return (
+        <h3 key={idx} className="blog-heading-primary text-lg sm:text-xl font-display font-bold pt-6 pb-2 tracking-tight flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#05BB8D] shrink-0" />
+          <span>{headingText}</span>
+        </h3>
+      );
+    }
+
+    // 5. Actionable Recommendation / "What to do:" Takeaway Box
+    if (trimmed.startsWith("**What to do:**")) {
+      const advice = trimmed.replace("**What to do:**", "").trim();
+      return (
+        <div key={idx} className="my-6 blog-callout-box border rounded-2xl p-5 sm:p-6 border-l-4 border-l-[#05BB8D] shadow-xs">
+          <div className="flex items-center space-x-2 mb-2.5">
+            <span className="w-6 h-6 rounded-lg bg-[#05BB8D]/15 text-[#05BB8D] flex items-center justify-center shrink-0">
+              <Sparkles size={13} />
+            </span>
+            <span className="blog-link-text font-mono text-xs font-bold uppercase tracking-wider">
+              Actionable Recommendation
+            </span>
+          </div>
+          <p className="blog-body-text text-sm sm:text-base leading-relaxed font-normal">
+            {renderInlineFormatting(advice)}
+          </p>
+        </div>
+      );
+    }
+
+    // 6. Highlight Pull Quote: Standalone block starting and ending with **...**
+    if (trimmed.startsWith("**") && trimmed.endsWith("**") && !trimmed.includes("\n")) {
+      const quoteText = trimmed.slice(2, -2).trim();
+      return (
+        <div key={idx} className="my-7 blog-quote-box border-l-4 p-5 sm:p-6 rounded-r-2xl border blog-border-color shadow-xs">
+          <p className="blog-heading-primary font-display text-base sm:text-lg font-bold italic leading-relaxed">
+            "{quoteText}"
+          </p>
+        </div>
+      );
+    }
+
+    // 7. Markdown Table Parsing
+    if (trimmed.includes("|") && trimmed.includes("|---")) {
+      const lines = trimmed.split("\n").filter((l) => l.trim().startsWith("|"));
+      if (lines.length >= 2) {
+        const headerCols = lines[0]
+          .split("|")
+          .map((c) => c.trim())
+          .filter(Boolean);
+
+        const rowLines = lines.slice(2); // Skip header and separator
+        const rows = rowLines.map((line) =>
+          line
+            .split("|")
+            .map((c) => c.trim())
+            .filter(Boolean)
+        );
+
+        return (
+          <div key={idx} className="my-8 rounded-2xl border blog-border-color overflow-hidden blog-table-container shadow-xs">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse text-sm">
+                <thead>
+                  <tr className="blog-table-header border-b blog-border-color">
+                    {headerCols.map((h, hIdx) => (
+                      <th key={hIdx} className="py-3.5 px-5 font-mono text-xs font-bold uppercase tracking-wider">
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y blog-border-color">
+                  {rows.map((row, rIdx) => (
+                    <tr key={rIdx} className="hover:bg-[#05BB8D]/5 transition-colors">
+                      {row.map((cell, cIdx) => (
+                        <td key={cIdx} className="py-3.5 px-5 text-sm blog-table-cell">
+                          {cIdx === 0 ? (
+                            <span className="font-semibold blog-heading-primary flex items-center gap-2">
+                              <span className="w-1.5 h-1.5 rounded-full bg-slate-400 shrink-0" />
+                              <span>{cell}</span>
+                            </span>
+                          ) : (
+                            <span className="flex items-center gap-2">
+                              <CheckCircle2 size={15} className="text-[#05BB8D] shrink-0" />
+                              <span className="font-medium blog-body-text">{renderInlineFormatting(cell)}</span>
+                            </span>
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        );
+      }
+    }
+
+    // 8. Numbered Checklist: "1. Question... \n 2. Question..."
+    if (/^\d+\.\s+/.test(trimmed)) {
+      const items = trimmed.split(/\n(?=\d+\.\s+)/).map((it) => {
+        const clean = it.replace(/^\d+\.\s+/, "").trim();
+        return clean;
+      });
+
+      return (
+        <div key={idx} className="my-6 space-y-3">
+          {items.map((item, itemIdx) => {
+            const isChecked = checklistProgress[itemIdx];
+            return (
+              <div
+                key={itemIdx}
+                onClick={() => toggleChecklistItem(itemIdx)}
+                className={`blog-checklist-item border rounded-xl p-4 flex items-start gap-3.5 cursor-pointer transition-all duration-200 select-none shadow-xs group ${
+                  isChecked ? "border-[#05BB8D]/60 bg-[#05BB8D]/5" : ""
+                }`}
+              >
+                <div 
+                  className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
+                    isChecked 
+                      ? "bg-[#05BB8D] text-slate-950 font-bold" 
+                      : "blog-card-subtle-surface border blog-border-color group-hover:border-[#05BB8D]/60 text-slate-400"
+                  }`}
+                >
+                  {isChecked ? (
+                    <Check size={14} className="stroke-[3]" />
+                  ) : (
+                    <span className="font-mono text-xs font-bold">{itemIdx + 1 < 10 ? `0${itemIdx + 1}` : itemIdx + 1}</span>
+                  )}
+                </div>
+                <div className="flex-1">
+                  <p className={`text-sm sm:text-base leading-relaxed transition-opacity ${
+                    isChecked ? "line-through opacity-60 blog-muted-text" : "blog-heading-primary font-medium"
+                  }`}>
+                    {renderInlineFormatting(item)}
+                  </p>
+                </div>
+                <span className="text-[11px] font-mono text-xs blog-muted-text opacity-0 group-hover:opacity-100 transition-opacity hidden sm:inline">
+                  {isChecked ? "Completed" : "Tap to audit"}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
+    // 9. Bullet list: "- item \n - item"
+    if (trimmed.includes("\n- ") || trimmed.startsWith("- ")) {
+      const items = trimmed.split("\n- ").filter(Boolean);
       return (
         <ul key={idx} className="space-y-2.5 my-4 pl-2">
           {items.map((item, itemIdx) => {
@@ -270,7 +584,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             return (
               <li key={itemIdx} className="flex items-start gap-2.5 blog-body-text text-sm sm:text-base leading-relaxed">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#05BB8D] shrink-0 mt-2.5" />
-                <span>{renderTextWithInternalLinks(cleanItem)}</span>
+                <span>{renderInlineFormatting(cleanItem)}</span>
               </li>
             );
           })}
@@ -278,57 +592,44 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       );
     }
 
+    // 10. Skip the plain-text FAQ body lines and final promo paragraph (handled in dedicated blocks)
+    if (trimmed.startsWith("### How often") || 
+        trimmed.startsWith("### Will a website") || 
+        trimmed.startsWith("### Can I redesign") || 
+        trimmed.startsWith("### How much does") || 
+        trimmed.startsWith("### Should I redesign") ||
+        trimmed.startsWith("At **Vprime Digitalz**, we help businesses")) {
+      return null;
+    }
+
+    // 11. Standard clean body paragraph
     return (
       <p key={idx} className="blog-body-text text-sm sm:text-base leading-relaxed font-normal">
-        {renderTextWithInternalLinks(para)}
+        {renderInlineFormatting(trimmed)}
       </p>
     );
   };
 
-  const renderTextWithInternalLinks = (text: string) => {
-    const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
-    const parts = [];
-    let lastIndex = 0;
-    let match;
+  // Quick Table of Contents signs list for Day 2
+  const isDay2Post = selectedPost?.id === "10-signs-your-website-needs-a-redesign";
+  const signsList = useMemo(() => [
+    { num: 1, title: "Outdated Look", id: "sign-1" },
+    { num: 2, title: "Not Mobile-Friendly", id: "sign-2" },
+    { num: 3, title: "Loads Too Slowly", id: "sign-3" },
+    { num: 4, title: "Confusing Navigation", id: "sign-4" },
+    { num: 5, title: "Few Enquiries", id: "sign-5" },
+    { num: 6, title: "Misaligned Branding", id: "sign-6" },
+    { num: 7, title: "Weak Trust Signals", id: "sign-7" },
+    { num: 8, title: "Difficult to Update", id: "sign-8" },
+    { num: 9, title: "Weak SEO Setup", id: "sign-9" },
+    { num: 10, title: "Unclear CTAs", id: "sign-10" },
+  ], []);
 
-    while ((match = regex.exec(text)) !== null) {
-      if (match.index > lastIndex) {
-        parts.push(text.substring(lastIndex, match.index));
-      }
-
-      const label = match[1];
-      const link = match[2];
-
-      parts.push(
-        <button
-          key={match.index}
-          onClick={(e) => {
-            e.preventDefault();
-            if (link.startsWith("/services")) {
-              onPageChange?.("services");
-            } else if (link.startsWith("/portfolio")) {
-              onPageChange?.("portfolio");
-            } else if (link.startsWith("/booking")) {
-              onBookCall();
-            } else {
-              onPageChange?.("home");
-            }
-          }}
-          className="blog-link-text underline font-semibold transition-colors cursor-pointer inline-flex items-center gap-0.5"
-        >
-          <span>{label}</span>
-          <ExternalLink size={11} className="inline opacity-70" />
-        </button>
-      );
-
-      lastIndex = regex.lastIndex;
+  const scrollToAnchor = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-
-    if (lastIndex < text.length) {
-      parts.push(text.substring(lastIndex));
-    }
-
-    return parts.length > 0 ? parts : text;
   };
 
   return (
@@ -348,155 +649,189 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             >
               {/* Header */}
               <div className="text-center max-w-3xl mx-auto space-y-4">
-                <div className="inline-flex items-center space-x-1.5 blog-badge-pill font-mono text-[10px] px-3.5 py-1.5 rounded-full font-bold uppercase tracking-wider">
-                  <Sparkles size={12} className="text-[#05BB8D]" />
-                  <span>VPRIME INSIGHTS & STRATEGY</span>
+                <div className="inline-flex items-center space-x-2 blog-badge-pill font-mono text-[11px] px-3.5 py-1.5 rounded-full font-bold uppercase tracking-wider">
+                  <Sparkles size={13} className="text-[#05BB8D]" />
+                  <span>30-Day Engineering & Strategy Series</span>
                 </div>
-                <h1 className="blog-heading-primary text-3xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight leading-tight">
-                  Actionable guides to modern web engineering & growth.
+
+                <h1 className="blog-heading-primary text-3xl sm:text-5xl md:text-6xl font-display font-black tracking-tight leading-tight">
+                  Insights & Conversion Strategies
                 </h1>
-                <p className="blog-muted-text text-sm md:text-base leading-relaxed max-w-2xl mx-auto font-normal">
-                  Tested strategies, conversion rate optimization checklists, and technical frameworks designed to turn your website into a predictable revenue asset.
+
+                <p className="blog-muted-text text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+                  In-depth design breakdowns, technical SEO blueprints, Webflow engineering playbooks, and conversion architectures for modern high-growth businesses.
                 </p>
               </div>
 
-              {/* ================= FEATURED ARTICLE HERO CARD ================= */}
-              {featuredArticle && (
-                <div 
-                  id="featured-article-card"
-                  onClick={() => handlePostClick(featuredArticle)}
-                  className="blog-hero-card rounded-3xl p-6 sm:p-10 border transition-all duration-300 cursor-pointer grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative overflow-hidden group"
-                >
-                  <div className="lg:col-span-7 space-y-5 relative z-10">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span className="bg-[#05BB8D] text-[#0F121D] font-mono text-[10px] uppercase font-black px-3 py-1 rounded-full tracking-widest shadow-xs">
-                        FEATURED ARTICLE
-                      </span>
-                      <span className="blog-badge-pill font-mono text-[10px] uppercase font-bold px-2.5 py-1 rounded-md">
-                        {featuredArticle.category}
-                      </span>
-                      <span className="blog-muted-text">•</span>
-                      <span className="flex items-center space-x-1 text-xs font-mono blog-muted-text">
-                        <Calendar size={12} className="text-[#05BB8D]" />
-                        <span>{featuredArticle.date}</span>
-                      </span>
-                      <span className="blog-muted-text">•</span>
-                      <span className="flex items-center space-x-1 text-xs font-mono blog-muted-text">
-                        <Clock size={12} className="text-[#05BB8D]" />
-                        <span>{featuredArticle.readTime}</span>
-                      </span>
-                    </div>
-
-                    <h2 className="blog-heading-primary text-2xl sm:text-3xl md:text-4xl font-display font-black group-hover:text-brand transition-colors tracking-tight leading-tight">
-                      {featuredArticle.title}
-                    </h2>
-
-                    <p className="blog-body-text text-sm sm:text-base leading-relaxed line-clamp-3">
-                      {featuredArticle.excerpt}
-                    </p>
-
-                    <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t blog-border-color">
-                      <div className="flex items-center space-x-3">
-                        <img 
-                          src={featuredArticle.author.avatar} 
-                          alt={featuredArticle.author.name} 
-                          className="w-10 h-10 rounded-full object-cover border border-[#05BB8D]/40" 
-                          referrerPolicy="no-referrer" 
-                        />
-                        <div>
-                          <div className="blog-heading-primary text-xs font-bold">{featuredArticle.author.name}</div>
-                          <div className="blog-muted-text text-[10px] font-mono">{featuredArticle.author.role}</div>
-                        </div>
-                      </div>
-
-                      <button
-                        className="blog-primary-btn inline-flex items-center space-x-2 font-sans text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-xl shadow-xs"
-                      >
-                        <span>Read Full Guide</span>
-                        <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="lg:col-span-5 relative z-10 aspect-video lg:aspect-square rounded-2xl overflow-hidden border blog-border-color shadow-md">
-                    <img 
-                      src={featuredArticle.image} 
-                      alt={featuredArticle.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                      referrerPolicy="no-referrer" 
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* Filtering & Search Bar row */}
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b blog-border-color pb-8 pt-4">
-                
-                {/* Categories */}
-                <div className="flex flex-wrap gap-2 self-start md:self-auto">
+              {/* Search & Category Filter Navigation Bar */}
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-2">
+                {/* Category Pills */}
+                <div className="flex items-center space-x-1.5 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
                   {categories.map((cat) => (
                     <button
                       key={cat}
                       onClick={() => setSelectedCategory(cat)}
-                      className={`px-4 py-2 rounded-xl font-display text-xs font-bold tracking-wider transition-all cursor-pointer ${
+                      className={`px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer shrink-0 border ${
                         selectedCategory === cat
-                          ? "blog-primary-btn shadow-xs"
-                          : "blog-card-subtle-surface blog-muted-text hover:text-brand border blog-border-color"
+                          ? "blog-primary-btn shadow-sm"
+                          : "blog-card-surface blog-muted-text hover:text-brand blog-border-color"
                       }`}
                     >
-                      {cat.toUpperCase()}
+                      {cat}
                     </button>
                   ))}
                 </div>
 
-                {/* Search Input widget */}
-                <div className="relative w-full md:w-80">
+                {/* Search Bar Input */}
+                <div className="relative w-full md:w-72">
+                  <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 blog-muted-text" />
                   <input
                     type="text"
-                    placeholder="Search articles, topics, tags..."
+                    placeholder="Search strategy guides..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="blog-input-field blog-border-color w-full text-xs font-medium pl-10 pr-4 py-3 rounded-xl focus:outline-none transition-all"
+                    className="blog-input-field blog-border-color w-full pl-10 pr-4 py-2.5 rounded-xl text-xs focus:outline-none transition-colors border"
                   />
-                  <Search size={14} className="blog-muted-text absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-xs blog-muted-text hover:text-brand"
+                    >
+                      Clear
+                    </button>
+                  )}
                 </div>
               </div>
 
-              {/* Grid content */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+              {/* ================= FEATURED HERO ARTICLE (Day 2 or Day 1) ================= */}
+              {featuredArticle && selectedCategory === "All" && !searchQuery && (
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-2 text-xs font-mono font-bold blog-link-text uppercase tracking-widest">
+                    <span className="w-2 h-2 rounded-full bg-[#05BB8D]" />
+                    <span>LATEST PUBLISHED STRATEGY GUIDE</span>
+                  </div>
+
+                  <div 
+                    onClick={() => handlePostClick(featuredArticle)}
+                    className="blog-hero-card rounded-3xl border overflow-hidden transition-all duration-300 hover:border-[#05BB8D]/50 group cursor-pointer"
+                  >
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+                      
+                      {/* Image Preview Box */}
+                      <div className="lg:col-span-7 relative aspect-video lg:aspect-auto overflow-hidden min-h-[280px] lg:min-h-[420px]">
+                        <img 
+                          src={featuredArticle.image} 
+                          alt={featuredArticle.title} 
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="absolute top-4 left-4">
+                          <span className="blog-badge-pill font-mono text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border shadow-sm">
+                            {featuredArticle.category}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Content Box */}
+                      <div className="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-between space-y-6">
+                        <div className="space-y-4">
+                          <div className="flex items-center space-x-3 text-xs font-mono blog-muted-text font-semibold">
+                            <span className="flex items-center space-x-1">
+                              <Calendar size={13} className="text-[#05BB8D]" />
+                              <span>{featuredArticle.date}</span>
+                            </span>
+                            <span>•</span>
+                            <span className="flex items-center space-x-1">
+                              <Clock size={13} className="text-[#05BB8D]" />
+                              <span>{featuredArticle.readTime}</span>
+                            </span>
+                          </div>
+
+                          <h2 className="blog-heading-primary text-2xl sm:text-3xl font-display font-extrabold group-hover:text-brand transition-colors tracking-tight leading-snug">
+                            {featuredArticle.title}
+                          </h2>
+
+                          <p className="blog-body-text text-sm leading-relaxed font-normal">
+                            {featuredArticle.excerpt}
+                          </p>
+
+                          <div className="flex flex-wrap gap-2 pt-2">
+                            {featuredArticle.tags.map((tag) => (
+                              <span 
+                                key={tag} 
+                                className="blog-card-subtle-surface border blog-border-color blog-muted-text text-[10px] font-mono px-2.5 py-1 rounded-md"
+                              >
+                                #{tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="pt-6 border-t blog-border-color flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <img 
+                              src={featuredArticle.author.avatar} 
+                              alt={featuredArticle.author.name} 
+                              className="w-9 h-9 rounded-full object-cover shrink-0 border border-[#05BB8D]/40" 
+                              referrerPolicy="no-referrer"
+                            />
+                            <div>
+                              <div className="blog-heading-primary text-xs font-bold">{featuredArticle.author.name}</div>
+                              <div className="blog-muted-text text-[11px] font-mono">{featuredArticle.author.role}</div>
+                            </div>
+                          </div>
+
+                          <span className="blog-primary-btn text-xs font-mono font-bold flex items-center space-x-1.5 px-4 py-2.5 rounded-xl transition-all shadow-xs">
+                            <span>Read Article</span>
+                            <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                          </span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ================= ARTICLES GRID & SIDEBAR ================= */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                 
-                {/* Left side: Articles list */}
+                {/* Left side: Articles Grid */}
                 <div className="lg:col-span-8 space-y-8">
-                  
-                  <div className="grid grid-cols-1 gap-8">
+                  <div className="flex items-center justify-between border-b blog-border-color pb-4">
+                    <h3 className="blog-heading-primary font-display font-bold text-xl tracking-tight">
+                      {selectedCategory === "All" ? "All Published Guides" : `${selectedCategory} Articles`}
+                    </h3>
+                    <span className="text-xs font-mono blog-muted-text font-bold">
+                      {filteredPosts.length} {filteredPosts.length === 1 ? "ARTICLE" : "ARTICLES"}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {filteredPosts.map((post) => (
                       <article
                         key={post.id}
-                        id={`blog-card-${post.slug}`}
                         onClick={() => handlePostClick(post)}
-                        className="blog-card-surface border blog-border-color rounded-3xl overflow-hidden group hover:border-[#05BB8D] shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer grid grid-cols-1 md:grid-cols-12 items-stretch"
+                        className="blog-card-surface border blog-border-color rounded-3xl overflow-hidden hover:border-[#05BB8D]/50 transition-all duration-300 flex flex-col justify-between group cursor-pointer shadow-xs"
                       >
-                        <div className="aspect-video md:aspect-auto md:col-span-5 bg-slate-100 overflow-hidden relative min-h-[220px]">
+                        <div className="aspect-video relative overflow-hidden">
                           <img 
                             src={post.image} 
                             alt={post.title} 
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                             referrerPolicy="no-referrer" 
                           />
                           <div className="absolute top-3 left-3">
-                            <span className="blog-badge-pill text-[10px] font-mono tracking-wider uppercase font-black px-2.5 py-1 rounded-md shadow-xs">
+                            <span className="blog-badge-pill font-mono text-[9px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md border shadow-xs">
                               {post.category}
                             </span>
                           </div>
                         </div>
 
-                        <div className="p-6 md:p-8 md:col-span-7 flex flex-col justify-between space-y-4">
-                          <div className="space-y-3">
-                            <div className="flex items-center space-x-3 text-[11px] font-mono blog-muted-text font-semibold uppercase">
-                              <span className="flex items-center space-x-1">
-                                <Calendar size={11} className="text-[#05BB8D]" />
-                                <span>{post.date}</span>
-                              </span>
+                        <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                          <div className="space-y-2.5">
+                            <div className="flex items-center space-x-2 text-[11px] font-mono blog-muted-text font-semibold">
+                              <span>{post.date}</span>
                               <span>•</span>
                               <span className="flex items-center space-x-1">
                                 <Clock size={11} className="text-[#05BB8D]" />
@@ -533,7 +868,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                     ))}
                     
                     {filteredPosts.length === 0 && (
-                      <div className="blog-card-subtle-surface border border-dashed blog-border-color text-center py-16 rounded-3xl space-y-3">
+                      <div className="col-span-2 blog-card-subtle-surface border border-dashed blog-border-color text-center py-16 rounded-3xl space-y-3">
                         <FolderOpen size={32} className="blog-muted-text mx-auto" />
                         <p className="blog-heading-primary text-base font-semibold">No articles matched your criteria.</p>
                         <p className="blog-muted-text text-xs">Try adjusting your category filter or search keywords.</p>
@@ -805,24 +1140,88 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                   />
                 </div>
 
+                {/* Quick Interactive Table of Contents for Day 2 */}
+                {isDay2Post && (
+                  <div className="blog-card-subtle-surface border blog-border-color rounded-2xl p-5 sm:p-6 space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <ListOrdered size={16} className="text-[#05BB8D]" />
+                        <span className="blog-heading-primary font-display font-bold text-sm tracking-tight">
+                          Quick Jump — In This Strategic Guide
+                        </span>
+                      </div>
+                      <span className="font-mono text-[10px] blog-muted-text font-bold uppercase tracking-wider">
+                        10 Warning Signs
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-1">
+                      {signsList.map((s) => (
+                        <button
+                          key={s.num}
+                          onClick={() => scrollToAnchor(s.id)}
+                          className="blog-card-surface border blog-border-color hover:border-[#05BB8D]/60 hover:text-brand px-2.5 py-2 rounded-xl text-left transition-all cursor-pointer group flex items-center space-x-1.5"
+                        >
+                          <span className="font-mono text-[10px] font-bold text-[#05BB8D] bg-[#05BB8D]/10 px-1.5 py-0.5 rounded">
+                            {s.num < 10 ? `0${s.num}` : s.num}
+                          </span>
+                          <span className="text-xs font-medium blog-heading-primary truncate group-hover:text-brand">
+                            {s.title}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 pt-2 border-t blog-border-color text-xs font-mono">
+                      <button
+                        onClick={() => scrollToAnchor("does-your-website-need-a-full-redesign")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Decision Matrix</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("a-simple-website-redesign-checklist")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>10-Point Checklist</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("faq-section")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>FAQ Accordion</span>
+                        <ChevronRight size={12} />
+                      </button>
+                    </div>
+                  </div>
+                )}
+
                 {/* Formatted body prose */}
-                <div className="space-y-6 pt-4 leading-relaxed">
+                <div className="space-y-6 pt-2 leading-relaxed">
                   {selectedPost.content.split("\n\n").map((para, i) => renderFormattedParagraph(para, i))}
                 </div>
 
-                {/* ================= BEAUTIFULLY STYLED FAQ SECTION ================= */}
+                {/* ================= BEAUTIFULLY STYLED FAQ ACCORDION ================= */}
                 {selectedPost.faq && selectedPost.faq.length > 0 && (
-                  <div className="my-12 blog-card-subtle-surface border blog-border-color rounded-3xl p-6 sm:p-10 space-y-6">
+                  <div id="faq-section" className="my-12 blog-card-subtle-surface border blog-border-color rounded-3xl p-6 sm:p-10 space-y-6 scroll-mt-28">
                     <div className="space-y-2">
                       <div className="inline-flex items-center space-x-1.5 blog-badge-pill font-mono text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
                         <HelpCircle size={12} className="text-[#05BB8D]" />
                         <span>FREQUENTLY ASKED QUESTIONS</span>
                       </div>
                       <h3 className="blog-heading-primary text-xl sm:text-2xl font-display font-black tracking-tight">
-                        Small Business Website Questions Answered
+                        {selectedPost.id === "10-signs-your-website-needs-a-redesign" 
+                          ? "Website Redesign Questions Answered"
+                          : "Small Business Website Questions Answered"}
                       </h3>
                       <p className="blog-muted-text text-xs sm:text-sm">
-                        Common questions founders ask us about website investments, development timelines, and search rankings in 2026.
+                        {selectedPost.id === "10-signs-your-website-needs-a-redesign"
+                          ? "Clear answers to the most common questions founders ask about website redesigns, SEO preservation, cost factors, and rebuild decisions."
+                          : "Common questions founders ask us about website investments, development timelines, and search rankings in 2026."}
                       </p>
                     </div>
 
@@ -889,7 +1288,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                 </div>
 
                 {/* ================= AUTHOR BIO CARD ================= */}
-                <div className="blog-card-subtle-surface border blog-border-color rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                <div className="blog-card-subtle-surface border blog-border-color rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6 shadow-xs">
                   <img 
                     src={selectedPost.author.avatar} 
                     alt={selectedPost.author.name} 
@@ -915,31 +1314,27 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                   </div>
 
                   <h3 className="blog-heading-primary text-2xl sm:text-3xl md:text-4xl font-display font-black max-w-2xl mx-auto tracking-tight leading-tight relative z-10">
-                    Ready to Build a Website That Works for Your Business?
+                    {selectedPost.cta?.heading || "Ready to Build a Website That Works for Your Business?"}
                   </h3>
 
                   <p className="blog-body-text text-xs sm:text-sm max-w-xl mx-auto leading-relaxed relative z-10">
-                    Your website should do more than look good. Let's create a digital experience that builds trust, supports your growth, and makes it easier for customers to reach you.
+                    {selectedPost.cta?.description || "Your website should do more than look good. Let's create a digital experience that builds trust, supports your growth, and makes it easier for customers to reach you."}
                   </p>
 
                   <div className="flex flex-col sm:flex-row justify-center gap-4 pt-2 relative z-10">
                     <button
                       onClick={onBookCall}
-                      className="blog-primary-btn inline-flex items-center justify-center space-x-2 font-sans text-xs font-bold uppercase tracking-wider px-7 py-4 rounded-xl shadow-md cursor-pointer"
+                      className="blog-primary-btn inline-flex items-center justify-center space-x-2 font-sans text-xs font-bold uppercase tracking-wider px-7 py-4 rounded-xl shadow-md cursor-pointer transition-all hover:scale-[1.02]"
                     >
-                      <span>Let's Discuss Your Project</span>
+                      <span>{selectedPost.cta?.primaryBtnText || "Let's Discuss Your Project"}</span>
                       <ArrowRight size={14} />
                     </button>
 
                     <button
-                      onClick={() => {
-                        if (onPageChange) {
-                          onPageChange("portfolio");
-                        }
-                      }}
-                      className="blog-secondary-btn inline-flex items-center justify-center space-x-2 font-sans text-xs font-bold uppercase tracking-wider px-7 py-4 rounded-xl border cursor-pointer"
+                      onClick={() => onPageChange?.("portfolio")}
+                      className="blog-secondary-btn inline-flex items-center justify-center space-x-2 font-sans text-xs font-bold uppercase tracking-wider px-7 py-4 rounded-xl border cursor-pointer transition-all hover:scale-[1.02]"
                     >
-                      <span>Explore Our Work</span>
+                      <span>{selectedPost.cta?.secondaryBtnText || "Explore Our Work"}</span>
                     </button>
                   </div>
                 </div>
