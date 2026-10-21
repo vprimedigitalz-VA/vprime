@@ -146,7 +146,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       }
 
       // Format ISO Date for Schema
-      const isoDate = selectedPost.date.includes("21")
+      const isoDate = selectedPost.date.includes("22")
+        ? "2026-10-22T00:00:00+00:00"
+        : selectedPost.date.includes("21")
         ? "2026-10-21T00:00:00+00:00"
         : selectedPost.date.includes("20") 
         ? "2026-10-20T00:00:00+00:00" 
@@ -308,39 +310,54 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         // Link: [label](url)
         const label = match[2];
         const link = match[3];
-        elements.push(
-          <button
-            key={`link-${match.index}`}
-            onClick={(e) => {
-              e.preventDefault();
-              if (link.startsWith("/services")) {
-                const sub = link.replace("/services/", "").replace("/services", "");
-                if (sub) {
-                  onPageChange?.("services", sub);
+        if (link.startsWith("http://") || link.startsWith("https://")) {
+          elements.push(
+            <a
+              key={`link-${match.index}`}
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="blog-link-text underline font-semibold transition-colors cursor-pointer inline-flex items-center gap-0.5 mx-0.5"
+            >
+              <span>{label}</span>
+              <ExternalLink size={11} className="inline opacity-70" />
+            </a>
+          );
+        } else {
+          elements.push(
+            <button
+              key={`link-${match.index}`}
+              onClick={(e) => {
+                e.preventDefault();
+                if (link.startsWith("/services")) {
+                  const sub = link.replace("/services/", "").replace("/services", "");
+                  if (sub) {
+                    onPageChange?.("services", sub);
+                  } else {
+                    onPageChange?.("services");
+                  }
+                } else if (link.startsWith("/portfolio")) {
+                  onPageChange?.("portfolio");
+                } else if (link.startsWith("/booking")) {
+                  onBookCall();
+                } else if (link.startsWith("/blog")) {
+                  const sub = link.replace("/blog/", "");
+                  if (sub && sub !== "/blog") {
+                    onPageChange?.("blog", sub);
+                  } else {
+                    handleBackToGrid();
+                  }
                 } else {
-                  onPageChange?.("services");
+                  onPageChange?.("home");
                 }
-              } else if (link.startsWith("/portfolio")) {
-                onPageChange?.("portfolio");
-              } else if (link.startsWith("/booking")) {
-                onBookCall();
-              } else if (link.startsWith("/blog")) {
-                const sub = link.replace("/blog/", "");
-                if (sub && sub !== "/blog") {
-                  onPageChange?.("blog", sub);
-                } else {
-                  handleBackToGrid();
-                }
-              } else {
-                onPageChange?.("home");
-              }
-            }}
-            className="blog-link-text underline font-semibold transition-colors cursor-pointer inline-flex items-center gap-0.5 mx-0.5"
-          >
-            <span>{label}</span>
-            <ExternalLink size={11} className="inline opacity-70" />
-          </button>
-        );
+              }}
+              className="blog-link-text underline font-semibold transition-colors cursor-pointer inline-flex items-center gap-0.5 mx-0.5"
+            >
+              <span>{label}</span>
+              <ExternalLink size={11} className="inline opacity-70" />
+            </button>
+          );
+        }
       } else if (match[4]) {
         // Bold: **text**
         elements.push(
@@ -476,6 +493,32 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             <span>{selectedPost.cta?.secondaryBtnText || "View Our Work"}</span>
           </button>
         </div>
+
+        {/* Previous Series Guides Links */}
+        <div className="pt-6 border-t blog-border-color text-left relative z-10">
+          <div className="text-[11px] font-mono font-bold uppercase tracking-wider blog-muted-text mb-3 text-center sm:text-left">
+            Explore More in Our 30-Day Series:
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            {blogPostsData
+              .filter((p) => p.slug !== selectedPost.slug)
+              .slice(0, 3)
+              .map((p) => (
+                <div
+                  key={p.id}
+                  onClick={() => handlePostClick(p)}
+                  className="blog-card-subtle-surface border blog-border-color hover:border-[#05BB8D]/50 p-3 rounded-xl cursor-pointer transition-all text-left group shadow-2xs"
+                >
+                  <div className="text-[10px] font-mono text-[#05BB8D] font-bold mb-1">
+                    {p.date}
+                  </div>
+                  <div className="blog-heading-primary text-xs font-bold line-clamp-2 group-hover:text-brand transition-colors">
+                    {p.title}
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
       </div>
     );
   };
@@ -495,16 +538,24 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
     }
 
     if (trimmed.startsWith("## Need Help Choosing the Right Website Platform?") || 
-        trimmed.startsWith("## Ready to Build a Website That Works for Your Business?")) {
+        trimmed.startsWith("## Ready to Build a Website That Works for Your Business?") ||
+        trimmed.startsWith("## Need a Transparent, Value-Driven Website Quote?")) {
       return renderStrategicCtaBox(idx);
     }
 
     // Skip redundant plain text promo blocks that are rendered by the CTA card
     if (trimmed.startsWith("At **Vprime Digitalz**, we help businesses") ||
+        trimmed.startsWith("At **Vprime Digitalz**, we believe in transparent pricing") ||
+        trimmed.startsWith("Whether you need a high-converting landing page") ||
         trimmed.startsWith("Whether you're planning a new website, considering Webflow") ||
         trimmed.startsWith("We can help you evaluate your goals, plan") ||
         trimmed.startsWith("Explore our [website design services](/services), view our [portfolio]") ||
-        trimmed.startsWith("Explore our services, view our recent projects")) {
+        trimmed.startsWith("Explore our services, view our recent projects") ||
+        trimmed.startsWith("Explore our [website design services]") ||
+        trimmed.startsWith("Also explore our previous strategy guides:") ||
+        trimmed.startsWith("- Day 1:") ||
+        trimmed.startsWith("- Day 2:") ||
+        trimmed.startsWith("- Day 3:")) {
       return null;
     }
 
@@ -615,6 +666,17 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
 
         const isWebflowVsWp = headerCols.some((h) => h.toLowerCase().includes("webflow")) &&
                               headerCols.some((h) => h.toLowerCase().includes("wordpress"));
+        const isPricingTable = headerCols.some((h) => h.toLowerCase().includes("budget") || h.toLowerCase().includes("price") || h.toLowerCase().includes("cost"));
+
+        const tableTitle = isWebflowVsWp
+          ? "Webflow vs WordPress Platform Architecture & Feature Matrix"
+          : isPricingTable
+          ? "Illustrative 2026 Website Investment Benchmark"
+          : "Strategic Comparison";
+
+        const tableSubtitle = isPricingTable
+          ? "Estimated Planning Tiers & Budget Ranges"
+          : "Detailed Side-by-Side Breakdown";
 
         return (
           <div key={idx} className="my-10 rounded-2xl border blog-border-color overflow-hidden blog-table-container shadow-xs">
@@ -623,26 +685,29 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
               <div className="flex items-center space-x-2">
                 <span className="w-2 h-2 rounded-full bg-[#05BB8D]" />
                 <span className="font-mono text-xs font-bold uppercase tracking-wider blog-heading-primary">
-                  {isWebflowVsWp ? "Webflow vs WordPress Platform Architecture & Feature Matrix" : "Strategic Comparison"}
+                  {tableTitle}
                 </span>
               </div>
               <span className="font-mono text-[10px] blog-muted-text uppercase tracking-wider hidden sm:inline">
-                Detailed Side-by-Side Breakdown
+                {tableSubtitle}
               </span>
             </div>
 
             <div className="overflow-x-auto scrollbar-thin">
-              <table className="w-full text-left border-collapse text-sm min-w-[620px]">
+              <table className={`w-full text-left border-collapse text-sm ${isPricingTable ? "min-w-[480px]" : "min-w-[620px]"}`}>
                 <thead>
                   <tr className="blog-table-header border-b blog-border-color">
                     {headerCols.map((h, hIdx) => {
                       const isWf = h.toLowerCase().includes("webflow");
                       const isWp = h.toLowerCase().includes("wordpress");
+                      const isRight = isPricingTable && hIdx === 1;
                       return (
                         <th 
                           key={hIdx} 
                           className={`py-4 px-5 font-mono text-xs font-bold tracking-wider ${
-                            hIdx === 0 ? "w-1/4" : "w-[37.5%]"
+                            isPricingTable 
+                              ? (hIdx === 0 ? "w-3/5" : "w-2/5 sm:text-right") 
+                              : (hIdx === 0 ? "w-1/4" : "w-[37.5%]")
                           }`}
                         >
                           {isWf ? (
@@ -655,6 +720,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                               <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
                               <span className="text-sm font-bold tracking-wider uppercase">{h}</span>
                             </div>
+                          ) : isRight ? (
+                            <span className="text-[#05BB8D] font-bold uppercase">{h}</span>
                           ) : (
                             <span className="blog-muted-text uppercase">{h}</span>
                           )}
@@ -667,12 +734,18 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                   {rows.map((row, rIdx) => (
                     <tr key={rIdx} className="hover:bg-[#05BB8D]/5 transition-colors">
                       {row.map((cell, cIdx) => (
-                        <td key={cIdx} className="py-4 px-5 text-sm blog-table-cell align-top">
+                        <td key={cIdx} className="py-4 px-5 text-sm blog-table-cell align-middle">
                           {cIdx === 0 ? (
                             <span className="font-semibold blog-heading-primary flex items-center gap-2">
                               <span className="w-1.5 h-1.5 rounded-full bg-[#05BB8D]/70 shrink-0" />
                               <span>{cell}</span>
                             </span>
+                          ) : isPricingTable && cIdx === 1 ? (
+                            <div className="flex justify-start sm:justify-end">
+                              <span className="inline-flex items-center font-mono font-bold text-xs sm:text-sm text-[#05BB8D] px-3.5 py-1.5 rounded-xl bg-[#05BB8D]/10 border border-[#05BB8D]/25 shadow-2xs">
+                                {renderInlineFormatting(cell)}
+                              </span>
+                            </div>
                           ) : (
                             <span className="blog-body-text leading-relaxed">
                               {renderInlineFormatting(cell)}
@@ -775,6 +848,23 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
   // Quick Table of Contents sections
   const isDay2Post = selectedPost?.slug === "10-signs-your-website-needs-a-redesign";
   const isDay3Post = selectedPost?.slug === "webflow-vs-wordpress-2026";
+  const isDay4Post = selectedPost?.slug === "how-much-does-a-professional-website-cost-2026";
+
+  const day4Sections = useMemo(() => [
+    { num: 1, title: "Pricing Spectrum", id: "section-1" },
+    { num: 2, title: "Agency vs Freelancer", id: "section-2" },
+    { num: 3, title: "Cost Drivers", id: "section-3" },
+    { num: 4, title: "Hidden & Ongoing", id: "section-4" },
+    { num: 5, title: "Cheap Sites Risk", id: "section-5" },
+    { num: 6, title: "Custom vs Template", id: "section-6" },
+    { num: 7, title: "E-Commerce", id: "section-7" },
+    { num: 8, title: "Content & Copy", id: "section-8" },
+    { num: 9, title: "Quote Checklist", id: "section-9" },
+    { num: 10, title: "Setting Budget", id: "section-10" },
+    { num: 11, title: "Agency Questions", id: "section-11" },
+    { num: 12, title: "FAQs", id: "faq-section" },
+    { num: 13, title: "Investment ROI", id: "section-13" },
+  ], []);
 
   const day2Signs = useMemo(() => [
     { num: 1, title: "Outdated Look", id: "sign-1" },
@@ -1282,6 +1372,74 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                     referrerPolicy="no-referrer" 
                   />
                 </div>
+
+                {/* Quick Interactive Table of Contents for Day 4 (Professional Website Cost in 2026) */}
+                {isDay4Post && (
+                  <div className="blog-card-subtle-surface border blog-border-color rounded-2xl p-5 sm:p-6 space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Layers size={16} className="text-[#05BB8D]" />
+                        <span className="blog-heading-primary font-display font-bold text-sm tracking-tight">
+                          Quick Jump — 2026 Website Cost & Budget Guide
+                        </span>
+                      </div>
+                      <span className="font-mono text-[10px] blog-muted-text font-bold uppercase tracking-wider">
+                        13 Sections & Pricing Benchmarks
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 pt-1">
+                      {day4Sections.map((s) => (
+                        <button
+                          key={s.num}
+                          onClick={() => scrollToAnchor(s.id)}
+                          className="blog-card-surface border blog-border-color hover:border-[#05BB8D]/60 hover:text-brand px-2.5 py-2 rounded-xl text-left transition-all cursor-pointer group flex items-center space-x-1.5"
+                        >
+                          <span className="font-mono text-[10px] font-bold text-[#05BB8D] bg-[#05BB8D]/10 px-1.5 py-0.5 rounded">
+                            {s.num < 10 ? `0${s.num}` : s.num}
+                          </span>
+                          <span className="text-xs font-medium blog-heading-primary truncate group-hover:text-brand">
+                            {s.title}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 pt-2 border-t blog-border-color text-xs font-mono">
+                      <button
+                        onClick={() => scrollToAnchor("section-1")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Illustrative Pricing Table</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("section-3")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Key Cost Drivers</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("section-11")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>5 Agency Questions</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("faq-section")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>FAQ Accordion</span>
+                        <ChevronRight size={12} />
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 {/* Quick Interactive Table of Contents for Day 3 (Webflow vs WordPress) */}
                 {isDay3Post && (
