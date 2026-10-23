@@ -146,7 +146,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       }
 
       // Format ISO Date for Schema
-      const isoDate = selectedPost.date.includes("22")
+      const isoDate = selectedPost.date.includes("23")
+        ? "2026-10-23T00:00:00+00:00"
+        : selectedPost.date.includes("22")
         ? "2026-10-22T00:00:00+00:00"
         : selectedPost.date.includes("21")
         ? "2026-10-21T00:00:00+00:00"
@@ -395,18 +397,26 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             <span>FREQUENTLY ASKED QUESTIONS</span>
           </div>
           <h3 className="blog-heading-primary text-xl sm:text-2xl font-display font-black tracking-tight">
-            {selectedPost.id === "webflow-vs-wordpress-2026"
+            {selectedPost.id === "website-mistakes-costing-your-business-customers"
+              ? "Website Mistakes & Usability Questions Answered"
+              : selectedPost.id === "how-much-does-a-professional-website-cost-2026"
+              ? "Website Cost & Investment Questions Answered"
+              : selectedPost.id === "webflow-vs-wordpress-2026"
               ? "Webflow vs WordPress Questions Answered"
               : selectedPost.id === "10-signs-your-website-needs-a-redesign"
               ? "Website Redesign Questions Answered"
               : "Frequently Asked Questions"}
           </h3>
           <p className="blog-muted-text text-xs sm:text-sm">
-            {selectedPost.id === "webflow-vs-wordpress-2026"
+            {selectedPost.id === "website-mistakes-costing-your-business-customers"
+              ? "Answers to the most common questions business owners ask about website performance, conversion friction, and redesign decisions."
+              : selectedPost.id === "how-much-does-a-professional-website-cost-2026"
+              ? "Common questions founders ask us about website investments, development timelines, and search rankings in 2026."
+              : selectedPost.id === "webflow-vs-wordpress-2026"
               ? "Answers to the most common questions founders and marketing leaders ask when choosing between Webflow and WordPress in 2026."
               : selectedPost.id === "10-signs-your-website-needs-a-redesign"
               ? "Clear answers to the most common questions founders ask about website redesigns, SEO preservation, cost factors, and rebuild decisions."
-              : "Common questions founders ask us about website investments, development timelines, and search rankings in 2026."}
+              : "Clear, transparent answers to strategic web questions."}
           </p>
         </div>
 
@@ -539,23 +549,29 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
 
     if (trimmed.startsWith("## Need Help Choosing the Right Website Platform?") || 
         trimmed.startsWith("## Ready to Build a Website That Works for Your Business?") ||
-        trimmed.startsWith("## Need a Transparent, Value-Driven Website Quote?")) {
+        trimmed.startsWith("## Need a Transparent, Value-Driven Website Quote?") ||
+        trimmed.startsWith("## Ready to Turn Your Website Into a Better Business Tool?")) {
       return renderStrategicCtaBox(idx);
     }
 
     // Skip redundant plain text promo blocks that are rendered by the CTA card
     if (trimmed.startsWith("At **Vprime Digitalz**, we help businesses") ||
         trimmed.startsWith("At **Vprime Digitalz**, we believe in transparent pricing") ||
+        trimmed.startsWith("At **Vprime Digitalz**, we design and develop") ||
+        trimmed.startsWith("Whether your website needs performance improvements") ||
         trimmed.startsWith("Whether you need a high-converting landing page") ||
         trimmed.startsWith("Whether you're planning a new website, considering Webflow") ||
         trimmed.startsWith("We can help you evaluate your goals, plan") ||
+        trimmed.startsWith("Let's explore how to create a website") ||
         trimmed.startsWith("Explore our [website design services](/services), view our [portfolio]") ||
         trimmed.startsWith("Explore our services, view our recent projects") ||
         trimmed.startsWith("Explore our [website design services]") ||
+        trimmed.startsWith("**Explore our [website design services]") ||
         trimmed.startsWith("Also explore our previous strategy guides:") ||
         trimmed.startsWith("- Day 1:") ||
         trimmed.startsWith("- Day 2:") ||
-        trimmed.startsWith("- Day 3:")) {
+        trimmed.startsWith("- Day 3:") ||
+        trimmed.startsWith("- Day 4:")) {
       return null;
     }
 
@@ -572,6 +588,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       const sectionId = selectedPost?.slug.includes("signs") ? `sign-${num}` : `section-${num}`;
       const badgeLabel = selectedPost?.slug.includes("signs") 
         ? `SIGN ${num < 10 ? `0${num}` : num}` 
+        : selectedPost?.slug.includes("mistakes")
+        ? `MISTAKE ${num < 10 ? `0${num}` : num}`
         : `SECTION ${num < 10 ? `0${num}` : num}`;
 
       return (
@@ -667,15 +685,20 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         const isWebflowVsWp = headerCols.some((h) => h.toLowerCase().includes("webflow")) &&
                               headerCols.some((h) => h.toLowerCase().includes("wordpress"));
         const isPricingTable = headerCols.some((h) => h.toLowerCase().includes("budget") || h.toLowerCase().includes("price") || h.toLowerCase().includes("cost"));
+        const isChecklistTable = headerCols.some((h) => h.toLowerCase().includes("problem") || h.toLowerCase().includes("mistake") || h.toLowerCase().includes("improvement"));
 
         const tableTitle = isWebflowVsWp
           ? "Webflow vs WordPress Platform Architecture & Feature Matrix"
           : isPricingTable
           ? "Illustrative 2026 Website Investment Benchmark"
+          : isChecklistTable
+          ? "Quick Website Mistake & Optimization Checklist"
           : "Strategic Comparison";
 
         const tableSubtitle = isPricingTable
           ? "Estimated Planning Tiers & Budget Ranges"
+          : isChecklistTable
+          ? "Friction Identification & Practical Fixes"
           : "Detailed Side-by-Side Breakdown";
 
         return (
@@ -707,6 +730,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                           className={`py-4 px-5 font-mono text-xs font-bold tracking-wider ${
                             isPricingTable 
                               ? (hIdx === 0 ? "w-3/5" : "w-2/5 sm:text-right") 
+                              : isChecklistTable
+                              ? (hIdx === 0 ? "w-2/5" : "w-3/5")
                               : (hIdx === 0 ? "w-1/4" : "w-[37.5%]")
                           }`}
                         >
@@ -722,6 +747,16 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                             </div>
                           ) : isRight ? (
                             <span className="text-[#05BB8D] font-bold uppercase">{h}</span>
+                          ) : isChecklistTable && hIdx === 1 ? (
+                            <div className="flex items-center gap-1.5 text-[#05BB8D]">
+                              <span className="w-2 h-2 rounded-full bg-[#05BB8D]" />
+                              <span className="font-bold uppercase">{h}</span>
+                            </div>
+                          ) : isChecklistTable && hIdx === 0 ? (
+                            <div className="flex items-center gap-1.5 blog-heading-primary">
+                              <span className="w-2 h-2 rounded-full bg-amber-500" />
+                              <span className="font-bold uppercase">{h}</span>
+                            </div>
                           ) : (
                             <span className="blog-muted-text uppercase">{h}</span>
                           )}
@@ -736,13 +771,24 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                       {row.map((cell, cIdx) => (
                         <td key={cIdx} className="py-4 px-5 text-sm blog-table-cell align-middle">
                           {cIdx === 0 ? (
-                            <span className="font-semibold blog-heading-primary flex items-center gap-2">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#05BB8D]/70 shrink-0" />
+                            <span className="font-semibold blog-heading-primary flex items-start gap-2">
+                              {isChecklistTable ? (
+                                <span className="w-2 h-2 rounded-full bg-amber-500/80 shrink-0 mt-1.5" />
+                              ) : (
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#05BB8D]/70 shrink-0 mt-1.5" />
+                              )}
                               <span>{cell}</span>
                             </span>
                           ) : isPricingTable && cIdx === 1 ? (
                             <div className="flex justify-start sm:justify-end">
                               <span className="inline-flex items-center font-mono font-bold text-xs sm:text-sm text-[#05BB8D] px-3.5 py-1.5 rounded-xl bg-[#05BB8D]/10 border border-[#05BB8D]/25 shadow-2xs">
+                                {renderInlineFormatting(cell)}
+                              </span>
+                            </div>
+                          ) : isChecklistTable && cIdx === 1 ? (
+                            <div className="flex items-start gap-2">
+                              <CheckCircle2 size={16} className="text-[#05BB8D] shrink-0 mt-0.5" />
+                              <span className="blog-body-text leading-relaxed font-medium">
                                 {renderInlineFormatting(cell)}
                               </span>
                             </div>
@@ -849,6 +895,22 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
   const isDay2Post = selectedPost?.slug === "10-signs-your-website-needs-a-redesign";
   const isDay3Post = selectedPost?.slug === "webflow-vs-wordpress-2026";
   const isDay4Post = selectedPost?.slug === "how-much-does-a-professional-website-cost-2026";
+  const isDay5Post = selectedPost?.slug === "website-mistakes-costing-your-business-customers";
+
+  const day5Sections = useMemo(() => [
+    { num: 1, title: "Unclear Offer", id: "section-1" },
+    { num: 2, title: "Slow Loading", id: "section-2" },
+    { num: 3, title: "Bad Mobile UX", id: "section-3" },
+    { num: 4, title: "Confusing Nav", id: "section-4" },
+    { num: 5, title: "Missing Trust", id: "section-5" },
+    { num: 6, title: "Weak CTAs", id: "section-6" },
+    { num: 7, title: "Ignores Goals", id: "section-7" },
+    { num: 8, title: "Mistake Checklist", id: "quick-website-mistake-checklist" },
+    { num: 9, title: "Fix Hierarchy", id: "how-to-identify-which-website-problems-to-fix-first" },
+    { num: 10, title: "Fix vs Rebuild", id: "should-you-fix-your-website-or-redesign-it-completely-" },
+    { num: 11, title: "FAQs", id: "faq-section" },
+    { num: 12, title: "Final Thoughts", id: "final-thoughts" },
+  ], []);
 
   const day4Sections = useMemo(() => [
     { num: 1, title: "Pricing Spectrum", id: "section-1" },
@@ -1372,6 +1434,74 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                     referrerPolicy="no-referrer" 
                   />
                 </div>
+
+                {/* Quick Interactive Table of Contents for Day 5 (7 Website Mistakes) */}
+                {isDay5Post && (
+                  <div className="blog-card-subtle-surface border blog-border-color rounded-2xl p-5 sm:p-6 space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Layers size={16} className="text-[#05BB8D]" />
+                        <span className="blog-heading-primary font-display font-bold text-sm tracking-tight">
+                          Quick Jump — 7 Website Mistakes & Usability Guide
+                        </span>
+                      </div>
+                      <span className="font-mono text-[10px] blog-muted-text font-bold uppercase tracking-wider">
+                        7 Mistakes & Action Frameworks
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2 pt-1">
+                      {day5Sections.map((s) => (
+                        <button
+                          key={s.num}
+                          onClick={() => scrollToAnchor(s.id)}
+                          className="blog-card-surface border blog-border-color hover:border-[#05BB8D]/60 hover:text-brand px-2.5 py-2 rounded-xl text-left transition-all cursor-pointer group flex items-center space-x-1.5"
+                        >
+                          <span className="font-mono text-[10px] font-bold text-[#05BB8D] bg-[#05BB8D]/10 px-1.5 py-0.5 rounded">
+                            {s.num < 10 ? `0${s.num}` : s.num}
+                          </span>
+                          <span className="text-xs font-medium blog-heading-primary truncate group-hover:text-brand">
+                            {s.title}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 pt-2 border-t blog-border-color text-xs font-mono">
+                      <button
+                        onClick={() => scrollToAnchor("quick-website-mistake-checklist")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Checklist Table</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("how-to-identify-which-website-problems-to-fix-first")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>6-Step Priority Guide</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("should-you-fix-your-website-or-redesign-it-completely-")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Fix vs Redesign</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("faq-section")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>FAQ Accordion</span>
+                        <ChevronRight size={12} />
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 {/* Quick Interactive Table of Contents for Day 4 (Professional Website Cost in 2026) */}
                 {isDay4Post && (
