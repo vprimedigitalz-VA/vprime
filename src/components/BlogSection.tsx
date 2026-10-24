@@ -146,7 +146,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       }
 
       // Format ISO Date for Schema
-      const isoDate = selectedPost.date.includes("23")
+      const isoDate = selectedPost.date.includes("24")
+        ? "2026-10-24T00:00:00+00:00"
+        : selectedPost.date.includes("23")
         ? "2026-10-23T00:00:00+00:00"
         : selectedPost.date.includes("22")
         ? "2026-10-22T00:00:00+00:00"
@@ -397,7 +399,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             <span>FREQUENTLY ASKED QUESTIONS</span>
           </div>
           <h3 className="blog-heading-primary text-xl sm:text-2xl font-display font-black tracking-tight">
-            {selectedPost.id === "website-mistakes-costing-your-business-customers"
+            {selectedPost.id === "how-to-turn-website-visitors-into-customers"
+              ? "Website Conversion Questions Answered"
+              : selectedPost.id === "website-mistakes-costing-your-business-customers"
               ? "Website Mistakes & Usability Questions Answered"
               : selectedPost.id === "how-much-does-a-professional-website-cost-2026"
               ? "Website Cost & Investment Questions Answered"
@@ -408,7 +412,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
               : "Frequently Asked Questions"}
           </h3>
           <p className="blog-muted-text text-xs sm:text-sm">
-            {selectedPost.id === "website-mistakes-costing-your-business-customers"
+            {selectedPost.id === "how-to-turn-website-visitors-into-customers"
+              ? "Answers to the most common questions business owners ask about conversion optimization, lead qualification, and turning traffic into sales."
+              : selectedPost.id === "website-mistakes-costing-your-business-customers"
               ? "Answers to the most common questions business owners ask about website performance, conversion friction, and redesign decisions."
               : selectedPost.id === "how-much-does-a-professional-website-cost-2026"
               ? "Common questions founders ask us about website investments, development timelines, and search rankings in 2026."
@@ -550,7 +556,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
     if (trimmed.startsWith("## Need Help Choosing the Right Website Platform?") || 
         trimmed.startsWith("## Ready to Build a Website That Works for Your Business?") ||
         trimmed.startsWith("## Need a Transparent, Value-Driven Website Quote?") ||
-        trimmed.startsWith("## Ready to Turn Your Website Into a Better Business Tool?")) {
+        trimmed.startsWith("## Ready to Turn Your Website Into a Better Business Tool?") ||
+        trimmed.startsWith("## Ready to Make Your Website Work Better for Your Business?")) {
       return renderStrategicCtaBox(idx);
     }
 
@@ -559,6 +566,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         trimmed.startsWith("At **Vprime Digitalz**, we believe in transparent pricing") ||
         trimmed.startsWith("At **Vprime Digitalz**, we design and develop") ||
         trimmed.startsWith("Whether your website needs performance improvements") ||
+        trimmed.startsWith("Whether you're building a new website, improving an existing one") ||
         trimmed.startsWith("Whether you need a high-converting landing page") ||
         trimmed.startsWith("Whether you're planning a new website, considering Webflow") ||
         trimmed.startsWith("We can help you evaluate your goals, plan") ||
@@ -571,7 +579,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         trimmed.startsWith("- Day 1:") ||
         trimmed.startsWith("- Day 2:") ||
         trimmed.startsWith("- Day 3:") ||
-        trimmed.startsWith("- Day 4:")) {
+        trimmed.startsWith("- Day 4:") ||
+        trimmed.startsWith("- Day 5:")) {
       return null;
     }
 
@@ -585,11 +594,19 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
     if (numberedHeadingMatch) {
       const num = parseInt(numberedHeadingMatch[1], 10);
       const title = numberedHeadingMatch[2];
-      const sectionId = selectedPost?.slug.includes("signs") ? `sign-${num}` : `section-${num}`;
+      const sectionId = selectedPost?.slug.includes("signs") 
+        ? `sign-${num}` 
+        : selectedPost?.slug.includes("customers")
+        ? `strategy-${num}`
+        : selectedPost?.slug.includes("mistakes")
+        ? `mistake-${num}`
+        : `section-${num}`;
       const badgeLabel = selectedPost?.slug.includes("signs") 
         ? `SIGN ${num < 10 ? `0${num}` : num}` 
         : selectedPost?.slug.includes("mistakes")
         ? `MISTAKE ${num < 10 ? `0${num}` : num}`
+        : selectedPost?.slug.includes("customers")
+        ? `STRATEGY ${num < 10 ? `0${num}` : num}`
         : `SECTION ${num < 10 ? `0${num}` : num}`;
 
       return (
@@ -686,6 +703,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                               headerCols.some((h) => h.toLowerCase().includes("wordpress"));
         const isPricingTable = headerCols.some((h) => h.toLowerCase().includes("budget") || h.toLowerCase().includes("price") || h.toLowerCase().includes("cost"));
         const isChecklistTable = headerCols.some((h) => h.toLowerCase().includes("problem") || h.toLowerCase().includes("mistake") || h.toLowerCase().includes("improvement"));
+        const isConversionChecklist = headerCols.some((h) => h.toLowerCase().includes("element") || h.toLowerCase().includes("check"));
 
         const tableTitle = isWebflowVsWp
           ? "Webflow vs WordPress Platform Architecture & Feature Matrix"
@@ -693,12 +711,16 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
           ? "Illustrative 2026 Website Investment Benchmark"
           : isChecklistTable
           ? "Quick Website Mistake & Optimization Checklist"
+          : isConversionChecklist
+          ? "Quick Website Conversion Checklist"
           : "Strategic Comparison";
 
         const tableSubtitle = isPricingTable
           ? "Estimated Planning Tiers & Budget Ranges"
           : isChecklistTable
           ? "Friction Identification & Practical Fixes"
+          : isConversionChecklist
+          ? "Key Website Elements & Audit Criteria"
           : "Detailed Side-by-Side Breakdown";
 
         return (
@@ -730,7 +752,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                           className={`py-4 px-5 font-mono text-xs font-bold tracking-wider ${
                             isPricingTable 
                               ? (hIdx === 0 ? "w-3/5" : "w-2/5 sm:text-right") 
-                              : isChecklistTable
+                              : (isChecklistTable || isConversionChecklist)
                               ? (hIdx === 0 ? "w-2/5" : "w-3/5")
                               : (hIdx === 0 ? "w-1/4" : "w-[37.5%]")
                           }`}
@@ -757,6 +779,16 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                               <span className="w-2 h-2 rounded-full bg-amber-500" />
                               <span className="font-bold uppercase">{h}</span>
                             </div>
+                          ) : isConversionChecklist && hIdx === 0 ? (
+                            <div className="flex items-center gap-1.5 blog-heading-primary">
+                              <span className="w-2 h-2 rounded-full bg-[#05BB8D]" />
+                              <span className="font-bold uppercase">{h}</span>
+                            </div>
+                          ) : isConversionChecklist && hIdx === 1 ? (
+                            <div className="flex items-center gap-1.5 text-[#05BB8D]">
+                              <span className="w-2 h-2 rounded-full bg-[#05BB8D]" />
+                              <span className="font-bold uppercase">{h}</span>
+                            </div>
                           ) : (
                             <span className="blog-muted-text uppercase">{h}</span>
                           )}
@@ -774,6 +806,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                             <span className="font-semibold blog-heading-primary flex items-start gap-2">
                               {isChecklistTable ? (
                                 <span className="w-2 h-2 rounded-full bg-amber-500/80 shrink-0 mt-1.5" />
+                              ) : isConversionChecklist ? (
+                                <span className="w-2 h-2 rounded-full bg-[#05BB8D] shrink-0 mt-1.5" />
                               ) : (
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#05BB8D]/70 shrink-0 mt-1.5" />
                               )}
@@ -785,7 +819,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                                 {renderInlineFormatting(cell)}
                               </span>
                             </div>
-                          ) : isChecklistTable && cIdx === 1 ? (
+                          ) : (isChecklistTable || isConversionChecklist) && cIdx === 1 ? (
                             <div className="flex items-start gap-2">
                               <CheckCircle2 size={16} className="text-[#05BB8D] shrink-0 mt-0.5" />
                               <span className="blog-body-text leading-relaxed font-medium">
@@ -896,6 +930,26 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
   const isDay3Post = selectedPost?.slug === "webflow-vs-wordpress-2026";
   const isDay4Post = selectedPost?.slug === "how-much-does-a-professional-website-cost-2026";
   const isDay5Post = selectedPost?.slug === "website-mistakes-costing-your-business-customers";
+  const isDay6Post = selectedPost?.slug === "how-to-turn-website-visitors-into-customers";
+
+  const day6Sections = useMemo(() => [
+    { num: 1, title: "Clear Message", id: "strategy-1" },
+    { num: 2, title: "First Impression", id: "strategy-2" },
+    { num: 3, title: "Clear CTAs", id: "strategy-3" },
+    { num: 4, title: "Build Trust", id: "strategy-4" },
+    { num: 5, title: "Navigation", id: "strategy-5" },
+    { num: 6, title: "Speed & Mobile", id: "strategy-6" },
+    { num: 7, title: "Landing Pages", id: "strategy-7" },
+    { num: 8, title: "Simple Forms", id: "strategy-8" },
+    { num: 9, title: "Helpful Content", id: "strategy-9" },
+    { num: 10, title: "Clear Offers", id: "strategy-10" },
+    { num: 11, title: "Analytics", id: "strategy-11" },
+    { num: 12, title: "Testing", id: "strategy-12" },
+    { num: 13, title: "Checklist", id: "quick-website-conversion-checklist" },
+    { num: 14, title: "Service Example", id: "a-practical-example-improving-a-service-business-website" },
+    { num: 15, title: "Timeline", id: "how-long-does-it-take-to-improve-website-conversions-" },
+    { num: 16, title: "FAQs", id: "faq-section" },
+  ], []);
 
   const day5Sections = useMemo(() => [
     { num: 1, title: "Unclear Offer", id: "section-1" },
@@ -1434,6 +1488,74 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                     referrerPolicy="no-referrer" 
                   />
                 </div>
+
+                {/* Quick Interactive Table of Contents for Day 6 (Turn Website Visitors Into Customers) */}
+                {isDay6Post && (
+                  <div className="blog-card-subtle-surface border blog-border-color rounded-2xl p-5 sm:p-6 space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Layers size={16} className="text-[#05BB8D]" />
+                        <span className="blog-heading-primary font-display font-bold text-sm tracking-tight">
+                          Quick Jump — 12 Practical Conversion Strategies
+                        </span>
+                      </div>
+                      <span className="font-mono text-[10px] blog-muted-text font-bold uppercase tracking-wider">
+                        16 Sections & Audit Frameworks
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-8 gap-2 pt-1">
+                      {day6Sections.map((s) => (
+                        <button
+                          key={s.num}
+                          onClick={() => scrollToAnchor(s.id)}
+                          className="blog-card-surface border blog-border-color hover:border-[#05BB8D]/60 hover:text-brand px-2.5 py-2 rounded-xl text-left transition-all cursor-pointer group flex items-center space-x-1.5"
+                        >
+                          <span className="font-mono text-[10px] font-bold text-[#05BB8D] bg-[#05BB8D]/10 px-1.5 py-0.5 rounded">
+                            {s.num < 10 ? `0${s.num}` : s.num}
+                          </span>
+                          <span className="text-xs font-medium blog-heading-primary truncate group-hover:text-brand">
+                            {s.title}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 pt-2 border-t blog-border-color text-xs font-mono">
+                      <button
+                        onClick={() => scrollToAnchor("quick-website-conversion-checklist")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Conversion Checklist</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("a-practical-example-improving-a-service-business-website")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Service Business Case</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("how-long-does-it-take-to-improve-website-conversions-")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Timeline & Testing</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("faq-section")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>FAQ Accordion</span>
+                        <ChevronRight size={12} />
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 {/* Quick Interactive Table of Contents for Day 5 (7 Website Mistakes) */}
                 {isDay5Post && (

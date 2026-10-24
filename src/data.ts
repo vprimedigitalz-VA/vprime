@@ -1194,6 +1194,727 @@ export const pricingPlans: PricingPlan[] = [
 
 export const blogPostsData: BlogPost[] = [
   {
+    id: "how-to-turn-website-visitors-into-customers",
+    slug: "how-to-turn-website-visitors-into-customers",
+    title: "How to Turn Your Website Visitors Into Paying Customers: 12 Practical Strategies",
+    category: "Conversions / Business Growth",
+    excerpt: "Getting website visitors but not enough enquiries or sales? Learn 12 practical strategies to improve trust, usability, calls to action, and conversions.",
+    content: `Your website is getting visitors.
+
+People are clicking your links, discovering your services, and spending time exploring your pages.
+
+But there's a problem.
+
+**Not enough of those visitors are becoming customers.**
+
+For many business owners, this is one of the most frustrating parts of having a website.
+
+You can invest in social media marketing, search engine optimization, paid advertising, and content creation, but if people arrive at your website and leave without taking action, those efforts may not deliver the results you're hoping for.
+
+The solution isn't always to attract more traffic.
+
+Sometimes, the better opportunity is to improve what happens after people arrive.
+
+This is where website conversion optimization becomes important.
+
+In this guide, we'll explore 12 practical ways to improve your website's customer journey, encourage qualified enquiries, and make it easier for visitors to become paying customers.
+
+---
+
+## What Does It Mean to Convert Website Visitors Into Customers?
+
+A website conversion happens when a visitor completes an action that supports your business goals.
+
+For an e-commerce store, that might mean completing a purchase.
+
+For a consultant, it could mean booking an introductory call.
+
+For a local service business, it might involve requesting a quote.
+
+For a website design agency, it could mean submitting a project enquiry.
+
+Not every conversion leads immediately to a sale.
+
+Some people become leads first, then customers after further conversations.
+
+This distinction matters because you should measure both the actions visitors take on your website and the quality of the business opportunities those actions produce.
+
+For example, a website generating 30 relevant enquiries may be more valuable than one generating 100 enquiries from people who aren't suited to the services offered.
+
+The objective is not simply to increase the number of clicks.
+
+**It's to create a better journey from initial interest to a meaningful business outcome.**
+
+---
+
+## 1. Make Your Website's Main Message Instantly Clear
+
+When someone arrives on your homepage, they should quickly understand what your business does.
+
+Visitors shouldn't need to read five paragraphs or browse several pages to discover whether your services are relevant.
+
+Unclear messaging creates confusion.
+
+Consider these examples.
+
+**Unclear headline:**
+
+"We Build Extraordinary Digital Possibilities."
+
+**Clearer headline:**
+
+"Professional Websites for Small Businesses That Want to Grow Online."
+
+The second example explains the service and the audience more directly.
+
+A good homepage should answer:
+
+- What does this business offer?
+- Who is it designed to help?
+- What problems does it solve?
+- What should I do next?
+
+### How to improve your messaging
+
+Write a headline that communicates your main service or value.
+
+Add a short supporting paragraph explaining the benefits.
+
+Then provide a clear call to action.
+
+Avoid overwhelming visitors with buzzwords or vague claims.
+
+Your goal is to help the right people recognize that they've found a relevant solution.
+
+**What to do:**
+Audit your homepage hero section. Test your headline with five people who don't work in your industry and ask them what your company offers within 5 seconds of scanning the page.
+
+**Key takeaway:** Clear messaging reduces uncertainty and makes it easier for visitors to evaluate your business.
+
+---
+
+## 2. Improve Your Website's First Impression
+
+Visual design influences how people perceive a business.
+
+If your website looks disorganized, outdated, or inconsistent, visitors may question its professionalism.
+
+Good design doesn't mean filling your pages with complex animations or trendy visual effects.
+
+It means creating an experience that feels trustworthy and easy to use.
+
+Important design elements include:
+
+- Consistent typography.
+- Clear visual hierarchy.
+- Balanced spacing.
+- Professional imagery.
+- Consistent brand colors.
+- Clean navigation.
+- Readable text.
+- Well-designed buttons and forms.
+
+### How to improve the experience
+
+Begin by reviewing your homepage and important service pages.
+
+Remove unnecessary visual clutter.
+
+Keep important information prominent.
+
+Use whitespace to make sections easier to understand.
+
+Ensure the design reflects your audience and the type of service you provide.
+
+A professional website should communicate confidence without overwhelming the visitor.
+
+**What to do:**
+Establish strict typography and spacing consistency across your site. Use generous negative space around key sections and replace generic stock graphics with authentic, high-quality visuals.
+
+**Key takeaway:** Strong visual design supports credibility when it also improves clarity and usability.
+
+---
+
+## 3. Give Every Important Page a Clear Call to Action
+
+A call to action, or CTA, tells visitors what they can do next.
+
+Without one, people may read your content and leave without understanding how to proceed.
+
+Examples include:
+
+- Request a Quote.
+- Book a Consultation.
+- Explore Our Services.
+- Discuss Your Project.
+- View Available Products.
+- Contact Our Team.
+
+Different pages may need different actions.
+
+A product page might encourage a purchase.
+
+A service page could invite visitors to request a consultation.
+
+A portfolio page may direct visitors toward discussing a similar project.
+
+### How to improve your CTAs
+
+Use clear, specific language.
+
+Place your primary CTA where visitors can reasonably act on it.
+
+Make buttons large enough to interact with comfortably.
+
+Ensure they have strong color contrast.
+
+Avoid placing several competing primary buttons next to one another.
+
+**What to do:**
+Select one primary conversion action per template. Use action-driven labels such as "Book a Free Consultation" or "Request a Custom Quote" rather than generic words like "Submit" or "Click Here".
+
+**Key takeaway:** Every important page should make the next step easy to recognize and complete.
+
+---
+
+## 4. Build Trust Before Asking for a Commitment
+
+People are cautious when spending money with unfamiliar businesses.
+
+Before contacting you or making a purchase, they often want evidence that your business is credible.
+
+A professional website should help answer those concerns.
+
+Useful trust signals include:
+
+- Genuine customer testimonials.
+- Relevant portfolio projects.
+- Clear service descriptions.
+- Authentic case studies.
+- Transparent contact information.
+- An informative About page.
+- A clear explanation of your process.
+- Relevant business credentials where appropriate.
+
+### How to improve trust
+
+Show visitors what you've actually done.
+
+For example, a website designer can explain the business problem behind a previous project, the design approach used, and the outcome where verified results are available.
+
+A bookkeeping company can explain how its services work and what customers can expect.
+
+An online store can clearly display shipping, returns, and customer support policies.
+
+Avoid fabricated testimonials, invented metrics, or exaggerated claims.
+
+**What to do:**
+Incorporate authentic client testimonials, recognized industry credentials, and detailed case studies that show real challenges, solutions, and measurable outcomes.
+
+**Key takeaway:** Credibility increases when visitors can evaluate your expertise through genuine evidence.
+
+---
+
+## 5. Make Your Website Easy to Navigate
+
+Confusing navigation can prevent visitors from finding the information they need.
+
+If someone wants to see your services or contact you, those options should be easy to locate.
+
+Common problems include:
+
+- Too many menu items.
+- Unclear page labels.
+- Complicated dropdowns.
+- Broken links.
+- Inconsistent page organization.
+- Important information buried deep within the site.
+
+### How to improve navigation
+
+Organize your pages around customer needs.
+
+For many service businesses, a simple structure can work:
+
+Home, About, Services, Portfolio, Blog, and Contact.
+
+Use familiar labels and logical groupings.
+
+Make sure your mobile navigation works correctly.
+
+Include contextual links between related pages so visitors can continue exploring naturally.
+
+**What to do:**
+Limit header navigation to 5–7 essential menu items. Ensure mobile hamburger menus open instantly, close effortlessly, and highlight the primary contact or quote button.
+
+**Key takeaway:** Intuitive navigation makes it easier for potential customers to move toward relevant information and actions.
+
+---
+
+## 6. Improve Website Speed and Mobile Performance
+
+A visitor may be interested in your offer, but slow loading and broken mobile layouts can create enough frustration to interrupt the journey.
+
+Website performance should support the experience rather than become an obstacle.
+
+Common technical problems include:
+
+- Oversized images.
+- Excessive JavaScript.
+- Unnecessary animations.
+- Layout shifts.
+- Heavy third-party integrations.
+- Poor mobile responsiveness.
+
+### How to improve performance
+
+Use Google PageSpeed Insights or other appropriate tools to identify technical issues.
+
+Review Core Web Vitals, including loading performance, interaction responsiveness, and visual stability.
+
+Optimize images and remove unnecessary scripts.
+
+Test your website on actual mobile devices.
+
+Make sure buttons, navigation, and forms remain easy to use on smaller screens.
+
+**What to do:**
+Audit your Core Web Vitals using PageSpeed Insights. Compress all visual assets to modern WebP format, defer non-critical analytics scripts, and verify responsive touch targets on physical smartphones.
+
+**Key takeaway:** A fast, stable, responsive website reduces avoidable friction in the customer journey.
+
+---
+
+## 7. Create Landing Pages That Match Your Marketing Campaigns
+
+Imagine clicking an advertisement promoting bookkeeping services and arriving on a generic homepage filled with unrelated information.
+
+Even if the company offers what you need, the experience may feel confusing.
+
+A focused landing page can help visitors continue the journey they started through an advertisement, email, or social media post.
+
+### What makes a focused landing page?
+
+A strong landing page typically includes:
+
+1. A clear headline connected to the original offer.
+2. A concise explanation of the service or product.
+3. Relevant benefits and supporting details.
+4. Credible trust signals.
+5. A simple call to action.
+6. Minimal unnecessary distractions.
+
+### Example
+
+A cleaning business advertising end-of-tenancy cleaning could direct visitors to a landing page specifically explaining that service.
+
+The page could include coverage areas, service details, genuine reviews, and a quote request form.
+
+This helps visitors understand the offer without navigating through unrelated pages.
+
+**What to do:**
+Align your landing page copy, headline, and imagery directly with the ad or email campaign that brought the visitor. Remove global navigation links to keep visitors focused on completing the primary action.
+
+**Key takeaway:** Consistency between marketing messages and landing pages helps visitors continue with greater confidence.
+
+---
+
+## 8. Simplify Your Contact and Enquiry Forms
+
+Forms are often where interested visitors take the next step.
+
+But complicated forms can create friction.
+
+Imagine asking someone for extensive personal information before they've even had an introductory conversation.
+
+They may decide the effort isn't worthwhile.
+
+### How to improve forms
+
+Request only information necessary for the next step.
+
+For a basic service enquiry, this might include:
+
+- Name.
+- Email address.
+- Type of service required.
+- Brief project description.
+
+You may also need relevant details such as project budget or preferred timeline, depending on your process.
+
+Provide clear labels and helpful error messages.
+
+Confirm that a submission was successful.
+
+Ensure forms work properly on mobile devices and support keyboard interaction.
+
+Respect visitors' privacy and explain how submitted information will be used.
+
+**What to do:**
+Reduce your contact form fields to 3–4 essential questions. Use real-time validation, prominent focus states, and a reassuring success confirmation message upon submission.
+
+**Key takeaway:** A simple, reliable enquiry process makes it easier for interested visitors to contact your business.
+
+---
+
+## 9. Use Helpful Content to Answer Customer Questions
+
+Not every visitor is ready to buy immediately.
+
+Some are researching a problem, exploring their options, or comparing service providers.
+
+Helpful content can support those decisions.
+
+Examples include:
+
+- Educational blog posts.
+- Service guides.
+- Frequently asked questions.
+- Product explanations.
+- Project case studies.
+- Platform comparisons.
+- Pricing considerations.
+
+A website design agency might publish articles about website redesign, performance, or choosing a website platform.
+
+A landscaping company could explain maintenance requirements or seasonal planning.
+
+A bookkeeping company might publish practical guides about organizing financial records.
+
+### How to improve your content strategy
+
+Focus on questions your actual customers ask.
+
+Provide clear, useful answers.
+
+Connect relevant articles to service pages where appropriate.
+
+Avoid creating content solely to repeat keywords or fill a publishing calendar.
+
+**What to do:**
+Compile a list of the 10 most common questions your sales team or customer service encounters. Write comprehensive, objective guides answering each question with clear internal links to your relevant service solutions.
+
+**Key takeaway:** Helpful information can build confidence and support customers who are still evaluating their options.
+
+---
+
+## 10. Make Your Offers Easier to Understand
+
+Sometimes visitors leave not because the website looks bad, but because the offer itself is unclear.
+
+They may not understand what's included, who the service is for, or how the process works.
+
+For service businesses, clarity can make a substantial difference.
+
+### How to improve your offer presentation
+
+Explain:
+
+- Which problem the service solves.
+- Who the service is designed for.
+- What customers receive.
+- How the process works.
+- What happens after someone contacts you.
+- Which relevant limitations or requirements apply.
+
+Where appropriate, provide pricing information or explain how quotations are prepared.
+
+Avoid making unsupported promises.
+
+Use language customers understand rather than relying entirely on industry terminology.
+
+**What to do:**
+Outline your deliverables, onboarding milestones, and timelines clearly on every service page. Remove jargon and explicitly state what the client will receive at each stage of the engagement.
+
+**Key takeaway:** People can evaluate your services more confidently when the offer is specific and understandable.
+
+---
+
+## 11. Measure Your Website's Conversion Performance
+
+Improving conversions requires understanding what currently happens on your website.
+
+Without useful data, it's easy to spend time changing things that aren't causing the problem.
+
+Start by defining meaningful website goals.
+
+For example:
+
+- Completed purchases.
+- Qualified enquiry submissions.
+- Consultation bookings.
+- Successful registrations.
+- Requests for quotations.
+
+### Understanding conversion rate
+
+A basic website conversion rate can be calculated as:
+
+Conversion Rate = (Conversions ÷ Relevant Visits) × 100
+
+For example, suppose a website receives 1,000 visits and generates 30 enquiry submissions.
+
+Its enquiry conversion rate would be:
+
+(30 ÷ 1,000) × 100 = 3%
+
+This is a hypothetical calculation, not a benchmark that every business should target.
+
+Make sure you're using consistent definitions for visits, sessions, users, and conversions.
+
+Also remember that enquiry volume and lead quality are different measurements.
+
+### What should you track?
+
+Review:
+
+- Relevant traffic sources.
+- Landing-page performance.
+- Enquiry submissions.
+- Form completion issues.
+- Mobile usability.
+- Conversion rates.
+- Qualified lead outcomes.
+
+Use an appropriately configured analytics system and respect applicable privacy requirements.
+
+**What to do:**
+Configure conversion goals in Google Analytics 4 for primary actions like form submissions, phone call clicks, and booking calendar completions. Regularly review funnel drop-off points to spot conversion leaks.
+
+**Key takeaway:** Measuring relevant outcomes helps you prioritize improvements based on evidence.
+
+---
+
+## 12. Test Improvements Instead of Guessing
+
+One of the most useful habits in website optimization is testing assumptions.
+
+A different headline may improve clarity.
+
+A shorter contact form may reduce friction.
+
+A better CTA placement may help more visitors understand the next step.
+
+But the results won't necessarily be the same for every business.
+
+### How to approach website testing
+
+**Step 1: Identify a problem.**
+
+For example, visitors reach a service page but rarely submit an enquiry.
+
+**Step 2: Develop a hypothesis.**
+
+Perhaps the form is too complicated or the value of the service isn't clear enough.
+
+**Step 3: Make a focused change.**
+
+Improve the form, clarify the offer, or refine the CTA.
+
+**Step 4: Measure relevant outcomes.**
+
+Compare performance over a suitable period while accounting for traffic differences and other influences.
+
+**Step 5: Keep learning.**
+
+Use the results to guide your next improvement.
+
+Where traffic levels and tools allow, controlled A/B tests can help evaluate competing approaches.
+
+For smaller websites, usability testing, analytics reviews, and customer feedback may be more practical than formal experiments.
+
+**What to do:**
+Implement one targeted change at a time, such as rewriting a value proposition or repositioning a form. Allow sufficient traffic to accumulate before evaluating results so your decisions are grounded in real data.
+
+**Key takeaway:** Sustainable improvement comes from learning what works for your audience, not copying every new design trend.
+
+---
+
+## Quick Website Conversion Checklist
+
+Use this checklist to evaluate your current website.
+
+| Website Element | What to Check |
+|---|---|
+| Homepage headline | Can visitors quickly understand what you offer? |
+| Visual design | Does the website look consistent and professional? |
+| Call to action | Is the next step clear and easy to find? |
+| Trust signals | Are claims supported by authentic evidence? |
+| Navigation | Can visitors reach important pages easily? |
+| Mobile experience | Do layouts, forms, and buttons work on phones? |
+| Landing pages | Do they match the campaigns that bring visitors? |
+| Contact forms | Are they simple, reliable, and accessible? |
+| Helpful content | Does it answer real customer questions? |
+| Service offers | Are deliverables and processes understandable? |
+| Analytics | Are meaningful business outcomes tracked? |
+| Testing | Are improvements guided by evidence? |
+
+You don't necessarily need to redesign your entire website to improve these areas.
+
+Start by identifying the biggest obstacles and addressing them systematically.
+
+---
+
+## A Practical Example: Improving a Service Business Website
+
+Imagine a small consulting business receiving regular website traffic but very few enquiries.
+
+Its homepage contains a vague headline, a long description of the company, and a contact button hidden near the bottom.
+
+Its service pages don't explain the engagement process, and the enquiry form asks for too much information.
+
+A practical improvement plan might involve:
+
+1. Rewriting the homepage headline to clearly explain the consulting service.
+2. Creating focused service descriptions.
+3. Displaying authentic experience and relevant project examples.
+4. Adding a clear consultation CTA.
+5. Simplifying the enquiry form.
+6. Improving the mobile experience.
+7. Tracking qualified enquiry submissions.
+
+These changes may make the website easier to understand and use.
+
+However, their effect on actual business results should be measured rather than assumed.
+
+This is the value of conversion-focused website design: aligning the experience with what customers need and what the business wants to achieve.
+
+---
+
+## How Long Does It Take to Improve Website Conversions?
+
+There is no universal timeline.
+
+Some usability problems can be corrected quickly.
+
+More complex changes involving content strategy, integrations, traffic quality, or customer research may require more work.
+
+It's important to establish a useful baseline before drawing conclusions.
+
+For websites with limited traffic, it may take longer to gather enough information to evaluate changes confidently.
+
+Avoid expecting every adjustment to produce an immediate improvement.
+
+The goal is to develop a website that becomes more effective through thoughtful, ongoing refinement.
+
+---
+
+## Frequently Asked Questions
+
+### What is a good website conversion rate?
+
+There is no single ideal conversion rate for every website. Performance varies depending on industry, traffic sources, products, visitor intent, and the action being measured. Compare results against your own business goals and reliable, relevant data.
+
+### Why does my website get traffic but no customers?
+
+Possible causes include unclear messaging, irrelevant traffic, weak offers, confusing navigation, poor mobile usability, missing trust signals, or problems with forms and checkout. Investigate before assuming that design alone is responsible.
+
+### Can website design improve conversions?
+
+Good website design can remove friction, improve clarity, and help visitors complete relevant actions. However, the effect on conversions depends on many factors and should be evaluated using actual data.
+
+### Do I need a new website to increase conversions?
+
+Not necessarily. Targeted improvements to messaging, forms, calls to action, usability, and performance may help. A full redesign is more appropriate when the existing structure cannot adequately support your objectives.
+
+### What is the difference between a lead and a customer?
+
+A lead is someone who expresses potential interest in your product or service. A customer is someone who has completed a purchase or paid for a service.
+
+### Can blog articles help generate customers?
+
+Yes. Useful articles can help people discover a business, understand their options, and explore relevant services. However, publication alone doesn't guarantee traffic or sales.
+
+### What should I improve first on my website?
+
+Start with issues preventing visitors from understanding your offer or completing important actions. Review website usability, forms, messaging, performance, and analytics to identify the highest-priority problems.
+
+---
+
+## Final Thoughts
+
+Turning website visitors into paying customers requires more than an attractive homepage.
+
+It involves clear communication, useful content, strong usability, authentic credibility, relevant offers, and an easy path toward taking action.
+
+You don't always need more visitors.
+
+Sometimes your biggest opportunity is making the experience better for the visitors you already have.
+
+Start with the problems that create unnecessary friction.
+
+Make improvements based on evidence.
+
+And remember that an effective website should support both your customers and your business objectives.
+
+**The best website isn't simply the one that looks impressive. It's the one that makes it easier for the right people to understand your value and move forward with confidence.**
+
+---
+
+## Ready to Make Your Website Work Better for Your Business?
+
+At **Vprime Digitalz**, we design and develop responsive, modern, conversion-focused websites that help businesses communicate clearly and create better online experiences.
+
+Whether you're building a new website, improving an existing one, or exploring a redesign, we can help you plan a digital experience that supports your business goals.
+
+**Explore our [website design services](/services), view our [portfolio](/portfolio), or [contact Vprime Digitalz to discuss your project](/booking).**
+
+Also explore our previous strategy guides:
+- Day 1: [Why Every Small Business Needs a Professional Website in 2026](/blog/why-small-businesses-need-a-website)
+- Day 2: [10 Signs Your Business Website Needs a Redesign](/blog/10-signs-your-website-needs-a-redesign)
+- Day 3: [Webflow vs WordPress: Which Is Better for Your Business in 2026?](/blog/webflow-vs-wordpress-2026)
+- Day 4: [How Much Does a Professional Website Cost in 2026?](/blog/how-much-does-a-professional-website-cost-2026)
+- Day 5: [7 Website Mistakes That Are Costing Your Business Customers (And How to Fix Them)](/blog/website-mistakes-costing-your-business-customers)`,
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+    author: {
+      name: "Vprime Digitalz",
+      role: "Conversion Optimization & Website Specialists",
+      avatar: "https://res.cloudinary.com/iuczvp68/image/upload/v1790002397/vprime-digitalz-logo-01_otkfc1.png"
+    },
+    date: "October 24, 2026",
+    readTime: "12 Min Read",
+    tags: ["Conversion Optimization", "Website Conversions", "Business Growth", "UX Design", "Lead Generation", "Webflow"],
+    seoTitle: "How to Turn Website Visitors Into Customers | Vprime Digitalz",
+    metaDescription: "Discover 12 practical ways to turn website visitors into customers with clearer messaging, better UX, stronger CTAs, trust signals, and conversion tracking.",
+    featured: true,
+    cta: {
+      heading: "Your Website Gets Visitors. Is It Turning Them Into Opportunities?",
+      description: "A great website should do more than attract attention. Let's create a clear, responsive, conversion-focused experience that supports your business goals.",
+      primaryBtnText: "Let's Improve Your Website",
+      secondaryBtnText: "Explore Our Work"
+    },
+    faq: [
+      {
+        q: "What is a good website conversion rate?",
+        a: "There is no single ideal conversion rate for every website. Performance varies depending on industry, traffic sources, products, visitor intent, and the action being measured. Compare results against your own business goals and reliable, relevant data."
+      },
+      {
+        q: "Why does my website get traffic but no customers?",
+        a: "Possible causes include unclear messaging, irrelevant traffic, weak offers, confusing navigation, poor mobile usability, missing trust signals, or problems with forms and checkout. Investigate before assuming that design alone is responsible."
+      },
+      {
+        q: "Can website design improve conversions?",
+        a: "Good website design can remove friction, improve clarity, and help visitors complete relevant actions. However, the effect on conversions depends on many factors and should be evaluated using actual data."
+      },
+      {
+        q: "Do I need a new website to increase conversions?",
+        a: "Not necessarily. Targeted improvements to messaging, forms, calls to action, usability, and performance may help. A full redesign is more appropriate when the existing structure cannot adequately support your objectives."
+      },
+      {
+        q: "What is the difference between a lead and a customer?",
+        a: "A lead is someone who expresses potential interest in your product or service. A customer is someone who has completed a purchase or paid for a service."
+      },
+      {
+        q: "Can blog articles help generate customers?",
+        a: "Yes. Useful articles can help people discover a business, understand their options, and explore relevant services. However, publication alone doesn't guarantee traffic or sales."
+      },
+      {
+        q: "What should I improve first on my website?",
+        a: "Start with issues preventing visitors from understanding your offer or completing important actions. Review website usability, forms, messaging, performance, and analytics to identify the highest-priority problems."
+      }
+    ]
+  },
+  {
     id: "website-mistakes-costing-your-business-customers",
     slug: "website-mistakes-costing-your-business-customers",
     title: "7 Website Mistakes That Are Costing Your Business Customers (And How to Fix Them)",
@@ -1757,7 +2478,7 @@ Also explore our previous strategy guides:
     tags: ["Website Mistakes", "Conversions", "Website Design", "UX Audit", "Small Business", "Webflow"],
     seoTitle: "7 Website Mistakes That Cost You Customers | Vprime Digitalz",
     metaDescription: "Discover 7 common website mistakes that could be costing your business customers and learn practical ways to improve usability, trust, and conversions.",
-    featured: true,
+    featured: false,
     cta: {
       heading: "Is Your Website Helping Your Business or Holding It Back?",
       description: "From confusing layouts to missed enquiries, small website problems can create unnecessary friction. Let's identify what needs improving and build a better experience for your customers.",
