@@ -146,7 +146,11 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       }
 
       // Format ISO Date for Schema
-      const isoDate = selectedPost.date.includes("24")
+      const isoDate = selectedPost.date.includes("26")
+        ? "2026-10-26T00:00:00+00:00"
+        : selectedPost.date.includes("25")
+        ? "2026-10-25T00:00:00+00:00"
+        : selectedPost.date.includes("24")
         ? "2026-10-24T00:00:00+00:00"
         : selectedPost.date.includes("23")
         ? "2026-10-23T00:00:00+00:00"
@@ -229,7 +233,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
     };
   }, [selectedPost]);
 
-  const categories = ["All", "Web Development", "Website Design", "Business Growth", "Case Study", "Design", "SEO"];
+  const categories = ["All", "Conversion Optimization", "Web Development", "Website Design", "Business Growth", "Case Study", "Design", "SEO"];
 
   const handlePostClick = (post: BlogPost) => {
     setSelectedPost(post);
@@ -399,7 +403,11 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             <span>FREQUENTLY ASKED QUESTIONS</span>
           </div>
           <h3 className="blog-heading-primary text-xl sm:text-2xl font-display font-black tracking-tight">
-            {selectedPost.id === "how-to-turn-website-visitors-into-customers"
+            {selectedPost.id === "webflow-vs-framer-2026"
+              ? "Webflow vs Framer Questions Answered"
+              : selectedPost.id === "what-makes-a-high-converting-landing-page"
+              ? "Landing Page Conversion Questions Answered"
+              : selectedPost.id === "how-to-turn-website-visitors-into-customers"
               ? "Website Conversion Questions Answered"
               : selectedPost.id === "website-mistakes-costing-your-business-customers"
               ? "Website Mistakes & Usability Questions Answered"
@@ -412,7 +420,11 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
               : "Frequently Asked Questions"}
           </h3>
           <p className="blog-muted-text text-xs sm:text-sm">
-            {selectedPost.id === "how-to-turn-website-visitors-into-customers"
+            {selectedPost.id === "webflow-vs-framer-2026"
+              ? "Clear answers to the most common questions founders, marketers, and designers ask when deciding between Webflow and Framer in 2026."
+              : selectedPost.id === "what-makes-a-high-converting-landing-page"
+              ? "Answers to the most common questions business owners ask about landing page architecture, conversion rates, design requirements, and testing."
+              : selectedPost.id === "how-to-turn-website-visitors-into-customers"
               ? "Answers to the most common questions business owners ask about conversion optimization, lead qualification, and turning traffic into sales."
               : selectedPost.id === "website-mistakes-costing-your-business-customers"
               ? "Answers to the most common questions business owners ask about website performance, conversion friction, and redesign decisions."
@@ -557,7 +569,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         trimmed.startsWith("## Ready to Build a Website That Works for Your Business?") ||
         trimmed.startsWith("## Need a Transparent, Value-Driven Website Quote?") ||
         trimmed.startsWith("## Ready to Turn Your Website Into a Better Business Tool?") ||
-        trimmed.startsWith("## Ready to Make Your Website Work Better for Your Business?")) {
+        trimmed.startsWith("## Ready to Make Your Website Work Better for Your Business?") ||
+        trimmed.startsWith("## Ready to Turn Your Landing Page Into a Better Customer Experience?") ||
+        trimmed.startsWith("## Ready to Build a Landing Page That Supports Your Business Goals?")) {
       return renderStrategicCtaBox(idx);
     }
 
@@ -569,18 +583,24 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         trimmed.startsWith("Whether you're building a new website, improving an existing one") ||
         trimmed.startsWith("Whether you need a high-converting landing page") ||
         trimmed.startsWith("Whether you're planning a new website, considering Webflow") ||
+        trimmed.startsWith("Whether you're launching a product, promoting a service") ||
+        trimmed.startsWith("Whether you're considering Webflow, Framer, or a redesign") ||
         trimmed.startsWith("We can help you evaluate your goals, plan") ||
+        trimmed.startsWith("We can help you plan the structure, refine the design") ||
         trimmed.startsWith("Let's explore how to create a website") ||
         trimmed.startsWith("Explore our [website design services](/services), view our [portfolio]") ||
         trimmed.startsWith("Explore our services, view our recent projects") ||
         trimmed.startsWith("Explore our [website design services]") ||
         trimmed.startsWith("**Explore our [website design services]") ||
+        trimmed.startsWith("**Explore our services, view our recent work") ||
         trimmed.startsWith("Also explore our previous strategy guides:") ||
         trimmed.startsWith("- Day 1:") ||
         trimmed.startsWith("- Day 2:") ||
         trimmed.startsWith("- Day 3:") ||
         trimmed.startsWith("- Day 4:") ||
-        trimmed.startsWith("- Day 5:")) {
+        trimmed.startsWith("- Day 5:") ||
+        trimmed.startsWith("- Day 6:") ||
+        trimmed.startsWith("- Day 7:")) {
       return null;
     }
 
@@ -594,14 +614,22 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
     if (numberedHeadingMatch) {
       const num = parseInt(numberedHeadingMatch[1], 10);
       const title = numberedHeadingMatch[2];
-      const sectionId = selectedPost?.slug.includes("signs") 
+      const sectionId = selectedPost?.slug === "webflow-vs-framer-2026"
+        ? `comparison-${num}`
+        : selectedPost?.slug.includes("landing-page")
+        ? `element-${num}`
+        : selectedPost?.slug.includes("signs") 
         ? `sign-${num}` 
         : selectedPost?.slug.includes("customers")
         ? `strategy-${num}`
         : selectedPost?.slug.includes("mistakes")
         ? `mistake-${num}`
         : `section-${num}`;
-      const badgeLabel = selectedPost?.slug.includes("signs") 
+      const badgeLabel = selectedPost?.slug === "webflow-vs-framer-2026"
+        ? `FACTOR ${num < 10 ? `0${num}` : num}`
+        : selectedPost?.slug.includes("landing-page")
+        ? `ELEMENT ${num < 10 ? `0${num}` : num}`
+        : selectedPost?.slug.includes("signs") 
         ? `SIGN ${num < 10 ? `0${num}` : num}` 
         : selectedPost?.slug.includes("mistakes")
         ? `MISTAKE ${num < 10 ? `0${num}` : num}`
@@ -701,26 +729,46 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
 
         const isWebflowVsWp = headerCols.some((h) => h.toLowerCase().includes("webflow")) &&
                               headerCols.some((h) => h.toLowerCase().includes("wordpress"));
+        const isWebflowVsFramer = headerCols.some((h) => h.toLowerCase().includes("webflow")) &&
+                                  headerCols.some((h) => h.toLowerCase().includes("framer"));
+        const isPriorityPlatformTable = headerCols.some((h) => h.toLowerCase().includes("priority")) &&
+                                        headerCols.some((h) => h.toLowerCase().includes("platform"));
+        const isLandingPageVsHome = headerCols.some((h) => h.toLowerCase().includes("homepage")) &&
+                                    headerCols.some((h) => h.toLowerCase().includes("landing page"));
         const isPricingTable = headerCols.some((h) => h.toLowerCase().includes("budget") || h.toLowerCase().includes("price") || h.toLowerCase().includes("cost"));
         const isChecklistTable = headerCols.some((h) => h.toLowerCase().includes("problem") || h.toLowerCase().includes("mistake") || h.toLowerCase().includes("improvement"));
         const isConversionChecklist = headerCols.some((h) => h.toLowerCase().includes("element") || h.toLowerCase().includes("check"));
 
-        const tableTitle = isWebflowVsWp
+        const tableTitle = isWebflowVsFramer
+          ? "Webflow vs Framer 2026 Platform Feature & Architecture Matrix"
+          : isPriorityPlatformTable
+          ? "Webflow vs Framer Strategic Decision Matrix"
+          : isLandingPageVsHome
+          ? "Homepage vs Dedicated Campaign Landing Page"
+          : isWebflowVsWp
           ? "Webflow vs WordPress Platform Architecture & Feature Matrix"
           : isPricingTable
           ? "Illustrative 2026 Website Investment Benchmark"
           : isChecklistTable
           ? "Quick Website Mistake & Optimization Checklist"
+          : isConversionChecklist && selectedPost?.slug.includes("landing-page")
+          ? "High-Converting Landing Page Checklist"
           : isConversionChecklist
           ? "Quick Website Conversion Checklist"
           : "Strategic Comparison";
 
-        const tableSubtitle = isPricingTable
+        const tableSubtitle = isWebflowVsFramer
+          ? "Platform Capabilities & Structural Comparison"
+          : isPriorityPlatformTable
+          ? "Recommended Platform Starting Points"
+          : isLandingPageVsHome
+          ? "Architectural Scope & User Intent Comparison"
+          : isPricingTable
           ? "Estimated Planning Tiers & Budget Ranges"
           : isChecklistTable
           ? "Friction Identification & Practical Fixes"
           : isConversionChecklist
-          ? "Key Website Elements & Audit Criteria"
+          ? "Key Elements & Audit Criteria"
           : "Detailed Side-by-Side Breakdown";
 
         return (
@@ -750,8 +798,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                         <th 
                           key={hIdx} 
                           className={`py-4 px-5 font-mono text-xs font-bold tracking-wider ${
-                            isPricingTable 
-                              ? (hIdx === 0 ? "w-3/5" : "w-2/5 sm:text-right") 
+                            isPricingTable || isPriorityPlatformTable
+                              ? (hIdx === 0 ? "w-3/5" : "w-2/5") 
                               : (isChecklistTable || isConversionChecklist)
                               ? (hIdx === 0 ? "w-2/5" : "w-3/5")
                               : (hIdx === 0 ? "w-1/4" : "w-[37.5%]")
@@ -765,6 +813,21 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                           ) : isWp ? (
                             <div className="flex items-center gap-2 blog-heading-primary">
                               <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
+                              <span className="text-sm font-bold tracking-wider uppercase">{h}</span>
+                            </div>
+                          ) : h.toLowerCase().includes("framer") ? (
+                            <div className="flex items-center gap-2 text-blue-500">
+                              <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
+                              <span className="text-sm font-bold tracking-wider uppercase">{h}</span>
+                            </div>
+                          ) : isLandingPageVsHome && h.toLowerCase().includes("landing page") ? (
+                            <div className="flex items-center gap-2 text-[#05BB8D]">
+                              <span className="w-2.5 h-2.5 rounded-full bg-[#05BB8D]" />
+                              <span className="text-sm font-bold tracking-wider uppercase">{h}</span>
+                            </div>
+                          ) : isLandingPageVsHome && h.toLowerCase().includes("homepage") ? (
+                            <div className="flex items-center gap-2 blog-heading-primary">
+                              <span className="w-2.5 h-2.5 rounded-full bg-slate-400" />
                               <span className="text-sm font-bold tracking-wider uppercase">{h}</span>
                             </div>
                           ) : isRight ? (
@@ -818,6 +881,22 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                               <span className="inline-flex items-center font-mono font-bold text-xs sm:text-sm text-[#05BB8D] px-3.5 py-1.5 rounded-xl bg-[#05BB8D]/10 border border-[#05BB8D]/25 shadow-2xs">
                                 {renderInlineFormatting(cell)}
                               </span>
+                            </div>
+                          ) : isPriorityPlatformTable && cIdx === 1 ? (
+                            <div>
+                              {cell.toLowerCase().includes("framer") ? (
+                                <span className="inline-flex items-center font-mono font-bold text-xs text-blue-600 dark:text-blue-400 px-3 py-1 rounded-xl bg-blue-500/10 border border-blue-500/30 shadow-2xs">
+                                  {cell}
+                                </span>
+                              ) : cell.toLowerCase().includes("webflow") ? (
+                                <span className="inline-flex items-center font-mono font-bold text-xs text-[#05BB8D] px-3 py-1 rounded-xl bg-[#05BB8D]/10 border border-[#05BB8D]/30 shadow-2xs">
+                                  {cell}
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center font-mono font-medium text-xs blog-heading-primary px-3 py-1 rounded-xl blog-card-subtle-surface border blog-border-color">
+                                  {cell}
+                                </span>
+                              )}
                             </div>
                           ) : (isChecklistTable || isConversionChecklist) && cIdx === 1 ? (
                             <div className="flex items-start gap-2">
@@ -931,6 +1010,46 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
   const isDay4Post = selectedPost?.slug === "how-much-does-a-professional-website-cost-2026";
   const isDay5Post = selectedPost?.slug === "website-mistakes-costing-your-business-customers";
   const isDay6Post = selectedPost?.slug === "how-to-turn-website-visitors-into-customers";
+  const isDay7Post = selectedPost?.slug === "what-makes-a-high-converting-landing-page";
+  const isDay8Post = selectedPost?.slug === "webflow-vs-framer-2026";
+
+  const day8Sections = useMemo(() => [
+    { num: 1, title: "Design Control", id: "comparison-1" },
+    { num: 2, title: "Ease of Use", id: "comparison-2" },
+    { num: 3, title: "CMS & Blog", id: "comparison-3" },
+    { num: 4, title: "SEO & Search", id: "comparison-4" },
+    { num: 5, title: "Pricing & Costs", id: "comparison-5" },
+    { num: 6, title: "Responsive UX", id: "comparison-6" },
+    { num: 7, title: "Performance", id: "comparison-7" },
+    { num: 8, title: "Scalability", id: "comparison-8" },
+    { num: 9, title: "Integrations", id: "comparison-9" },
+    { num: 10, title: "Business Types", id: "comparison-10" },
+    { num: 11, title: "Common Mistakes", id: "comparison-11" },
+    { num: 12, title: "7-Step Choice", id: "comparison-12" },
+    { num: 13, title: "Quick Comparison", id: "webflow-vs-framer-quick-comparison" },
+    { num: 14, title: "Decision Matrix", id: "webflow-vs-framer-which-should-you-choose-" },
+    { num: 15, title: "FAQs", id: "faq-section" },
+    { num: 16, title: "Final Thoughts", id: "final-thoughts" },
+  ], []);
+
+  const day7Sections = useMemo(() => [
+    { num: 1, title: "Headline", id: "element-1" },
+    { num: 2, title: "Subheadline", id: "element-2" },
+    { num: 3, title: "Clear CTA", id: "element-3" },
+    { num: 4, title: "Visual Hierarchy", id: "element-4" },
+    { num: 5, title: "Relevant Images", id: "element-5" },
+    { num: 6, title: "Benefits", id: "element-6" },
+    { num: 7, title: "Trust Signals", id: "element-7" },
+    { num: 8, title: "Simple Form", id: "element-8" },
+    { num: 9, title: "Mobile & Speed", id: "element-9" },
+    { num: 10, title: "Ad Consistency", id: "element-10" },
+    { num: 11, title: "Clear Pricing", id: "element-11" },
+    { num: 12, title: "Testing", id: "element-12" },
+    { num: 13, title: "Checklist", id: "high-converting-landing-page-checklist" },
+    { num: 14, title: "Bookkeeping Case", id: "example-a-landing-page-for-a-bookkeeping-business" },
+    { num: 15, title: "7 Mistakes", id: "seven-common-landing-page-mistakes-to-avoid" },
+    { num: 16, title: "FAQs", id: "faq-section" },
+  ], []);
 
   const day6Sections = useMemo(() => [
     { num: 1, title: "Clear Message", id: "strategy-1" },
@@ -1488,6 +1607,150 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                     referrerPolicy="no-referrer" 
                   />
                 </div>
+
+                {/* Quick Interactive Table of Contents for Day 8 (Webflow vs Framer 2026) */}
+                {isDay8Post && (
+                  <div className="blog-card-subtle-surface border blog-border-color rounded-2xl p-5 sm:p-6 space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Scale size={16} className="text-[#05BB8D]" />
+                        <span className="blog-heading-primary font-display font-bold text-sm tracking-tight">
+                          Quick Jump — 12 Key Comparison Dimensions
+                        </span>
+                      </div>
+                      <span className="font-mono text-[10px] blog-muted-text font-bold uppercase tracking-wider">
+                        16 Sections & Strategic Frameworks
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-8 gap-2 pt-1">
+                      {day8Sections.map((s) => (
+                        <button
+                          key={s.num}
+                          onClick={() => scrollToAnchor(s.id)}
+                          className="blog-card-surface border blog-border-color hover:border-[#05BB8D]/60 hover:text-brand px-2.5 py-2 rounded-xl text-left transition-all cursor-pointer group flex items-center space-x-1.5"
+                        >
+                          <span className="font-mono text-[10px] font-bold text-[#05BB8D] bg-[#05BB8D]/10 px-1.5 py-0.5 rounded">
+                            {s.num < 10 ? `0${s.num}` : s.num}
+                          </span>
+                          <span className="text-xs font-medium blog-heading-primary truncate group-hover:text-brand">
+                            {s.title}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 pt-2 border-t blog-border-color text-xs font-mono">
+                      <button
+                        onClick={() => scrollToAnchor("webflow-vs-framer-quick-comparison")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Feature Comparison Matrix</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("webflow-vs-framer-which-should-you-choose-")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Strategic Decision Matrix</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("faq-section")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>FAQ Accordion</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("final-thoughts")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Final Verdict</span>
+                        <ChevronRight size={12} />
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Quick Interactive Table of Contents for Day 7 (High-Converting Landing Page) */}
+                {isDay7Post && (
+                  <div className="blog-card-subtle-surface border blog-border-color rounded-2xl p-5 sm:p-6 space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Layers size={16} className="text-[#05BB8D]" />
+                        <span className="blog-heading-primary font-display font-bold text-sm tracking-tight">
+                          Quick Jump — 12 Landing Page Essentials
+                        </span>
+                      </div>
+                      <span className="font-mono text-[10px] blog-muted-text font-bold uppercase tracking-wider">
+                        16 Sections & Audit Frameworks
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-8 gap-2 pt-1">
+                      {day7Sections.map((s) => (
+                        <button
+                          key={s.num}
+                          onClick={() => scrollToAnchor(s.id)}
+                          className="blog-card-surface border blog-border-color hover:border-[#05BB8D]/60 hover:text-brand px-2.5 py-2 rounded-xl text-left transition-all cursor-pointer group flex items-center space-x-1.5"
+                        >
+                          <span className="font-mono text-[10px] font-bold text-[#05BB8D] bg-[#05BB8D]/10 px-1.5 py-0.5 rounded">
+                            {s.num < 10 ? `0${s.num}` : s.num}
+                          </span>
+                          <span className="text-xs font-medium blog-heading-primary truncate group-hover:text-brand">
+                            {s.title}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 pt-2 border-t blog-border-color text-xs font-mono">
+                      <button
+                        onClick={() => scrollToAnchor("landing-page-vs-homepage")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Homepage vs Landing Page</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("high-converting-landing-page-checklist")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>12-Point Checklist</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("example-a-landing-page-for-a-bookkeeping-business")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Bookkeeping Example</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("seven-common-landing-page-mistakes-to-avoid")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>7 Mistakes to Avoid</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("faq-section")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>FAQ Accordion</span>
+                        <ChevronRight size={12} />
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 {/* Quick Interactive Table of Contents for Day 6 (Turn Website Visitors Into Customers) */}
                 {isDay6Post && (
