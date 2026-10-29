@@ -21,7 +21,8 @@ import {
   Layers,
   FileCheck2,
   Check,
-  Scale
+  Scale,
+  Zap
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { blogPostsData } from "../data";
@@ -146,7 +147,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       }
 
       // Format ISO Date for Schema
-      const isoDate = selectedPost.date.includes("27")
+      const isoDate = selectedPost.date.includes("28")
+        ? "2026-10-28T00:00:00+00:00"
+        : selectedPost.date.includes("27")
         ? "2026-10-27T00:00:00+00:00"
         : selectedPost.date.includes("26")
         ? "2026-10-26T00:00:00+00:00"
@@ -235,7 +238,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
     };
   }, [selectedPost]);
 
-  const categories = ["All", "Conversion Optimization", "Web Development", "Website Design", "Business Growth", "Case Study", "Design", "SEO"];
+  const categories = ["All", "Performance", "Conversion Optimization", "Web Development", "Website Design", "Business Growth", "Case Study", "Design", "SEO"];
 
   const handlePostClick = (post: BlogPost) => {
     setSelectedPost(post);
@@ -405,7 +408,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             <span>FREQUENTLY ASKED QUESTIONS</span>
           </div>
           <h3 className="blog-heading-primary text-xl sm:text-2xl font-display font-black tracking-tight">
-            {selectedPost.id === "website-redesign-checklist"
+            {selectedPost.id === "why-website-speed-matters"
+              ? "Website Speed Questions Answered"
+              : selectedPost.id === "website-redesign-checklist"
               ? "Website Redesign Checklist Questions Answered"
               : selectedPost.id === "webflow-vs-framer-2026"
               ? "Webflow vs Framer Questions Answered"
@@ -424,7 +429,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
               : "Frequently Asked Questions"}
           </h3>
           <p className="blog-muted-text text-xs sm:text-sm">
-            {selectedPost.id === "website-redesign-checklist"
+            {selectedPost.id === "why-website-speed-matters"
+              ? "Practical answers to common questions about Core Web Vitals, speed testing tools, mobile performance benchmarks, and loading optimizations."
+              : selectedPost.id === "website-redesign-checklist"
               ? "Practical answers to key questions about redesign timelines, search engine rank preservation, CMS improvements, post-launch QA, and measuring ROI."
               : selectedPost.id === "webflow-vs-framer-2026"
               ? "Clear answers to the most common questions founders, marketers, and designers ask when deciding between Webflow and Framer in 2026."
@@ -571,7 +578,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       return renderFaqSectionComponent(idx);
     }
 
-    if (trimmed.startsWith("### Need a Website That Looks Professional and Works Better?") ||
+    if (trimmed.startsWith("### Need a Faster, Better-Performing Website?") ||
+        trimmed.startsWith("## Need a Faster, Better-Performing Website?") ||
+        trimmed.startsWith("### Need a Website That Looks Professional and Works Better?") ||
         trimmed.startsWith("## Need a Website That Looks Professional and Works Better?") ||
         trimmed.startsWith("## Need Help Choosing the Right Website Platform?") || 
         trimmed.startsWith("## Ready to Build a Website That Works for Your Business?") ||
@@ -590,6 +599,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         trimmed.startsWith("At **Vprime Digitalz**, we design and develop") ||
         trimmed.startsWith("If your current website feels outdated, confusing") ||
         trimmed.startsWith("**Ready to improve your website? [Get in touch") ||
+        trimmed.startsWith("[View Our Work](/portfolio) [Start Your Project](/booking)") ||
         trimmed.startsWith("Whether your website needs performance improvements") ||
         trimmed.startsWith("Whether you're building a new website, improving an existing one") ||
         trimmed.startsWith("Whether you need a high-converting landing page") ||
@@ -612,7 +622,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         trimmed.startsWith("- Day 5:") ||
         trimmed.startsWith("- Day 6:") ||
         trimmed.startsWith("- Day 7:") ||
-        trimmed.startsWith("- Day 8:")) {
+        trimmed.startsWith("- Day 8:") ||
+        trimmed.startsWith("- Day 9:")) {
       return null;
     }
 
@@ -626,7 +637,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
     if (numberedHeadingMatch) {
       const num = parseInt(numberedHeadingMatch[1], 10);
       const title = numberedHeadingMatch[2];
-      const sectionId = selectedPost?.slug === "website-redesign-checklist"
+      const sectionId = selectedPost?.slug === "why-website-speed-matters"
+        ? `speed-${num}`
+        : selectedPost?.slug === "website-redesign-checklist"
         ? `checkpoint-${num}`
         : selectedPost?.slug === "webflow-vs-framer-2026"
         ? `comparison-${num}`
@@ -639,7 +652,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         : selectedPost?.slug.includes("mistakes")
         ? `mistake-${num}`
         : `section-${num}`;
-      const badgeLabel = selectedPost?.slug === "website-redesign-checklist"
+      const badgeLabel = selectedPost?.slug === "why-website-speed-matters"
+        ? `INSIGHT ${num < 10 ? `0${num}` : num}`
+        : selectedPost?.slug === "website-redesign-checklist"
         ? `CHECKPOINT ${num < 10 ? `0${num}` : num}`
         : selectedPost?.slug === "webflow-vs-framer-2026"
         ? `FACTOR ${num < 10 ? `0${num}` : num}`
@@ -743,6 +758,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             .filter(Boolean)
         );
 
+        const isCoreWebVitalsTable = headerCols.some((h) => h.toLowerCase().includes("threshold")) ||
+                                     (headerCols.some((h) => h.toLowerCase().includes("measures")) && headerCols.some((h) => h.toLowerCase().includes("metric")));
         const isRedesignLaunchChecklist = headerCols.some((h) => h.toLowerCase().includes("checkpoint")) ||
                                           headerCols.some((h) => h.toLowerCase().includes("verification gate"));
         const isWebflowVsWp = headerCols.some((h) => h.toLowerCase().includes("webflow")) &&
@@ -757,7 +774,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         const isChecklistTable = headerCols.some((h) => h.toLowerCase().includes("problem") || h.toLowerCase().includes("mistake") || h.toLowerCase().includes("improvement"));
         const isConversionChecklist = headerCols.some((h) => h.toLowerCase().includes("element") || h.toLowerCase().includes("check"));
 
-        const tableTitle = isRedesignLaunchChecklist
+        const tableTitle = isCoreWebVitalsTable
+          ? "Core Web Vitals Metric & Benchmark Guide"
+          : isRedesignLaunchChecklist
           ? "Website Redesign Pre-Launch Quality & Verification Matrix"
           : isWebflowVsFramer
           ? "Webflow vs Framer 2026 Platform Feature & Architecture Matrix"
@@ -777,7 +796,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
           ? "Quick Website Conversion Checklist"
           : "Strategic Comparison";
 
-        const tableSubtitle = isRedesignLaunchChecklist
+        const tableSubtitle = isCoreWebVitalsTable
+          ? "Google Page Experience Thresholds & Visitor Impact"
+          : isRedesignLaunchChecklist
           ? "15 Critical Checkpoints, Implementation Focus & Launch Gates"
           : isWebflowVsFramer
           ? "Platform Capabilities & Structural Comparison"
@@ -809,7 +830,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             </div>
 
             <div className="overflow-x-auto scrollbar-thin">
-              <table className={`w-full text-left border-collapse text-sm ${isPricingTable ? "min-w-[480px]" : isRedesignLaunchChecklist ? "min-w-[700px]" : "min-w-[620px]"}`}>
+              <table className={`w-full text-left border-collapse text-sm ${isPricingTable ? "min-w-[480px]" : (isRedesignLaunchChecklist || isCoreWebVitalsTable) ? "min-w-[700px]" : "min-w-[620px]"}`}>
                 <thead>
                   <tr className="blog-table-header border-b blog-border-color">
                     {headerCols.map((h, hIdx) => {
@@ -822,6 +843,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                           className={`py-4 px-5 font-mono text-xs font-bold tracking-wider ${
                             isPricingTable || isPriorityPlatformTable
                               ? (hIdx === 0 ? "w-3/5" : "w-2/5") 
+                              : isCoreWebVitalsTable
+                              ? (hIdx === 0 ? "w-[24%]" : hIdx === 1 ? "w-[16%]" : hIdx === 2 ? "w-[38%]" : "w-[22%]")
                               : (isChecklistTable || isConversionChecklist)
                               ? (hIdx === 0 ? "w-2/5" : "w-3/5")
                               : (hIdx === 0 ? "w-1/4" : "w-[37.5%]")
@@ -920,6 +943,14 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                                 </span>
                               )}
                             </div>
+                          ) : isCoreWebVitalsTable && cIdx === 1 ? (
+                            <span className="inline-flex items-center font-mono font-bold text-xs text-blue-600 dark:text-blue-400 px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-500/25 shadow-2xs">
+                              {cell}
+                            </span>
+                          ) : isCoreWebVitalsTable && cIdx === 3 ? (
+                            <span className="inline-flex items-center font-mono font-bold text-xs text-[#05BB8D] px-3 py-1 rounded-xl bg-[#05BB8D]/10 border border-[#05BB8D]/30 shadow-2xs">
+                              {cell}
+                            </span>
                           ) : isRedesignLaunchChecklist && cIdx === 1 ? (
                             <span className="inline-flex items-center font-mono font-bold text-xs text-[#05BB8D] px-2.5 py-1 rounded-md bg-[#05BB8D]/10 border border-[#05BB8D]/25 shadow-2xs">
                               {cell}
@@ -1023,10 +1054,17 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         <ul key={idx} className="space-y-2.5 my-4 pl-2">
           {items.map((item, itemIdx) => {
             const cleanItem = item.replace(/^- /, "");
+            const isCheckItem = cleanItem.startsWith("[x] ") || cleanItem.startsWith("[ ] ");
+            const displayItem = isCheckItem ? cleanItem.replace(/^\[[ x]\] /, "") : cleanItem;
+
             return (
               <li key={itemIdx} className="flex items-start gap-2.5 blog-body-text text-sm sm:text-base leading-relaxed">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#05BB8D] shrink-0 mt-2.5" />
-                <span>{renderInlineFormatting(cleanItem)}</span>
+                {isCheckItem ? (
+                  <CheckCircle2 size={16} className="text-[#05BB8D] shrink-0 mt-1" />
+                ) : (
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#05BB8D] shrink-0 mt-2.5" />
+                )}
+                <span>{renderInlineFormatting(displayItem)}</span>
               </li>
             );
           })}
@@ -1051,6 +1089,20 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
   const isDay7Post = selectedPost?.slug === "what-makes-a-high-converting-landing-page";
   const isDay8Post = selectedPost?.slug === "webflow-vs-framer-2026";
   const isDay9Post = selectedPost?.slug === "website-redesign-checklist";
+  const isDay10Post = selectedPost?.slug === "why-website-speed-matters";
+
+  const day10Sections = useMemo(() => [
+    { num: 1, title: "Speed Meaning", id: "speed-1" },
+    { num: 2, title: "Why It Matters", id: "speed-2" },
+    { num: 3, title: "Core Web Vitals", id: "speed-3" },
+    { num: 4, title: "How to Test", id: "speed-4" },
+    { num: 5, title: "What Slows Sites", id: "speed-5" },
+    { num: 6, title: "Speed Fixes", id: "speed-6" },
+    { num: 7, title: "Platform Impact", id: "speed-7" },
+    { num: 8, title: "Beautiful & Fast", id: "speed-8" },
+    { num: 9, title: "Speed Checklist", id: "speed-9" },
+    { num: 10, title: "Common Mistakes", id: "speed-10" },
+  ], []);
 
   const day9Sections = useMemo(() => [
     { num: 1, title: "Business Goal", id: "checkpoint-1" },
@@ -1660,10 +1712,74 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                   <img 
                     src={selectedPost.image} 
                     alt={selectedPost.title} 
+                    width={1200}
+                    height={675}
+                    loading="eager"
+                    fetchPriority="high"
                     className="w-full h-full object-cover" 
                     referrerPolicy="no-referrer" 
                   />
                 </div>
+
+                {/* Quick Interactive Table of Contents for Day 10 (Why Website Speed Matters) */}
+                {isDay10Post && (
+                  <div className="blog-card-subtle-surface border blog-border-color rounded-2xl p-5 sm:p-6 space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Zap size={16} className="text-[#05BB8D]" />
+                        <span className="blog-heading-primary font-display font-bold text-sm tracking-tight">
+                          Quick Jump — 10 Speed Insights & Guidance
+                        </span>
+                      </div>
+                      <span className="font-mono text-[10px] blog-muted-text font-bold uppercase tracking-wider">
+                        10 Sections • Core Web Vitals & Checklist
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 pt-1">
+                      {day10Sections.map((s) => (
+                        <button
+                          key={s.num}
+                          onClick={() => scrollToAnchor(s.id)}
+                          className="blog-card-surface border blog-border-color hover:border-[#05BB8D]/60 hover:text-brand px-2.5 py-2 rounded-xl text-left transition-all cursor-pointer group flex items-center space-x-1.5"
+                        >
+                          <span className="font-mono text-[10px] font-bold text-[#05BB8D] bg-[#05BB8D]/10 px-1.5 py-0.5 rounded">
+                            {s.num < 10 ? `0${s.num}` : s.num}
+                          </span>
+                          <span className="text-xs font-medium blog-heading-primary truncate group-hover:text-brand">
+                            {s.title}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 pt-2 border-t blog-border-color text-xs font-mono">
+                      <button
+                        onClick={() => scrollToAnchor("speed-3")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Core Web Vitals Guide</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("speed-9")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>13-Point Speed Checklist</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("faq-section")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Speed FAQs</span>
+                        <ChevronRight size={12} />
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 {/* Quick Interactive Table of Contents for Day 9 (Website Redesign Checklist) */}
                 {isDay9Post && (
