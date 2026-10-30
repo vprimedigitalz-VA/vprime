@@ -1194,6 +1194,413 @@ export const pricingPlans: PricingPlan[] = [
 
 export const blogPostsData: BlogPost[] = [
   {
+    id: "plan-your-website-before-hiring-a-web-designer",
+    slug: "plan-your-website-before-hiring-a-web-designer",
+    title: "How to Plan a Website Before Hiring a Web Designer (Step-by-Step Guide)",
+    category: "Website Design",
+    excerpt: "A clear plan leads to better quotes, fewer revisions, and a website that actually supports your business. Here's how to prepare before you hire a web designer.",
+    content: `You've decided it's time for a new website, or a better one.
+
+The natural next step feels like contacting a web designer and asking, "How much for a website?"
+
+But that question is hard to answer without more information. A simple five-page website and a custom website with bookings, a blog, and online payments are completely different projects.
+
+The business owners who get the best results usually do a little planning first. They don't need technical knowledge or design skills. They just need clarity about what they want the website to achieve.
+
+In this guide, you'll learn how to plan your website step by step before hiring a web designer. At the end, you'll find a simple website brief template you can fill in and share with any designer you're considering.
+
+---
+
+## Why Planning Your Website First Makes Such a Difference
+
+Planning isn't about doing the web designer's job for them. It's about giving them the information they need to do their best work for you.
+
+When you plan before hiring, you'll usually get:
+
+- **More accurate quotes:** Designers can price the actual project instead of guessing.
+- **Better comparisons:** When every designer receives the same brief, it's easier to compare their proposals fairly.
+- **Fewer revisions:** Clear goals and content reduce the back-and-forth that slows projects down.
+- **Fewer surprises:** Features you need are discussed at the start, not discovered halfway through.
+- **A website built around your business:** Instead of a generic template, you get a website shaped around your customers and goals.
+
+A little preparation at the start can save a lot of time, money, and frustration later.
+
+---
+
+## Step 1: Define the Main Goal of Your Website
+
+Start with the most important question:
+
+**What should this website do for your business?**
+
+"Look professional" is a good start, but it isn't a goal on its own. Think about the specific result you want.
+
+Common website goals include:
+
+- Generate enquiries or quote requests
+- Get people to book calls, appointments, or consultations
+- Sell products online
+- Showcase a portfolio to win clients
+- Build credibility for investors, partners, or recruits
+- Share information and resources with an audience
+- Grow an email list
+
+Most websites have several goals, but one should come first. Then decide on the main action you want visitors to take, such as "Book a consultation" or "Request a quote."
+
+That one action shapes the whole website: the layout, the messaging, the buttons, and the pages.
+
+If you want to understand how goals connect to results, read [How to Turn Your Website Visitors Into Paying Customers](/blog/how-to-turn-website-visitors-into-customers).
+
+---
+
+## Step 2: Get Clear on Who Your Website Is For
+
+A website that tries to speak to everyone often connects with no one.
+
+Write down who your ideal customers are and what they need to know before they contact you. Ask yourself:
+
+- Who are my best customers?
+- What problems are they trying to solve?
+- What questions do they ask before buying?
+- What concerns or objections stop them from contacting me?
+- How do they usually find businesses like mine, through Google, social media, or referrals?
+- Are they likely to visit on a phone or a computer?
+
+You don't need a formal marketing document. A few honest notes are enough. They help your designer create a website that speaks directly to the people you want to reach.
+
+---
+
+## Step 3: List the Features Your Website Needs
+
+Next, think about what your website needs to do, not just what it needs to show.
+
+A helpful approach is to sort features into "must-have" and "nice-to-have."
+
+| Feature | Must-have or nice-to-have? | Notes |
+|---|---|---|
+| Contact or enquiry form | | Which details should it collect? |
+| Online booking or scheduling | | Which booking tool do you use now, if any? |
+| Blog or news section | | Who will write and publish posts? |
+| Portfolio or case studies | | How many projects will you show? |
+| Online payments or e-commerce | | How many products or services? |
+| Newsletter sign-up | | Which email platform do you use? |
+| Multiple languages | | Which languages? |
+| Client login or member area | | What should members access? |
+| Integrations (CRM, analytics, chat) | | List any tools you already use |
+
+Be honest about what you truly need at launch. You can usually add "nice-to-have" features later, once the website is live and working.
+
+This list also helps your designer recommend the right platform for your project.
+
+---
+
+## Step 4: Plan Your Pages (Your Sitemap)
+
+A sitemap is simply a list of the pages your website will have and how they connect. It doesn't need to be complicated. A list on paper works perfectly.
+
+Many service business websites include pages like these:
+
+- **Home:** A clear summary of who you help, what you do, and why visitors should choose you
+- **About:** Your story, your approach, and the people behind the business
+- **Services:** Either one [services page](/services) or a separate page for each main service
+- **Portfolio or Case Studies:** Proof of your work in your [client showcase](/portfolio)
+- **Testimonials:** Genuine feedback from real clients, if you have it
+- **Blog or Resources:** Helpful content that builds trust and supports search visibility
+- **FAQ:** Answers to common questions
+- **Contact:** A simple way to get in touch, [book a call](/booking), or request a quote
+- **Legal pages:** Privacy policy and terms, where required
+
+Not every business needs every page. A focused website with fewer, stronger pages often works better than a large website filled with thin content.
+
+If you offer several distinct services, separate pages for each one can make your website clearer for visitors and easier for search engines to understand.
+
+---
+
+## Step 5: Gather Your Content Early
+
+Content is one of the most common reasons website projects get delayed.
+
+A designer can build a beautiful layout, but the website isn't complete until it has real words, images, and proof.
+
+Before your project starts, begin gathering:
+
+- Your logo in high-quality formats
+- Brand colours and fonts, if you already have them
+- Service descriptions: what you offer, who it's for, and what's included
+- Your business story for the About page
+- Real photos of your team, workspace, products, or work, where possible
+- Portfolio examples or case studies
+- Genuine testimonials from real clients, with their permission
+- Frequently asked questions your customers already ask
+- Contact details, business hours, and locations, if relevant
+
+Also decide who will write the website copy. Will you write it yourself, hire a copywriter, or ask your web designer whether copywriting is included? Clarifying this early avoids confusion later.
+
+---
+
+## Step 6: Collect Websites You Like (and Explain Why)
+
+Examples are one of the fastest ways to communicate your taste.
+
+Find three to five websites you like. They don't need to be in your industry. For each one, write down what specifically appeals to you:
+
+- The layout or structure
+- The colours or overall mood
+- The typography
+- The photography style
+- How easy it is to navigate
+- A specific section or feature
+
+It's just as helpful to note what you don't like. "Too busy," "too dark," or "hard to find the contact button" are all useful notes.
+
+Remember that examples are for inspiration, not copying. A good designer will use them to understand your preferences and then create something original for your brand.
+
+---
+
+## Step 7: Think About Your Platform and Who Will Manage the Website
+
+You don't need to choose a platform before hiring a designer. A good designer will recommend one based on your needs. But it helps to think about how you'll manage the website after launch.
+
+Ask yourself:
+
+- Will I update the website myself, or will someone else handle it?
+- How often will content change, such as blog posts, projects, or team members?
+- Do I need to edit text and images without technical help?
+- Am I already using any tools the website should connect with?
+- Do I already own a domain name? Who has access to it?
+
+Your answers help a designer recommend a platform that fits your skills, content, and plans for growth.
+
+If you'd like to compare popular options, read [Webflow vs WordPress](/blog/webflow-vs-wordpress-2026) and [Webflow vs Framer](/blog/webflow-vs-framer-2026).
+
+---
+
+## Step 8: Set a Realistic Budget and Timeline
+
+Many business owners feel uncomfortable sharing a budget. But a budget range helps a designer recommend a solution that fits, rather than proposing something too basic or too expensive.
+
+Think about:
+
+- The budget range you're comfortable investing
+- Ongoing costs such as hosting, platform plans, domains, and maintenance
+- Whether you need everything at launch or can build in phases
+- Any important deadlines, such as a product launch, event, or campaign
+
+Be realistic about timing too. Quality websites take time to plan, design, write, build, and test. Content delays and late decisions often affect timelines more than the build itself.
+
+For a detailed look at what affects website pricing, read [How Much Does a Professional Website Cost in 2026?](/blog/how-much-does-a-professional-website-cost-2026).
+
+---
+
+## Step 9: Decide How You'll Measure Success
+
+How will you know whether the new website is working?
+
+Choose a few simple measures connected to your main goal, such as:
+
+- Number of enquiries or quote requests
+- Number of booked calls or appointments
+- Online sales
+- Newsletter sign-ups
+- How visitors find your website
+- Which pages people visit before getting in touch
+
+Ask your designer to set up analytics and form tracking so you can actually measure these results after launch. A website you can measure is a website you can improve.
+
+---
+
+## Step 10: Prepare Questions to Ask Web Designers
+
+Once your plan is ready, you're in a strong position to speak with designers. Prepare a few questions so you can compare them properly:
+
+- Can I see examples of websites you've built that are similar to what I need?
+- What does your design and development process look like?
+- What's included in your quote, and what isn't?
+- Will the website be fully responsive on phones, tablets, and desktops?
+- Will I be able to edit the content myself after launch?
+- How do you approach website speed, SEO basics, and accessibility?
+- Who will own the website, domain, and accounts after launch?
+- What support do you offer after the website goes live?
+- How many revision rounds are included?
+
+The answers will tell you a lot about a designer's experience, process, and how they work with clients.
+
+---
+
+## Your Simple Website Brief Template
+
+Use this template to collect your answers in one place. Then share the same brief with every designer you're considering.
+
+:::website-brief
+### WEBSITE BRIEF
+1. **Business overview:** What does your business do, and who do you serve?
+2. **Main website goal:** What is the most important result the website should achieve?
+3. **Main visitor action:** What is the one action you most want visitors to take?
+4. **Target audience:** Who are your ideal customers, and what do they need to know?
+5. **Pages needed:** List the pages you expect the website to have.
+6. **Must-have features:** Forms, booking, blog, e-commerce, integrations, and so on.
+7. **Nice-to-have features:** Features that could be added later.
+8. **Content status:** What content is ready, what is in progress, and who is writing the copy?
+9. **Brand assets:** Logo, colours, fonts, and photography available.
+10. **Websites you like:** Three to five examples and what you like about each one.
+11. **Website management:** Who will update the website after launch, and how often?
+12. **Budget range:** Your comfortable investment range, including ongoing costs.
+13. **Timeline:** Your preferred launch date and any fixed deadlines.
+14. **Success measures:** How you'll know the website is working.
+:::
+
+---
+
+## Common Website Planning Mistakes to Avoid
+
+### Starting with design instead of goals
+
+Colours and layouts matter, but they should support a clear business goal. Starting with "I want it to look like this" before deciding what the website should achieve often leads to a beautiful website that doesn't perform.
+
+### Planning too many pages
+
+More pages don't automatically mean a better website. Every page should have a clear purpose. Thin, repetitive pages can make a website harder to use and maintain.
+
+### Leaving content until the end
+
+Waiting until the design is finished to start writing is one of the most common causes of delays. Start gathering content as early as possible.
+
+### Choosing a designer on price alone
+
+The cheapest quote isn't always the best value. Compare what's included, the quality of previous work, the process, and the support offered after launch.
+
+### Forgetting about life after launch
+
+A website needs updates, content, maintenance, and occasional improvements. Plan who will handle these tasks before the website goes live.
+
+### Ignoring mobile visitors
+
+Many of your visitors will arrive on a phone. Make sure mobile experience, speed, and usability are part of the plan from the start. Speed matters more than many businesses expect. Read [Why Website Speed Matters for Your Business](/blog/why-website-speed-matters) to learn more.
+
+---
+
+## Frequently Asked Questions
+
+### Do I need to know about design or technology to plan a website?
+
+No. Planning is about your business, your customers, and your goals. A good web designer will handle the design and technical decisions and guide you through the options.
+
+### What should I prepare before contacting a web designer?
+
+At minimum, prepare your main website goal, a list of the pages you think you need, your must-have features, the content you already have, a few example websites you like, and a budget range. The brief template above covers everything.
+
+### Should I write my own website content?
+
+You can, and you know your business best. Many business owners write a first draft and then work with a copywriter or their designer to refine it. Just confirm early whether copywriting is included in your designer's proposal.
+
+### Should I choose the platform before hiring a designer?
+
+Not necessarily. It's better to share your needs and let an experienced designer recommend a platform. However, if you already have a strong preference or an existing website, mention it in your brief.
+
+### How detailed should my website brief be?
+
+Detailed enough for a designer to understand your goals, audience, pages, and features, but it doesn't need to be long. A clear one- or two-page brief is usually more useful than a long document.
+
+### Why should I share my budget with a web designer?
+
+A budget range helps a designer recommend the best solution within your means. Without it, you may receive proposals that are far above or below what you expected, which makes comparison difficult.
+
+### Can I plan a website redesign the same way?
+
+Yes. For a redesign, also review what works and what doesn't on your current website. Note which pages perform well, what customers struggle with, and what content can be kept. Our article [10 Signs Your Business Website Needs a Redesign](/blog/10-signs-your-website-needs-a-redesign) can help you assess your current site.
+
+---
+
+## Final Thoughts
+
+Hiring a web designer is much easier when you know what you want your website to achieve.
+
+You don't need technical skills to plan well. Start with your main goal, understand your audience, list the pages and features you need, gather your content early, and be honest about your budget and timeline.
+
+Then put everything into a simple brief. It will help you get more accurate quotes, compare designers fairly, and start your project with clarity.
+
+A well-planned website is easier to build, easier to manage, and far more likely to support your business once it goes live.
+
+---
+
+## Ready to Plan Your Website?
+
+At **Vprime Digitalz**, we help businesses turn their ideas into clear, well-structured websites that look professional and are built to convert.
+
+Whether you have a detailed brief or just a rough idea, we can help you clarify your goals, plan the right pages and features, and design and build a website that fits your business.
+
+[View Our Work](/portfolio) [Start Your Project](/booking)
+
+Also explore our previous strategy guides:
+- Day 1: [Why Every Small Business Needs a Professional Website in 2026](/blog/why-small-businesses-need-a-website)
+- Day 2: [10 Signs Your Business Website Needs a Redesign](/blog/10-signs-your-website-needs-a-redesign)
+- Day 3: [Webflow vs WordPress: Which Is Better for Your Business in 2026?](/blog/webflow-vs-wordpress-2026)
+- Day 4: [How Much Does a Professional Website Cost in 2026?](/blog/how-much-does-a-professional-website-cost-2026)
+- Day 5: [7 Website Mistakes That Are Costing Your Business Customers (And How to Fix Them)](/blog/website-mistakes-costing-your-business-customers)
+- Day 6: [How to Turn Your Website Visitors Into Paying Customers: 12 Practical Strategies](/blog/how-to-turn-website-visitors-into-customers)
+- Day 7: [What Makes a High-Converting Landing Page? 12 Essential Elements That Drive Results](/blog/what-makes-a-high-converting-landing-page)
+- Day 8: [Webflow vs Framer in 2026: Which Website Builder Is Best for Your Business?](/blog/webflow-vs-framer-2026)
+- Day 9: [Website Redesign Checklist: 15 Things to Fix Before Launching Your New Website](/blog/website-redesign-checklist)
+- Day 10: [Why Website Speed Matters for Your Business (And How to Make Your Site Faster)](/blog/why-website-speed-matters)`,
+    image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1200&q=80",
+    author: {
+      name: "Vprime Digitalz",
+      role: "Website Strategists & UX Designers",
+      avatar: "https://res.cloudinary.com/iuczvp68/image/upload/v1790002397/vprime-digitalz-logo-01_otkfc1.png"
+    },
+    date: "October 30, 2026",
+    readTime: "11 Min Read",
+    tags: [
+      "Website Planning",
+      "Website Design",
+      "Web Development",
+      "Website Strategy",
+      "Small Business",
+      "Client Brief",
+      "Sitemap",
+      "UX Design"
+    ],
+    seoTitle: "How to Plan a Website Before Hiring a Web Designer | Vprime Digitalz",
+    metaDescription: "Plan your website before hiring a web designer. Use this step-by-step checklist to define goals, pages, content, features, budget, and a clear website brief.",
+    featured: true,
+    cta: {
+      heading: "Ready to Plan Your Website?",
+      description: "At Vprime Digitalz, we help businesses turn their ideas into clear, well-structured websites that look professional and are built to convert. Whether you have a detailed brief or just a rough idea, we can help you clarify your goals, plan the right pages and features, and design and build a website that fits your business.",
+      primaryBtnText: "Start Your Project",
+      secondaryBtnText: "View Our Work"
+    },
+    faq: [
+      {
+        q: "Do I need to know about design or technology to plan a website?",
+        a: "No. Planning is about your business, your customers, and your goals. A good web designer will handle the design and technical decisions and guide you through the options."
+      },
+      {
+        q: "What should I prepare before contacting a web designer?",
+        a: "At minimum, prepare your main website goal, a list of the pages you think you need, your must-have features, the content you already have, a few example websites you like, and a budget range. The brief template above covers everything."
+      },
+      {
+        q: "Should I write my own website content?",
+        a: "You can, and you know your business best. Many business owners write a first draft and then work with a copywriter or their designer to refine it. Just confirm early whether copywriting is included in your designer's proposal."
+      },
+      {
+        q: "Should I choose the platform before hiring a designer?",
+        a: "Not necessarily. It's better to share your needs and let an experienced designer recommend a platform. However, if you already have a strong preference or an existing website, mention it in your brief."
+      },
+      {
+        q: "How detailed should my website brief be?",
+        a: "Detailed enough for a designer to understand your goals, audience, pages, and features, but it doesn't need to be long. A clear one- or two-page brief is usually more useful than a long document."
+      },
+      {
+        q: "Why should I share my budget with a web designer?",
+        a: "A budget range helps a designer recommend the best solution within your means. Without it, you may receive proposals that are far above or below what you expected, which makes comparison difficult."
+      },
+      {
+        q: "Can I plan a website redesign the same way?",
+        a: "Yes. For a redesign, also review what works and what doesn't on your current website. Note which pages perform well, what customers struggle with, and what content can be kept. Our article 10 Signs Your Business Website Needs a Redesign can help you assess your current site."
+      }
+    ]
+  },
+  {
     id: "why-website-speed-matters",
     slug: "why-website-speed-matters",
     title: "Why Website Speed Matters for Your Business (And How to Make Your Site Faster)",
@@ -1567,7 +1974,7 @@ Also explore our previous strategy guides:
     tags: ["Performance", "Website Speed", "Core Web Vitals", "Technical SEO", "Mobile UX", "Conversion Optimization"],
     seoTitle: "Why Website Speed Matters for Your Business | Vprime Digitalz",
     metaDescription: "A slow website can cost you enquiries, trust, and visibility. Learn why website speed matters, what Core Web Vitals measure, and how to make your site faster.",
-    featured: true,
+    featured: false,
     cta: {
       heading: "Need a Faster, Better-Performing Website?",
       description: "At Vprime Digitalz, we design and develop modern websites that look premium and are built to perform, with fast loading, smooth interactions, and layouts that work beautifully on every device.",

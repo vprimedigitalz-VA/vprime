@@ -22,7 +22,8 @@ import {
   FileCheck2,
   Check,
   Scale,
-  Zap
+  Zap,
+  FileText
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { blogPostsData } from "../data";
@@ -55,6 +56,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
 
   const [expandedFaqIndex, setExpandedFaqIndex] = useState<number | null>(0);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [copiedBrief, setCopiedBrief] = useState(false);
   const [checklistProgress, setChecklistProgress] = useState<Record<number, boolean>>({});
   
   // Reading scroll progress tracker for blog detail view
@@ -147,7 +149,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       }
 
       // Format ISO Date for Schema
-      const isoDate = selectedPost.date.includes("28")
+      const isoDate = selectedPost.date.includes("30")
+        ? "2026-10-30T00:00:00+00:00"
+        : selectedPost.date.includes("28")
         ? "2026-10-28T00:00:00+00:00"
         : selectedPost.date.includes("27")
         ? "2026-10-27T00:00:00+00:00"
@@ -270,6 +274,31 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       navigator.clipboard.writeText(`https://vprimedigitalz.com/blog/${selectedPost.slug}`);
       setCopiedLink(true);
       setTimeout(() => setCopiedLink(false), 2000);
+    }
+  };
+
+  const handleCopyBrief = () => {
+    if (typeof window !== "undefined" && typeof navigator !== "undefined" && navigator.clipboard) {
+      const briefTemplate = `WEBSITE BRIEF TEMPLATE (Vprime Digitalz)
+
+1. Business overview: What does your business do, and who do you serve?
+2. Main website goal: What is the most important result the website should achieve?
+3. Main visitor action: What is the one action you most want visitors to take?
+4. Target audience: Who are your ideal customers, and what do they need to know?
+5. Pages needed: List the pages you expect the website to have.
+6. Must-have features: Forms, booking, blog, e-commerce, integrations, and so on.
+7. Nice-to-have features: Features that could be added later.
+8. Content status: What content is ready, what is in progress, and who is writing the copy?
+9. Brand assets: Logo, colours, fonts, and photography available.
+10. Websites you like: Three to five examples and what you like about each one.
+11. Website management: Who will update the website after launch, and how often?
+12. Budget range: Your comfortable investment range, including ongoing costs.
+13. Timeline: Your preferred launch date and any fixed deadlines.
+14. Success measures: How you'll know the website is working.`;
+
+      navigator.clipboard.writeText(briefTemplate);
+      setCopiedBrief(true);
+      setTimeout(() => setCopiedBrief(false), 2500);
     }
   };
 
@@ -408,7 +437,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             <span>FREQUENTLY ASKED QUESTIONS</span>
           </div>
           <h3 className="blog-heading-primary text-xl sm:text-2xl font-display font-black tracking-tight">
-            {selectedPost.id === "why-website-speed-matters"
+            {selectedPost.id === "plan-your-website-before-hiring-a-web-designer"
+              ? "Website Planning Questions Answered"
+              : selectedPost.id === "why-website-speed-matters"
               ? "Website Speed Questions Answered"
               : selectedPost.id === "website-redesign-checklist"
               ? "Website Redesign Checklist Questions Answered"
@@ -429,7 +460,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
               : "Frequently Asked Questions"}
           </h3>
           <p className="blog-muted-text text-xs sm:text-sm">
-            {selectedPost.id === "why-website-speed-matters"
+            {selectedPost.id === "plan-your-website-before-hiring-a-web-designer"
+              ? "Practical answers to common questions about preparing a project brief, budgeting, copy preparation, platform choices, and hiring web designers."
+              : selectedPost.id === "why-website-speed-matters"
               ? "Practical answers to common questions about Core Web Vitals, speed testing tools, mobile performance benchmarks, and loading optimizations."
               : selectedPost.id === "website-redesign-checklist"
               ? "Practical answers to key questions about redesign timelines, search engine rank preservation, CMS improvements, post-launch QA, and measuring ROI."
@@ -564,6 +597,80 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
     );
   };
 
+  const renderWebsiteBriefCard = (idx: number, items: Array<{ num: string; title: string; desc: string }>) => {
+    return (
+      <div 
+        key={idx} 
+        id="website-brief" 
+        className="my-10 blog-card-subtle-surface border blog-border-color border-l-4 border-l-[#05BB8D] rounded-2xl p-6 sm:p-8 space-y-6 relative shadow-xs scroll-mt-28"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b blog-border-color">
+          <div className="space-y-1">
+            <div className="flex items-center space-x-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#05BB8D]" />
+              <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#05BB8D]">
+                Client Planning Worksheet
+              </span>
+            </div>
+            <h3 className="blog-heading-primary text-xl sm:text-2xl font-display font-black tracking-tight">
+              Website Brief Template
+            </h3>
+            <p className="blog-muted-text text-xs sm:text-sm">
+              Answer these 14 questions to get accurate quotes, fair comparisons, and fewer project delays.
+            </p>
+          </div>
+
+          <button
+            onClick={handleCopyBrief}
+            className="self-start sm:self-auto blog-secondary-btn border blog-border-color hover:border-[#05BB8D] px-3.5 py-2 rounded-xl text-xs font-mono font-semibold flex items-center space-x-2 cursor-pointer transition-all shrink-0"
+          >
+            {copiedBrief ? (
+              <>
+                <Check size={14} className="text-[#05BB8D]" />
+                <span className="text-[#05BB8D]">Brief Copied!</span>
+              </>
+            ) : (
+              <>
+                <Copy size={14} />
+                <span>Copy Brief Template</span>
+              </>
+            )}
+          </button>
+        </div>
+
+        <div className="space-y-3.5 sm:space-y-4">
+          {items.map((item, itemIdx) => (
+            <div 
+              key={itemIdx} 
+              className="p-4 rounded-xl blog-card-surface border blog-border-color hover:border-[#05BB8D]/40 transition-colors flex items-start gap-3 sm:gap-4 shadow-2xs"
+            >
+              <span className="font-mono text-xs font-bold text-[#05BB8D] bg-[#05BB8D]/10 px-2 py-0.5 rounded shrink-0 mt-0.5">
+                {item.num.length === 1 ? `0${item.num}` : item.num}
+              </span>
+              <div className="space-y-0.5 flex-1">
+                <h4 className="blog-heading-primary text-sm sm:text-base font-bold">
+                  {item.title}
+                </h4>
+                {item.desc && (
+                  <p className="blog-body-text text-xs sm:text-sm leading-relaxed">
+                    {item.desc}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="p-4 rounded-xl blog-card-surface border blog-border-color flex items-center gap-3 text-xs blog-body-text">
+          <Sparkles size={16} className="text-[#05BB8D] shrink-0" />
+          <span>
+            <strong>Pro Tip:</strong> Fill in this brief and share the exact same document with 2–3 agencies or designers to receive transparent, directly comparable proposals.
+          </span>
+        </div>
+      </div>
+    );
+  };
+
   // Helper to render markdown content with full structural support
   const renderFormattedParagraph = (para: string, idx: number) => {
     const trimmed = para.trim();
@@ -578,7 +685,23 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       return renderFaqSectionComponent(idx);
     }
 
-    if (trimmed.startsWith("### Need a Faster, Better-Performing Website?") ||
+    if (trimmed.startsWith(":::website-brief")) {
+      const content = trimmed.replace(/^:::website-brief\s*/, "").replace(/:::$/, "").trim();
+      const briefLines = content.split("\n").filter((l) => /^\d+\.\s+/.test(l.trim()));
+      const briefItems = briefLines.map((line) => {
+        const clean = line.replace(/^\d+\.\s+/, "").trim();
+        const colonMatch = clean.match(/^\*\*([^*]+)\:\*\*\s*(.*)$/);
+        if (colonMatch) {
+          return { num: line.match(/^(\d+)\./)?.[1] || "", title: colonMatch[1], desc: colonMatch[2] };
+        }
+        return { num: line.match(/^(\d+)\./)?.[1] || "", title: clean, desc: "" };
+      });
+      return renderWebsiteBriefCard(idx, briefItems);
+    }
+
+    if (trimmed.startsWith("### Ready to Plan Your Website?") ||
+        trimmed.startsWith("## Ready to Plan Your Website?") ||
+        trimmed.startsWith("### Need a Faster, Better-Performing Website?") ||
         trimmed.startsWith("## Need a Faster, Better-Performing Website?") ||
         trimmed.startsWith("### Need a Website That Looks Professional and Works Better?") ||
         trimmed.startsWith("## Need a Website That Looks Professional and Works Better?") ||
@@ -594,6 +717,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
 
     // Skip redundant plain text promo blocks that are rendered by the CTA card
     if (trimmed.startsWith("At **Vprime Digitalz**, we help businesses") ||
+        trimmed.startsWith("At Vprime Digitalz, we help businesses turn their ideas") ||
+        trimmed.startsWith("Whether you have a detailed brief or just a rough idea") ||
         trimmed.startsWith("At **Vprime Digitalz**, the goal is to help businesses") ||
         trimmed.startsWith("At **Vprime Digitalz**, we believe in transparent pricing") ||
         trimmed.startsWith("At **Vprime Digitalz**, we design and develop") ||
@@ -623,7 +748,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         trimmed.startsWith("- Day 6:") ||
         trimmed.startsWith("- Day 7:") ||
         trimmed.startsWith("- Day 8:") ||
-        trimmed.startsWith("- Day 9:")) {
+        trimmed.startsWith("- Day 9:") ||
+        trimmed.startsWith("- Day 10:")) {
       return null;
     }
 
@@ -632,12 +758,16 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       return null;
     }
 
-    // 3. Headings with Numbers: "## 1. What Is Webflow?" or "## 10. Signs..."
+    // 3. Headings with Numbers: "## 1. What Is Webflow?" or "## Step 1: Define..."
+    const stepHeadingMatch = trimmed.match(/^##\s+Step\s+(\d+):\s+(.*)$/i);
     const numberedHeadingMatch = trimmed.match(/^##\s+(\d+)\.\s+(.*)$/);
-    if (numberedHeadingMatch) {
-      const num = parseInt(numberedHeadingMatch[1], 10);
-      const title = numberedHeadingMatch[2];
-      const sectionId = selectedPost?.slug === "why-website-speed-matters"
+    if (stepHeadingMatch || numberedHeadingMatch) {
+      const isStep = !!stepHeadingMatch;
+      const num = parseInt(isStep ? stepHeadingMatch[1] : numberedHeadingMatch![1], 10);
+      const title = isStep ? `Step ${num}: ${stepHeadingMatch[2]}` : numberedHeadingMatch![2];
+      const sectionId = isStep
+        ? `step-${num}`
+        : selectedPost?.slug === "why-website-speed-matters"
         ? `speed-${num}`
         : selectedPost?.slug === "website-redesign-checklist"
         ? `checkpoint-${num}`
@@ -652,7 +782,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         : selectedPost?.slug.includes("mistakes")
         ? `mistake-${num}`
         : `section-${num}`;
-      const badgeLabel = selectedPost?.slug === "why-website-speed-matters"
+      const badgeLabel = isStep
+        ? `STEP ${num < 10 ? `0${num}` : num}`
+        : selectedPost?.slug === "why-website-speed-matters"
         ? `INSIGHT ${num < 10 ? `0${num}` : num}`
         : selectedPost?.slug === "website-redesign-checklist"
         ? `CHECKPOINT ${num < 10 ? `0${num}` : num}`
@@ -758,6 +890,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             .filter(Boolean)
         );
 
+        const isFeaturesPlanningTable = headerCols.some((h) => h.toLowerCase().includes("must-have") || h.toLowerCase().includes("nice-to-have")) ||
+                                        (headerCols.some((h) => h.toLowerCase().includes("feature")) && headerCols.some((h) => h.toLowerCase().includes("notes")));
         const isCoreWebVitalsTable = headerCols.some((h) => h.toLowerCase().includes("threshold")) ||
                                      (headerCols.some((h) => h.toLowerCase().includes("measures")) && headerCols.some((h) => h.toLowerCase().includes("metric")));
         const isRedesignLaunchChecklist = headerCols.some((h) => h.toLowerCase().includes("checkpoint")) ||
@@ -774,7 +908,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         const isChecklistTable = headerCols.some((h) => h.toLowerCase().includes("problem") || h.toLowerCase().includes("mistake") || h.toLowerCase().includes("improvement"));
         const isConversionChecklist = headerCols.some((h) => h.toLowerCase().includes("element") || h.toLowerCase().includes("check"));
 
-        const tableTitle = isCoreWebVitalsTable
+        const tableTitle = isFeaturesPlanningTable
+          ? "Website Feature Prioritisation Matrix"
+          : isCoreWebVitalsTable
           ? "Core Web Vitals Metric & Benchmark Guide"
           : isRedesignLaunchChecklist
           ? "Website Redesign Pre-Launch Quality & Verification Matrix"
@@ -796,7 +932,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
           ? "Quick Website Conversion Checklist"
           : "Strategic Comparison";
 
-        const tableSubtitle = isCoreWebVitalsTable
+        const tableSubtitle = isFeaturesPlanningTable
+          ? "Launch Essentials vs Future Enhancements"
+          : isCoreWebVitalsTable
           ? "Google Page Experience Thresholds & Visitor Impact"
           : isRedesignLaunchChecklist
           ? "15 Critical Checkpoints, Implementation Focus & Launch Gates"
@@ -843,6 +981,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                           className={`py-4 px-5 font-mono text-xs font-bold tracking-wider ${
                             isPricingTable || isPriorityPlatformTable
                               ? (hIdx === 0 ? "w-3/5" : "w-2/5") 
+                              : isFeaturesPlanningTable
+                              ? (hIdx === 0 ? "w-[36%]" : hIdx === 1 ? "w-[30%]" : "w-[34%]")
                               : isCoreWebVitalsTable
                               ? (hIdx === 0 ? "w-[24%]" : hIdx === 1 ? "w-[16%]" : hIdx === 2 ? "w-[38%]" : "w-[22%]")
                               : (isChecklistTable || isConversionChecklist)
@@ -967,6 +1107,11 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                                 </span>
                               )}
                             </div>
+                          ) : isFeaturesPlanningTable && cIdx === 1 ? (
+                            <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold text-slate-500 dark:text-slate-400 border border-dashed border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1 blog-card-subtle-surface">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#05BB8D]" />
+                              <span>Must-have / Nice-to-have</span>
+                            </span>
                           ) : (isChecklistTable || isConversionChecklist) && cIdx === 1 ? (
                             <div className="flex items-start gap-2">
                               <CheckCircle2 size={16} className="text-[#05BB8D] shrink-0 mt-0.5" />
@@ -990,7 +1135,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             {/* Mobile swipe hint */}
             <div className="sm:hidden px-4 py-2 border-t blog-border-color blog-card-subtle-surface text-center">
               <span className="font-mono text-[10px] blog-muted-text">
-                Swipe left/right to compare columns
+                {isFeaturesPlanningTable ? "Swipe left/right to view notes & fillable checklist" : "Swipe left/right to compare columns"}
               </span>
             </div>
           </div>
@@ -1090,6 +1235,20 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
   const isDay8Post = selectedPost?.slug === "webflow-vs-framer-2026";
   const isDay9Post = selectedPost?.slug === "website-redesign-checklist";
   const isDay10Post = selectedPost?.slug === "why-website-speed-matters";
+  const isDay11Post = selectedPost?.slug === "plan-your-website-before-hiring-a-web-designer";
+
+  const day11Sections = useMemo(() => [
+    { num: 1, title: "Main Goal", id: "step-1" },
+    { num: 2, title: "Target Audience", id: "step-2" },
+    { num: 3, title: "Features List", id: "step-3" },
+    { num: 4, title: "Sitemap Pages", id: "step-4" },
+    { num: 5, title: "Content Assets", id: "step-5" },
+    { num: 6, title: "Inspiration", id: "step-6" },
+    { num: 7, title: "Platform Choice", id: "step-7" },
+    { num: 8, title: "Budget & Time", id: "step-8" },
+    { num: 9, title: "Success Metrics", id: "step-9" },
+    { num: 10, title: "Questions to Ask", id: "step-10" },
+  ], []);
 
   const day10Sections = useMemo(() => [
     { num: 1, title: "Speed Meaning", id: "speed-1" },
@@ -1720,6 +1879,74 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                     referrerPolicy="no-referrer" 
                   />
                 </div>
+
+                {/* Quick Interactive Table of Contents for Day 11 (Plan Website Before Hiring Web Designer) */}
+                {isDay11Post && (
+                  <div className="blog-card-subtle-surface border blog-border-color rounded-2xl p-5 sm:p-6 space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <FileText size={16} className="text-[#05BB8D]" />
+                        <span className="blog-heading-primary font-display font-bold text-sm tracking-tight">
+                          Quick Jump — 10-Step Website Planning Guide
+                        </span>
+                      </div>
+                      <span className="font-mono text-[10px] blog-muted-text font-bold uppercase tracking-wider">
+                        10 Steps • Feature Matrix & Brief Template
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 pt-1">
+                      {day11Sections.map((s) => (
+                        <button
+                          key={s.num}
+                          onClick={() => scrollToAnchor(s.id)}
+                          className="blog-card-surface border blog-border-color hover:border-[#05BB8D]/60 hover:text-brand px-2.5 py-2 rounded-xl text-left transition-all cursor-pointer group flex items-center space-x-1.5"
+                        >
+                          <span className="font-mono text-[10px] font-bold text-[#05BB8D] bg-[#05BB8D]/10 px-1.5 py-0.5 rounded">
+                            {s.num < 10 ? `0${s.num}` : s.num}
+                          </span>
+                          <span className="text-xs font-medium blog-heading-primary truncate group-hover:text-brand">
+                            {s.title}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 pt-2 border-t blog-border-color text-xs font-mono">
+                      <button
+                        onClick={() => scrollToAnchor("step-3")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Feature Matrix Table</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("website-brief")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Website Brief Template</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("common-website-planning-mistakes-to-avoid")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Common Mistakes</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("faq-section")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Planning FAQs</span>
+                        <ChevronRight size={12} />
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 {/* Quick Interactive Table of Contents for Day 10 (Why Website Speed Matters) */}
                 {isDay10Post && (
@@ -2367,27 +2594,33 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                   <h4 className="blog-heading-primary text-base font-display font-extrabold border-b blog-border-color pb-3">
                     More Articles & Strategy Guides
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {blogPostsData
-                      .filter((p) => p.id !== selectedPost.id)
-                      .slice(0, 2)
-                      .map((p) => (
-                        <div
-                          key={p.id}
-                          onClick={() => handlePostClick(p)}
-                          className="blog-card-surface border blog-border-color rounded-2xl p-5 hover:border-[#05BB8D]/50 transition-all cursor-pointer space-y-3 group shadow-xs"
-                        >
-                          <span className="blog-badge-pill text-[10px] font-mono uppercase font-bold px-2 py-0.5 rounded">{p.category}</span>
-                          <h5 className="blog-heading-primary group-hover:text-brand text-sm font-display font-bold transition-colors line-clamp-2">
-                            {p.title}
-                          </h5>
-                          <p className="blog-muted-text text-xs line-clamp-2">{p.excerpt}</p>
-                          <span className="blog-link-text text-xs font-mono font-bold flex items-center gap-1 pt-1">
-                            <span>Read article</span>
-                            <ArrowRight size={12} />
-                          </span>
-                        </div>
-                      ))}
+                  <div className={`grid grid-cols-1 ${isDay11Post ? "md:grid-cols-3" : "md:grid-cols-2"} gap-6`}>
+                    {(isDay11Post
+                      ? [
+                          blogPostsData.find((p) => p.slug === "why-website-speed-matters"),
+                          blogPostsData.find((p) => p.slug === "how-much-does-a-professional-website-cost-2026"),
+                          blogPostsData.find((p) => p.slug === "website-redesign-checklist"),
+                        ].filter(Boolean) as BlogPost[]
+                      : blogPostsData
+                          .filter((p) => p.id !== selectedPost.id)
+                          .slice(0, 2)
+                    ).map((p) => (
+                      <div
+                        key={p.id}
+                        onClick={() => handlePostClick(p)}
+                        className="blog-card-surface border blog-border-color rounded-2xl p-5 hover:border-[#05BB8D]/50 transition-all cursor-pointer space-y-3 group shadow-xs"
+                      >
+                        <span className="blog-badge-pill text-[10px] font-mono uppercase font-bold px-2 py-0.5 rounded">{p.category}</span>
+                        <h5 className="blog-heading-primary group-hover:text-brand text-sm font-display font-bold transition-colors line-clamp-2">
+                          {p.title}
+                        </h5>
+                        <p className="blog-muted-text text-xs line-clamp-2">{p.excerpt}</p>
+                        <span className="blog-link-text text-xs font-mono font-bold flex items-center gap-1 pt-1">
+                          <span>Read article</span>
+                          <ArrowRight size={12} />
+                        </span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
