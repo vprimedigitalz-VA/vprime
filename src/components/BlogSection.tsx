@@ -437,7 +437,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             <span>FREQUENTLY ASKED QUESTIONS</span>
           </div>
           <h3 className="blog-heading-primary text-xl sm:text-2xl font-display font-black tracking-tight">
-            {selectedPost.id === "plan-your-website-before-hiring-a-web-designer"
+            {selectedPost.id === "turn-website-visitors-into-customers"
+              ? "Website Conversion Questions Answered"
+              : selectedPost.id === "plan-your-website-before-hiring-a-web-designer"
               ? "Website Planning Questions Answered"
               : selectedPost.id === "why-website-speed-matters"
               ? "Website Speed Questions Answered"
@@ -460,7 +462,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
               : "Frequently Asked Questions"}
           </h3>
           <p className="blog-muted-text text-xs sm:text-sm">
-            {selectedPost.id === "plan-your-website-before-hiring-a-web-designer"
+            {selectedPost.id === "turn-website-visitors-into-customers"
+              ? "Practical answers to common questions about conversion rates, driving qualified leads, improving visitor trust, and optimizing user journeys."
+              : selectedPost.id === "plan-your-website-before-hiring-a-web-designer"
               ? "Practical answers to common questions about preparing a project brief, budgeting, copy preparation, platform choices, and hiring web designers."
               : selectedPost.id === "why-website-speed-matters"
               ? "Practical answers to common questions about Core Web Vitals, speed testing tools, mobile performance benchmarks, and loading optimizations."
@@ -699,7 +703,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       return renderWebsiteBriefCard(idx, briefItems);
     }
 
-    if (trimmed.startsWith("### Ready to Plan Your Website?") ||
+    if (trimmed.startsWith("### Want a Website Designed to Do More Than Look Good?") ||
+        trimmed.startsWith("## Want a Website Designed to Do More Than Look Good?") ||
+        trimmed.startsWith("### Ready to Plan Your Website?") ||
         trimmed.startsWith("## Ready to Plan Your Website?") ||
         trimmed.startsWith("### Need a Faster, Better-Performing Website?") ||
         trimmed.startsWith("## Need a Faster, Better-Performing Website?") ||
@@ -716,7 +722,10 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
     }
 
     // Skip redundant plain text promo blocks that are rendered by the CTA card
-    if (trimmed.startsWith("At **Vprime Digitalz**, we help businesses") ||
+    if (trimmed.startsWith("At **Vprime Digitalz**, we believe a professional website should combine") ||
+        trimmed.startsWith("**Let's build a website that works harder for your business.**") ||
+        trimmed.startsWith("[Discuss Your Website Project](/booking) [View Our Work](/portfolio)") ||
+        trimmed.startsWith("At **Vprime Digitalz**, we help businesses") ||
         trimmed.startsWith("At Vprime Digitalz, we help businesses turn their ideas") ||
         trimmed.startsWith("Whether you have a detailed brief or just a rough idea") ||
         trimmed.startsWith("At **Vprime Digitalz**, the goal is to help businesses") ||
@@ -749,7 +758,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         trimmed.startsWith("- Day 7:") ||
         trimmed.startsWith("- Day 8:") ||
         trimmed.startsWith("- Day 9:") ||
-        trimmed.startsWith("- Day 10:")) {
+        trimmed.startsWith("- Day 10:") ||
+        trimmed.startsWith("- Day 11:")) {
       return null;
     }
 
@@ -767,6 +777,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       const title = isStep ? `Step ${num}: ${stepHeadingMatch[2]}` : numberedHeadingMatch![2];
       const sectionId = isStep
         ? `step-${num}`
+        : selectedPost?.slug === "turn-website-visitors-into-customers"
+        ? `conversion-strategy-${num}`
         : selectedPost?.slug === "why-website-speed-matters"
         ? `speed-${num}`
         : selectedPost?.slug === "website-redesign-checklist"
@@ -784,6 +796,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         : `section-${num}`;
       const badgeLabel = isStep
         ? `STEP ${num < 10 ? `0${num}` : num}`
+        : selectedPost?.slug === "turn-website-visitors-into-customers"
+        ? `STRATEGY ${num < 10 ? `0${num}` : num}`
         : selectedPost?.slug === "why-website-speed-matters"
         ? `INSIGHT ${num < 10 ? `0${num}` : num}`
         : selectedPost?.slug === "website-redesign-checklist"
@@ -1236,6 +1250,20 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
   const isDay9Post = selectedPost?.slug === "website-redesign-checklist";
   const isDay10Post = selectedPost?.slug === "why-website-speed-matters";
   const isDay11Post = selectedPost?.slug === "plan-your-website-before-hiring-a-web-designer";
+  const isDay12Post = selectedPost?.slug === "turn-website-visitors-into-customers";
+
+  const day12Sections = useMemo(() => [
+    { num: 1, title: "Value Proposition", id: "conversion-strategy-1" },
+    { num: 2, title: "Target Audience", id: "conversion-strategy-2" },
+    { num: 3, title: "Navigation UX", id: "conversion-strategy-3" },
+    { num: 4, title: "Strategic CTAs", id: "conversion-strategy-4" },
+    { num: 5, title: "Building Trust", id: "conversion-strategy-5" },
+    { num: 6, title: "Speed & Usability", id: "conversion-strategy-6" },
+    { num: 7, title: "Visitor Intent", id: "conversion-strategy-7" },
+    { num: 8, title: "Simplify Forms", id: "conversion-strategy-8" },
+    { num: 9, title: "Useful Content", id: "conversion-strategy-9" },
+    { num: 10, title: "Track & Improve", id: "conversion-strategy-10" },
+  ], []);
 
   const day11Sections = useMemo(() => [
     { num: 1, title: "Main Goal", id: "step-1" },
@@ -1879,6 +1907,66 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                     referrerPolicy="no-referrer" 
                   />
                 </div>
+
+                {/* Quick Interactive Table of Contents for Day 12 (Turn Website Visitors Into Paying Customers) */}
+                {isDay12Post && (
+                  <div className="blog-card-subtle-surface border blog-border-color rounded-2xl p-5 sm:p-6 space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Layers size={16} className="text-[#05BB8D]" />
+                        <span className="blog-heading-primary font-display font-bold text-sm tracking-tight">
+                          Quick Jump — 10 Conversion Strategies
+                        </span>
+                      </div>
+                      <span className="font-mono text-[10px] blog-muted-text font-bold uppercase tracking-wider">
+                        10 Strategies • Conversion Checklist & Reasons
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 pt-1">
+                      {day12Sections.map((s) => (
+                        <button
+                          key={s.num}
+                          onClick={() => scrollToAnchor(s.id)}
+                          className="blog-card-surface border blog-border-color hover:border-[#05BB8D]/60 hover:text-brand px-2.5 py-2 rounded-xl text-left transition-all cursor-pointer group flex items-center space-x-1.5"
+                        >
+                          <span className="font-mono text-[10px] font-bold text-[#05BB8D] bg-[#05BB8D]/10 px-1.5 py-0.5 rounded">
+                            {s.num < 10 ? `0${s.num}` : s.num}
+                          </span>
+                          <span className="text-xs font-medium blog-heading-primary truncate group-hover:text-brand">
+                            {s.title}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 pt-2 border-t blog-border-color text-xs font-mono">
+                      <button
+                        onClick={() => scrollToAnchor("a-simple-website-conversion-improvement-checklist")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Conversion Checklist</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("common-reasons-websites-fail-to-convert-visitors")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Why Websites Fail</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("frequently-asked-questions")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>FAQ</span>
+                        <ChevronRight size={12} />
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 {/* Quick Interactive Table of Contents for Day 11 (Plan Website Before Hiring Web Designer) */}
                 {isDay11Post && (
@@ -2594,8 +2682,14 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                   <h4 className="blog-heading-primary text-base font-display font-extrabold border-b blog-border-color pb-3">
                     More Articles & Strategy Guides
                   </h4>
-                  <div className={`grid grid-cols-1 ${isDay11Post ? "md:grid-cols-3" : "md:grid-cols-2"} gap-6`}>
-                    {(isDay11Post
+                  <div className={`grid grid-cols-1 ${isDay12Post || isDay11Post ? "md:grid-cols-3" : "md:grid-cols-2"} gap-6`}>
+                    {(isDay12Post
+                      ? [
+                          blogPostsData.find((p) => p.slug === "plan-your-website-before-hiring-a-web-designer"),
+                          blogPostsData.find((p) => p.slug === "why-website-speed-matters"),
+                          blogPostsData.find((p) => p.slug === "what-makes-a-high-converting-landing-page"),
+                        ].filter(Boolean) as BlogPost[]
+                      : isDay11Post
                       ? [
                           blogPostsData.find((p) => p.slug === "why-website-speed-matters"),
                           blogPostsData.find((p) => p.slug === "how-much-does-a-professional-website-cost-2026"),
