@@ -149,7 +149,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       }
 
       // Format ISO Date for Schema
-      const isoDate = selectedPost.date.includes("30")
+      const isoDate = selectedPost.date.includes("November") || selectedPost.date.includes("Nov")
+        ? "2026-11-03T00:00:00+00:00"
+        : selectedPost.date.includes("30")
         ? "2026-10-30T00:00:00+00:00"
         : selectedPost.date.includes("28")
         ? "2026-10-28T00:00:00+00:00"
@@ -437,7 +439,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             <span>FREQUENTLY ASKED QUESTIONS</span>
           </div>
           <h3 className="blog-heading-primary text-xl sm:text-2xl font-display font-black tracking-tight">
-            {selectedPost.id === "turn-website-visitors-into-customers"
+            {selectedPost.id === "website-seo-for-beginners"
+              ? "Website SEO Questions Answered"
+              : selectedPost.id === "turn-website-visitors-into-customers"
               ? "Website Conversion Questions Answered"
               : selectedPost.id === "plan-your-website-before-hiring-a-web-designer"
               ? "Website Planning Questions Answered"
@@ -462,7 +466,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
               : "Frequently Asked Questions"}
           </h3>
           <p className="blog-muted-text text-xs sm:text-sm">
-            {selectedPost.id === "turn-website-visitors-into-customers"
+            {selectedPost.id === "website-seo-for-beginners"
+              ? "Clear answers to the most common questions business owners ask about Google search rankings, SEO timelines, and organic traffic."
+              : selectedPost.id === "turn-website-visitors-into-customers"
               ? "Practical answers to common questions about conversion rates, driving qualified leads, improving visitor trust, and optimizing user journeys."
               : selectedPost.id === "plan-your-website-before-hiring-a-web-designer"
               ? "Practical answers to common questions about preparing a project brief, budgeting, copy preparation, platform choices, and hiring web designers."
@@ -703,7 +709,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       return renderWebsiteBriefCard(idx, briefItems);
     }
 
-    if (trimmed.startsWith("### Want a Website Designed to Do More Than Look Good?") ||
+    if (trimmed.startsWith("### Need a Website Built for Better Online Visibility?") ||
+        trimmed.startsWith("## Need a Website Built for Better Online Visibility?") ||
+        trimmed.startsWith("### Want a Website Designed to Do More Than Look Good?") ||
         trimmed.startsWith("## Want a Website Designed to Do More Than Look Good?") ||
         trimmed.startsWith("### Ready to Plan Your Website?") ||
         trimmed.startsWith("## Ready to Plan Your Website?") ||
@@ -722,7 +730,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
     }
 
     // Skip redundant plain text promo blocks that are rendered by the CTA card
-    if (trimmed.startsWith("At **Vprime Digitalz**, we believe a professional website should combine") ||
+    if (trimmed.startsWith("At **Vprime Digitalz**, we help businesses strengthen their online presence") ||
+        trimmed.startsWith("**Let's create a website that helps your business stand out online.**") ||
+        trimmed.startsWith("At **Vprime Digitalz**, we believe a professional website should combine") ||
         trimmed.startsWith("**Let's build a website that works harder for your business.**") ||
         trimmed.startsWith("[Discuss Your Website Project](/booking) [View Our Work](/portfolio)") ||
         trimmed.startsWith("At **Vprime Digitalz**, we help businesses") ||
@@ -759,7 +769,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         trimmed.startsWith("- Day 8:") ||
         trimmed.startsWith("- Day 9:") ||
         trimmed.startsWith("- Day 10:") ||
-        trimmed.startsWith("- Day 11:")) {
+        trimmed.startsWith("- Day 11:") ||
+        trimmed.startsWith("- Day 12:")) {
       return null;
     }
 
@@ -777,6 +788,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       const title = isStep ? `Step ${num}: ${stepHeadingMatch[2]}` : numberedHeadingMatch![2];
       const sectionId = isStep
         ? `step-${num}`
+        : selectedPost?.slug === "website-seo-for-beginners"
+        ? `seo-strategy-${num}`
         : selectedPost?.slug === "turn-website-visitors-into-customers"
         ? `conversion-strategy-${num}`
         : selectedPost?.slug === "why-website-speed-matters"
@@ -796,6 +809,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         : `section-${num}`;
       const badgeLabel = isStep
         ? `STEP ${num < 10 ? `0${num}` : num}`
+        : selectedPost?.slug === "website-seo-for-beginners"
+        ? `SEO STRATEGY ${num < 10 ? `0${num}` : num}`
         : selectedPost?.slug === "turn-website-visitors-into-customers"
         ? `STRATEGY ${num < 10 ? `0${num}` : num}`
         : selectedPost?.slug === "why-website-speed-matters"
@@ -1251,6 +1266,22 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
   const isDay10Post = selectedPost?.slug === "why-website-speed-matters";
   const isDay11Post = selectedPost?.slug === "plan-your-website-before-hiring-a-web-designer";
   const isDay12Post = selectedPost?.slug === "turn-website-visitors-into-customers";
+  const isDay13Post = selectedPost?.slug === "website-seo-for-beginners";
+
+  const day13Sections = useMemo(() => [
+    { num: 1, title: "Keyword Search", id: "seo-strategy-1" },
+    { num: 2, title: "SEO Titles", id: "seo-strategy-2" },
+    { num: 3, title: "Meta Descriptions", id: "seo-strategy-3" },
+    { num: 4, title: "Helpful Content", id: "seo-strategy-4" },
+    { num: 5, title: "Headings & Hierarchy", id: "seo-strategy-5" },
+    { num: 6, title: "Mobile Usability", id: "seo-strategy-6" },
+    { num: 7, title: "Speed & Vitals", id: "seo-strategy-7" },
+    { num: 8, title: "Image SEO", id: "seo-strategy-8" },
+    { num: 9, title: "Internal Links", id: "seo-strategy-9" },
+    { num: 10, title: "Search Console", id: "seo-strategy-10" },
+    { num: 11, title: "Local SEO", id: "seo-strategy-11" },
+    { num: 12, title: "Technical Health", id: "seo-strategy-12" },
+  ], []);
 
   const day12Sections = useMemo(() => [
     { num: 1, title: "Value Proposition", id: "conversion-strategy-1" },
@@ -1907,6 +1938,66 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                     referrerPolicy="no-referrer" 
                   />
                 </div>
+
+                {/* Quick Interactive Table of Contents for Day 13 (Website SEO for Beginners) */}
+                {isDay13Post && (
+                  <div className="blog-card-subtle-surface border blog-border-color rounded-2xl p-5 sm:p-6 space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Search size={16} className="text-[#05BB8D]" />
+                        <span className="blog-heading-primary font-display font-bold text-sm tracking-tight">
+                          Quick Jump — 12 Website SEO Strategies
+                        </span>
+                      </div>
+                      <span className="font-mono text-[10px] blog-muted-text font-bold uppercase tracking-wider">
+                        12 Strategies • SEO Checklist & Mistakes
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 pt-1">
+                      {day13Sections.map((s) => (
+                        <button
+                          key={s.num}
+                          onClick={() => scrollToAnchor(s.id)}
+                          className="blog-card-surface border blog-border-color hover:border-[#05BB8D]/60 hover:text-brand px-2.5 py-2 rounded-xl text-left transition-all cursor-pointer group flex items-center space-x-1.5"
+                        >
+                          <span className="font-mono text-[10px] font-bold text-[#05BB8D] bg-[#05BB8D]/10 px-1.5 py-0.5 rounded">
+                            {s.num < 10 ? `0${s.num}` : s.num}
+                          </span>
+                          <span className="text-xs font-medium blog-heading-primary truncate group-hover:text-brand">
+                            {s.title}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 pt-2 border-t blog-border-color text-xs font-mono">
+                      <button
+                        onClick={() => scrollToAnchor("a-beginner-friendly-website-seo-checklist")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>SEO Checklist</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("common-seo-mistakes-beginners-should-avoid")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Common Mistakes</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("frequently-asked-questions")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>FAQ</span>
+                        <ChevronRight size={12} />
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 {/* Quick Interactive Table of Contents for Day 12 (Turn Website Visitors Into Paying Customers) */}
                 {isDay12Post && (
@@ -2682,8 +2773,14 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                   <h4 className="blog-heading-primary text-base font-display font-extrabold border-b blog-border-color pb-3">
                     More Articles & Strategy Guides
                   </h4>
-                  <div className={`grid grid-cols-1 ${isDay12Post || isDay11Post ? "md:grid-cols-3" : "md:grid-cols-2"} gap-6`}>
-                    {(isDay12Post
+                  <div className={`grid grid-cols-1 ${isDay13Post || isDay12Post || isDay11Post ? "md:grid-cols-3" : "md:grid-cols-2"} gap-6`}>
+                    {(isDay13Post
+                      ? [
+                          blogPostsData.find((p) => p.slug === "turn-website-visitors-into-customers"),
+                          blogPostsData.find((p) => p.slug === "why-website-speed-matters"),
+                          blogPostsData.find((p) => p.slug === "what-makes-a-high-converting-landing-page"),
+                        ].filter(Boolean) as BlogPost[]
+                      : isDay12Post
                       ? [
                           blogPostsData.find((p) => p.slug === "plan-your-website-before-hiring-a-web-designer"),
                           blogPostsData.find((p) => p.slug === "why-website-speed-matters"),
