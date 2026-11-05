@@ -1,0 +1,599 @@
+VPRIME DIGITALZ — DAY 14 BLOG PUBLICATION PROMPT
+Complete Article, Website Structure Comparison, SEO, Responsive Design, and Perfect Light/Dark Themes
+YOUR ROLE
+
+Act as a senior full-stack website developer, professional UI/UX designer, information architecture specialist, SEO strategist, and conversion-focused content designer.
+
+Work directly inside my existing Vprime Digitalz website.
+
+Publish Day 14 of my 30-day blog series in the correct existing Blog page and article section.
+
+Days 1–13 must remain intact.
+
+Non-negotiable requirements:
+
+Use the existing blog CMS, routing, design system, and article template.
+Include the complete article supplied below, without shortening it or replacing it with filler.
+Perfect both Light Mode and Dark Mode. This includes all text, cards, the comparison table, the "Quick Decision Guide" card, the two "Best for" cards, buttons, icons, callouts, and interactive states.
+Maintain professional spacing, typography, alignment, and mobile responsiveness.
+Keep the comparison balanced and accurate. Do not add statistics, prices, ranking promises, or "studies show" claims that are not in the article.
+Connect the article naturally to relevant Vprime Digitalz services, portfolio, and contact page.
+Do not invent customer testimonials, results, features, or case studies.
+Do not claim the article is published unless the live URL has been verified.
+PART 1 — ARTICLE SETTINGS
+
+Title: One-Page Website vs Multi-Page Website: Which Works Better for Your Business?
+
+Category: Website Design
+
+Author: Vprime Digitalz
+
+Publication date: November 5, 2026
+
+Primary keyword: One-page vs multi-page website
+
+Secondary keywords:
+
+One-page website
+Multi-page website
+Single-page website vs multi-page website
+Is a one-page website good for SEO
+One-page website pros and cons
+Best website structure for small business
+Website structure planning
+Landing page vs website
+How many pages should my website have
+
+SEO title: One-Page vs Multi-Page Website: Which Is Better? | Vprime Digitalz
+
+Meta description: One-page or multi-page website? Compare SEO, conversions, user experience, and growth to choose the right website structure for your business.
+
+URL slug: one-page-vs-multi-page-website
+
+Article URL: /blog/one-page-vs-multi-page-website
+
+Blog excerpt: Should your business have a one-page website or a multi-page website? Compare the pros, cons, SEO impact, and best use cases to choose the right structure.
+
+Featured image: A premium editorial image of a clean design workspace. A tall, single scrolling website layout printed or sketched on paper sits beside a set of separate page layouts connected like a simple sitemap. Use soft natural light and a minimal, calm composition. Do not include readable fake text, fake brand names, or fake UI screenshots.
+
+Image alt text: A single long-scrolling website layout beside a set of connected page layouts, comparing one-page and multi-page website structures.
+
+Image performance: Serve the featured image in a modern format such as WebP or AVIF at responsive sizes. Do not lazy-load the featured image. Lazy-load any images further down the page.
+
+Calculate reading time from the complete article.
+
+PART 2 — COMPLETE DAY 14 ARTICLE
+
+Publish this article in full.
+
+One-Page Website vs Multi-Page Website: Which Works Better for Your Business?
+
+When you plan a new website, one of the first structural decisions is surprisingly simple to ask and harder to answer:
+
+Should your website be one long page, or several separate pages?
+
+One-page websites have become popular because they look modern, feel focused, and can be quicker to launch. Multi-page websites remain the standard for most businesses because they give each service, topic, and audience its own space.
+
+Neither option is automatically better. The right choice depends on what your business offers, how people find you, and what you want visitors to do.
+
+In this guide, you'll learn the real differences between one-page and multi-page websites, their strengths and limitations, how each affects SEO and conversions, and a practical way to decide which structure fits your business.
+
+What Is a One-Page Website?
+
+A one-page website places all of its main content on a single, long, scrolling page.
+
+Instead of clicking to separate pages, visitors scroll through sections such as:
+
+A hero section explaining what you do
+Services or offer details
+About information
+Portfolio or examples of work
+Testimonials, where genuine ones are available
+FAQs
+A contact form or booking section
+
+The navigation menu usually links to sections further down the same page. These are called anchor links. Clicking "Services" scrolls the visitor to the services section instead of opening a new page.
+
+What Is a Multi-Page Website?
+
+A multi-page website organises content across separate pages, each with its own URL.
+
+A typical service business might have:
+
+Home
+About
+Services, often with a separate page for each main service
+Portfolio or case studies
+Blog or resources
+Contact
+
+Each page can focus on one topic, answer specific questions, and be found in search results on its own.
+
+One-Page vs Multi-Page Website: Quick Comparison
+Factor	One-Page Website	Multi-Page Website
+Best for	A single offer, campaign, event, or simple portfolio	Multiple services, growing businesses, and content-rich websites
+User journey	Linear and guided: visitors scroll from top to bottom	Flexible: visitors choose the pages most relevant to them
+SEO potential	Limited: one URL usually focuses on one main topic	Stronger: each page can target its own topic and search intent
+Content depth	Best with concise content	Supports detailed information on every topic
+Speed to launch	Often faster	Usually takes longer to plan and build
+Scalability	Harder to expand without becoming too long	Easy to add new pages, services, and articles
+Maintenance	Simple when content is small	More pages to manage, but better organised
+Analytics	Needs extra setup to see which sections people engage with	Page-level data is available by default
+The Advantages of a One-Page Website
+1. A focused, guided experience
+
+A one-page website takes visitors on a clear journey: what you do, why it matters, proof, and how to get in touch. There are fewer decisions to make and fewer places to get lost.
+
+When you have one main offer and one main action, that focus can be a real strength.
+
+2. Faster to plan and launch
+
+With fewer pages to plan, write, and design, a one-page website can often go live sooner. That's useful for new businesses, product launches, events, and campaigns with deadlines.
+
+3. Works naturally on mobile
+
+People are used to scrolling on their phones. A well-designed one-page website can feel natural and smooth on mobile, as long as sections are clearly organised and the page isn't overwhelmingly long.
+
+4. Easier to keep consistent
+
+With everything on one page, it's easier to keep the message, design, and calls to action consistent from top to bottom.
+
+The Limitations of a One-Page Website
+1. Limited SEO reach
+
+This is the biggest limitation for most businesses.
+
+Search engines rank individual pages, and each page usually works best when it focuses on one main topic. A one-page website has a single URL trying to cover everything you offer. That makes it harder to appear in search results for several different services, questions, or locations.
+
+A one-page website can still be found for your business name and a closely related main topic. But if you want to be found for many different searches, a single page has limited room to compete.
+
+2. Content can become too long
+
+As your business grows, it's tempting to keep adding sections. Eventually, the page becomes very long, important information gets buried, and visitors lose patience before reaching your contact section.
+
+3. Less room for detail
+
+Some customers need detailed information before they get in touch, such as process, pricing factors, examples, and answers to specific questions. Fitting that depth into one page without overwhelming everyone else is difficult.
+
+4. Heavier pages can load slowly
+
+Putting every image, video, and section on one page can make it heavy. Without careful optimisation, a long one-page website can load slowly, especially on mobile. Learn more in Why Website Speed Matters for Your Business.
+
+5. Harder to measure
+
+On a multi-page website, analytics tools show which pages people visit. On a one-page website, you need extra tracking to understand which sections visitors actually read and where they stop scrolling.
+
+The Advantages of a Multi-Page Website
+1. Stronger SEO potential
+
+Each page can focus on a specific service, question, or audience, with its own title, description, headings, and content. This gives your website many more opportunities to appear in relevant search results.
+
+For example, a business offering website design, website redesign, and SEO services can have a dedicated page for each one, rather than competing for all three with a single page.
+
+A blog also needs separate pages. Every article you publish creates another useful page that people can discover.
+
+2. Room for depth and clarity
+
+Separate pages let you explain each service properly: who it's for, what's included, how the process works, and answers to common questions. Visitors who need more detail can find it, while others can skip straight to what matters to them.
+
+3. Better for different audiences
+
+If you serve different types of customers, multi-page websites let you create content for each one, so every visitor finds information relevant to their situation.
+
+4. Built to grow
+
+Adding a new service, location, case study, or article is straightforward. You add a page without reworking the whole website.
+
+5. Clearer analytics
+
+Because each page has its own URL, it's easier to see which services attract interest, which pages lead to enquiries, and where visitors drop off.
+
+The Limitations of a Multi-Page Website
+1. More planning and content required
+
+More pages mean more decisions, more writing, and more design work. Without good planning, multi-page websites can end up with thin, repetitive pages that don't help anyone. Our guide on How to Plan a Website Before Hiring a Web Designer can help you avoid this.
+
+2. Navigation needs careful design
+
+With more pages, visitors need clear navigation to find what they're looking for. Confusing menus or too many options can cause people to leave.
+
+3. Usually a larger investment
+
+More pages generally mean more design, development, and content work. That can affect the timeline and budget. See How Much Does a Professional Website Cost in 2026? for the factors that affect pricing.
+
+4. More to maintain
+
+Every page needs to stay accurate and up to date. Outdated service pages, old team information, and broken links can damage trust.
+
+How Each Structure Affects Conversions
+
+Both structures can convert well. What matters is how clearly they guide visitors toward the next step.
+
+One-page websites work well when the decision is simple. A visitor can understand the offer, see proof, and take action in one continuous journey. This is why many dedicated landing pages use a one-page structure. Learn more in What Makes a High-Converting Landing Page?
+
+Multi-page websites work well when the decision involves more research. Visitors can explore services, review case studies, read articles, and contact you once they feel confident.
+
+In both cases, conversion depends on the same fundamentals:
+
+A clear message about who you help and what you do
+Calls to action that are easy to find
+Genuine proof of your work
+Simple contact or booking options
+A smooth experience on mobile
+
+For a deeper look, read How to Turn Your Website Visitors Into Paying Customers.
+
+When a One-Page Website Is the Right Choice
+
+A one-page website is often a strong choice when:
+
+You offer one main product or service
+You're promoting a specific campaign, event, or launch
+You're a new business that needs a professional presence quickly
+You're a freelancer or creative with a simple portfolio and one main action
+Your audience is likely to come from ads, social media, or referrals rather than search engines
+You don't plan to publish regular content such as blog posts
+When a Multi-Page Website Is the Right Choice
+
+A multi-page website is usually the better choice when:
+
+You offer several distinct services or products
+You want to be found on Google for different searches
+You serve different audiences, industries, or locations
+You plan to publish blog posts, guides, or case studies
+Customers need detailed information before making a decision
+You expect your business and website to grow over time
+You run an online store with multiple products or categories
+The Hybrid Approach: The Best of Both
+
+You don't always have to choose one extreme.
+
+Many effective business websites use a hybrid structure:
+
+A strong, long-scroll homepage that summarises everything and guides visitors to the main action
+Separate pages for each main service, the portfolio, the blog, and contact
+Dedicated landing pages for specific campaigns or ads
+
+This gives visitors a focused first impression while still providing the depth and SEO opportunities of a multi-page website.
+
+Another option is to start with a one-page website and grow into a multi-page website. Just plan for it from the start, so adding pages later doesn't require rebuilding everything.
+
+How to Decide: A Simple Framework
+
+Ask yourself these questions:
+
+QUICK DECISION GUIDE
+
+1. How many services or products do you offer? One main offer → one-page can work. Several → multi-page.
+
+2. How will most visitors find you? Mainly ads, social media, or referrals → one-page can work. Google search → multi-page.
+
+3. How much information do customers need before contacting you? A little → one-page. A lot → multi-page.
+
+4. Do you plan to publish articles or case studies? No → one-page can work. Yes → multi-page.
+
+5. How quickly do you need to launch? Very soon, with limited content → start with one-page and plan to expand.
+
+6. Where do you see your business in two years? Same focused offer → one-page can work. Growing services or audiences → multi-page.
+
+If most of your answers point toward multi-page, a multi-page or hybrid structure is likely the better long-term choice.
+
+Common Mistakes to Avoid
+Choosing one-page just because it looks trendy
+
+A one-page website should be chosen because it fits your business, not because it's fashionable.
+
+Cramming everything onto one page
+
+If your one-page website keeps growing section after section, it's probably time for separate pages.
+
+Creating pages without a clear purpose
+
+On multi-page websites, every page should serve a real need. Several near-identical pages don't help visitors or search engines.
+
+Hiding the call to action
+
+On long one-page websites, visitors shouldn't have to scroll all the way to the bottom to contact you. Repeat clear calls to action throughout the page.
+
+Forgetting about navigation on one-page websites
+
+Use a clear menu with anchor links, keep the navigation easy to reach as visitors scroll, and make sure every section can be found quickly.
+
+Not planning for growth
+
+If you start small, choose a structure and platform that make it easy to add pages later.
+
+Frequently Asked Questions
+Is a one-page website bad for SEO?
+
+Not bad, but limited. A one-page website can rank for your business name and a closely related main topic. However, because it has only one URL, it's harder to rank for many different services, questions, or locations. Multi-page websites give you more opportunities to appear in search results.
+
+Are one-page websites cheaper?
+
+They often require less design, development, and content work, so they can cost less and launch faster. However, the final cost depends on the design quality, features, and content involved.
+
+Can I switch from a one-page website to a multi-page website later?
+
+Yes. Many businesses start with one page and expand. Planning for growth from the start, by choosing a flexible platform and organising content into clear sections, makes the transition much easier.
+
+Is a landing page the same as a one-page website?
+
+They're similar in structure, but they serve different purposes. A landing page is usually focused on one campaign or offer and often sits alongside a larger website. A one-page website is the business's entire website on a single page.
+
+How many pages should a small business website have?
+
+There's no fixed number. Most small service businesses need a Home page, About page, service pages, a portfolio or proof page, and a Contact page. Add more only when they serve a clear purpose, such as a blog, FAQs, or dedicated pages for each service.
+
+Do one-page websites work well on mobile?
+
+They can work very well, because scrolling is natural on phones. The key is keeping sections concise, navigation easy to access, calls to action visible, and the page optimised for speed.
+
+Which is better for a portfolio website?
+
+It depends. A freelancer with a few strong projects and one main action may do well with a one-page portfolio. A designer or agency with many projects, multiple services, and detailed case studies usually benefits from a multi-page structure.
+
+Final Thoughts
+
+One-page and multi-page websites both have a place. The right choice isn't about what's trendy. It's about what fits your business, your customers, and your goals.
+
+A one-page website can be a smart, focused choice for a single offer, a campaign, or a new business that needs to launch quickly.
+
+A multi-page website is usually the stronger choice for businesses with several services, a growing content strategy, or a goal of being found on Google for many different searches.
+
+And for many businesses, a hybrid approach offers the best of both: a focused homepage that guides visitors, supported by dedicated pages that provide depth and search visibility.
+
+Whatever you choose, plan for where your business is going, not just where it is today.
+
+Not Sure Which Website Structure Is Right for You?
+
+At Vprime Digitalz, we help businesses choose the right website structure and design websites that are clear, fast, and built to convert, whether that's a focused one-page website, a complete multi-page website, or a hybrid of both.
+
+If you're planning a new website or rethinking your current one, we can help you map out the right pages, structure, and user journey for your business.
+
+[View Our Work] [Start Your Project]
+
+PART 3 — PUBLISH IN THE EXISTING BLOG
+
+Main blog route: /blog
+
+Article route: /blog/one-page-vs-multi-page-website
+
+Inspect the existing blog architecture and CMS.
+Check for an existing article with this slug. If one exists, update it. Do not create a duplicate.
+Create or update one article record.
+Use the existing article template.
+Add the featured image, title, excerpt, author, category, date, and reading time.
+Make sure the article appears in the correct chronological order, as the newest post after Day 13.
+Preserve Days 1–13 and all existing URLs.
+Verify the blog card links to the full article.
+Preserve category filters, search, and pagination. Confirm the "Website Design" filter shows this article.
+Confirm each internal link in the article resolves to its live article:
+Day 4: /blog/how-much-does-a-professional-website-cost-2026
+Day 6: /blog/how-to-turn-website-visitors-into-customers
+Day 7: /blog/what-makes-a-high-converting-landing-page
+Day 10: /blog/why-website-speed-matters
+Day 11: /blog/plan-your-website-before-hiring-a-web-designer
+If any of these URLs differ on the live site, update the link to the correct existing URL. Do not create redirects or new pages to make a link work.
+Days 12 and 13: Find the actual URLs of Day 12 ("SEO for Small Businesses: Where to Start") and Day 13 ("How to Create a Website That Generates Quality Leads") in the CMS. Do not guess their slugs. If Day 12 exists, add this sentence at the end of the "1. Limited SEO reach" subsection, linking the article title to its real URL: "If you're new to SEO, start with our guide: SEO for Small Businesses: Where to Start." If Day 13 exists, include it in the related articles. If either article can't be found, leave it out and report this in your final summary.
+Related articles: Show Day 13 (if found), Day 11, and Day 7 as related articles.
+Connect the CTA buttons to the site's real routes. "View Our Work" goes to the existing portfolio/work page and "Start Your Project" goes to the existing contact page. Do not create new pages, and do not use placeholder # links.
+PART 4 — LIGHT MODE COLORS
+
+Light Mode must be bright, crisp, professional, and easy to read.
+
+Use the existing design system where possible. The following are reference colors:
+
+Element	Light Mode
+Main background	
+#FFFFFF
+Secondary background	
+#F7F9F8
+Card background	
+#FFFFFF
+Main headings	
+#0F121D
+Body text	
+#374151
+Secondary text	
+#64748B
+Borders	
+#E5E7EB
+Brand accent	
+#05BB8D
+Accessible links	
+#087F65
+Primary button	
+#0F121D
+Primary button text	
+#FFFFFF
+Link hover	
+#066B54
+
+Requirements:
+
+Never use white text on white backgrounds.
+Never use low-contrast gray paragraphs.
+Ensure green links remain readable.
+Use restrained borders and shadows.
+Keep metadata, badges, and icons legible.
+Comparison table: Use a clear header row, bold factor labels in the first column, row separation, and equal-width "One-Page" and "Multi-Page" columns. You may give the header row a very light brand-tinted background, but the text must stay 
+#0F121D.
+"When a One-Page Website Is the Right Choice" and "When a Multi-Page Website Is the Right Choice": Present these two sections as matching "Best for" cards. Place them side by side on desktop and stack them on tablet and mobile. Each card has a small label badge ("One-Page" / "Multi-Page"), a subtle border, and green check icons for each item. Keep the H2 headings for SEO.
+Quick Decision Guide: Style it as a distinct, premium card with the secondary background (
+#F7F9F8), a subtle border, a thin brand-green accent on the left edge or top, and comfortable inner padding. Each numbered question is bold, and each answer line is regular body text.
+Keep buttons prominent without overpowering the article.
+Maintain a consistent visual language throughout the page.
+PART 5 — DARK MODE COLORS
+
+Dark Mode must be equally polished and readable.
+
+Element	Dark Mode
+Main background	
+#0F121D
+Secondary background	
+#171C29
+Card background	
+#1C2230
+Main headings	
+#F8FAFC
+Body text	
+#D1D5DB
+Secondary text	
+#A6B1C2
+Borders	
+#303847
+Brand accent	
+#05BB8D
+Accessible links	
+#45E0B8
+Primary button	
+#05BB8D
+Primary button text	
+#0F121D
+Link hover	
+#76F0CF
+
+Requirements:
+
+No dark text on dark backgrounds.
+Use comfortable off-white text.
+Clearly distinguish the comparison table, the two "Best for" cards, and the Quick Decision Guide from the main background. Use the card background (
+#1C2230) with a visible border (
+#303847).
+The table header row must be readable in Dark Mode. If it has a tinted background, keep the header text 
+#F8FAFC.
+Keep the green check icons, label badges, and the Decision Guide's accent edge clearly visible.
+Ensure links, badges, and icons remain visible.
+Style tables and FAQ sections correctly.
+Keep CTA buttons readable.
+Implement hover, focus, active, and disabled states.
+Use the existing theme provider and semantic color tokens.
+Ensure the theme updates consistently across the whole article, with no elements stuck in the wrong theme. Blockquote and callout styles are a common failure point, so check them specifically.
+
+Do not introduce a separate theme system or unintentionally alter other website pages.
+
+PART 6 — SPACING, ALIGNMENT, AND TYPOGRAPHY
+
+Create a premium editorial reading experience.
+
+Desktop reference:
+
+Article width: 700–760px.
+Wider layouts for the comparison table and the side-by-side "Best for" cards: up to 1000–1100px, centred.
+H1: 42–52px.
+H2: 28–34px.
+H3: 22–26px.
+Body: 17–18px.
+Paragraph line height: 1.7–1.85.
+Paragraph bottom spacing: 20–24px.
+Major section spacing: 48–64px.
+List spacing: 10–14px.
+Featured image ratio: 16:9.
+
+Mobile reference:
+
+Horizontal padding: approximately 20px.
+H1: 30–36px.
+H2: 24–28px.
+Body: 16–17px.
+Line height: 1.65–1.8.
+Major section spacing: 36–44px.
+
+Additional requirements:
+
+Align all headings and paragraphs consistently.
+Prevent cramped sections and excessive empty space.
+Maintain comfortable text widths.
+On mobile, the comparison table must stay readable. Use either a horizontally scrollable container with a visible scroll cue and a sticky first column, or a stacked layout where each factor is its own small card showing both options. The page itself must never scroll sideways.
+The "Best for" cards should be equal height on desktop, with a 20–24px gap between them and 24–28px inner padding.
+The Quick Decision Guide card should have 24–32px inner padding on desktop and 18–20px on mobile, with 16–20px spacing between questions.
+Keep the CTA and FAQ components aligned with the article's text column.
+Prevent overlapping text and horizontal overflow.
+Reuse the existing font system. Do not add new font files.
+Make the article visually consistent in both themes.
+PART 7 — SEO, ACCESSIBILITY, AND PERFORMANCE
+
+Implement:
+
+A unique SEO title and meta description.
+One H1 and logical heading levels.
+A canonical URL using the actual production domain.
+Open Graph metadata.
+Accurate BlogPosting structured data.
+Correct author and publication date.
+Descriptive image alt text.
+Relevant internal links.
+Sitemap inclusion.
+Correct indexability.
+Semantic HTML, including a proper <table> with header cells (and scope attributes) for the comparison table. If you use a stacked card layout on mobile, keep the semantic table available for assistive technology or provide an equivalent accessible structure.
+Check icons that are decorative should be hidden from screen readers. The list text must carry the meaning.
+Keyboard-accessible links and controls.
+Optimised image loading. Do not lazy-load the featured image. Set explicit dimensions on all images to prevent layout shift.
+Do not add new third-party scripts, widgets, or font files to this page.
+
+Do not add fake reviews, fabricated statistics, or unsupported claims.
+
+PART 8 — RESPONSIVE QUALITY ASSURANCE
+
+Test the article in both Light Mode and Dark Mode at:
+
+1440px desktop.
+1024px desktop.
+768px tablet.
+390px mobile.
+320px mobile.
+
+Verify:
+
+Header and H1 alignment.
+Featured image cropping.
+Paragraph readability.
+Comparison table responsiveness and header readability.
+"Best for" cards: side by side on desktop, stacked on smaller screens, equal height, and icons visible.
+Quick Decision Guide padding, readability, and accent visibility.
+FAQ spacing.
+Internal links and related articles, including Days 12 and 13.
+CTA buttons and their destinations.
+Navigation and footer.
+Theme switching.
+No horizontal overflow.
+No overlapping content.
+Visible keyboard focus.
+Accessible color contrast.
+
+Target WCAG AA contrast ratios: 4.5:1 for normal text and 3:1 for large text. Also meet the non-text contrast requirements for icons, meaningful borders, and focus indicators.
+
+Run the available build and accessibility checks, and fix any issues found.
+
+PART 9 — FINAL PUBLISHING VERIFICATION
+Save the complete article in the existing CMS.
+Set the publication date to November 5, 2026.
+Publish using the authorized existing workflow.
+Confirm the article appears on /blog as the newest post.
+Verify the individual article URL: /blog/one-page-vs-multi-page-website.
+Test all internal links.
+Check SEO metadata and structured data.
+Confirm sitemap inclusion.
+Verify Light Mode and Dark Mode.
+Check responsive layouts.
+Ensure Days 1–13 remain unchanged.
+Report any unresolved issues.
+
+If production publishing is unavailable, save a draft or preview and clearly explain what remains.
+
+Do not claim the article is publicly live unless verified.
+
+FINAL RESULT
+
+Deliver a polished, complete Day 14 article with a balanced, accurate comparison, professional editorial styling, theme-aware colors, a readable comparison table, matching "Best for" cards, a premium Quick Decision Guide card, responsive layouts, useful internal links, and appropriate SEO.
+
+The finished page should look and function like a premium digital agency publication.
+
+After implementation, report:
+
+The article URL and publication status.
+Light Mode and Dark Mode results.
+Responsive check results.
+SEO and structured data verification.
+Every internal link and whether it resolved, including the Day 12 and Day 13 URLs, or a note if either couldn't be found.
+Any remaining issues.

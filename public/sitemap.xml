@@ -38,9 +38,15 @@
   </url>
   <url>
     <loc>https://vprimedigitalz.com/blog</loc>
-    <lastmod>2026-11-03</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://vprimedigitalz.com/blog/one-page-vs-multi-page-website</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vprimedigitalz.com/blog/website-seo-for-beginners</loc>

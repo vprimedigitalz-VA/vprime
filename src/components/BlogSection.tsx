@@ -149,7 +149,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       }
 
       // Format ISO Date for Schema
-      const isoDate = selectedPost.date.includes("November") || selectedPost.date.includes("Nov")
+      const isoDate = selectedPost.date.includes("November 5") || selectedPost.date.includes("Nov 5") || selectedPost.date.includes("5, 2026")
+        ? "2026-11-05T00:00:00+00:00"
+        : selectedPost.date.includes("November") || selectedPost.date.includes("Nov")
         ? "2026-11-03T00:00:00+00:00"
         : selectedPost.date.includes("30")
         ? "2026-10-30T00:00:00+00:00"
@@ -439,7 +441,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             <span>FREQUENTLY ASKED QUESTIONS</span>
           </div>
           <h3 className="blog-heading-primary text-xl sm:text-2xl font-display font-black tracking-tight">
-            {selectedPost.id === "website-seo-for-beginners"
+            {selectedPost.id === "one-page-vs-multi-page-website"
+              ? "Website Structure Questions Answered"
+              : selectedPost.id === "website-seo-for-beginners"
               ? "Website SEO Questions Answered"
               : selectedPost.id === "turn-website-visitors-into-customers"
               ? "Website Conversion Questions Answered"
@@ -466,7 +470,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
               : "Frequently Asked Questions"}
           </h3>
           <p className="blog-muted-text text-xs sm:text-sm">
-            {selectedPost.id === "website-seo-for-beginners"
+            {selectedPost.id === "one-page-vs-multi-page-website"
+              ? "Practical answers to common questions about one-page websites, SEO limitations, redesign costs, scalability, and mobile UX."
+              : selectedPost.id === "website-seo-for-beginners"
               ? "Clear answers to the most common questions business owners ask about Google search rankings, SEO timelines, and organic traffic."
               : selectedPost.id === "turn-website-visitors-into-customers"
               ? "Practical answers to common questions about conversion rates, driving qualified leads, improving visitor trust, and optimizing user journeys."
@@ -681,6 +687,140 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
     );
   };
 
+  const renderBestForCards = (idx: number, rawContent: string) => {
+    const parts = rawContent.split(":::multi-page");
+    const onePagePart = parts[0] || "";
+    const multiPagePart = parts[1] || "";
+
+    const extractItems = (block: string) => {
+      return block
+        .split("\n")
+        .map((l) => l.trim())
+        .filter((l) => l.startsWith("- ") || l.startsWith("* "))
+        .map((l) => l.replace(/^[-*]\s+/, ""));
+    };
+
+    const onePageItems = extractItems(onePagePart);
+    const multiPageItems = extractItems(multiPagePart);
+
+    return (
+      <div key={idx} id="when-to-choose-which-structure" className="my-10 space-y-4 scroll-mt-28">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          {/* One-Page Card */}
+          <div className="blog-card-surface border blog-border-color rounded-2xl p-6 sm:p-7 shadow-xs flex flex-col justify-between space-y-4">
+            <div className="space-y-3.5">
+              <div className="flex items-center justify-between">
+                <span className="blog-badge-pill font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md border tracking-wider">
+                  ONE-PAGE
+                </span>
+                <span className="font-mono text-[10px] blog-muted-text uppercase font-semibold">Focused & Streamlined</span>
+              </div>
+              <h2 className="blog-heading-primary text-xl sm:text-2xl font-display font-extrabold tracking-tight">
+                When a One-Page Website Is the Right Choice
+              </h2>
+              <p className="blog-body-text text-sm">A one-page website is often a strong choice when:</p>
+              <ul className="space-y-2.5 pt-1">
+                {onePageItems.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm blog-body-text leading-relaxed">
+                    <CheckCircle2 size={16} className="text-[#05BB8D] shrink-0 mt-0.5" aria-hidden="true" />
+                    <span>{renderInlineFormatting(item)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Multi-Page Card */}
+          <div className="blog-card-surface border blog-border-color rounded-2xl p-6 sm:p-7 shadow-xs flex flex-col justify-between space-y-4">
+            <div className="space-y-3.5">
+              <div className="flex items-center justify-between">
+                <span className="blog-badge-pill font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md border tracking-wider text-blue-500 border-blue-500/30">
+                  MULTI-PAGE
+                </span>
+                <span className="font-mono text-[10px] blog-muted-text uppercase font-semibold">Scalable & Search-Ready</span>
+              </div>
+              <h2 className="blog-heading-primary text-xl sm:text-2xl font-display font-extrabold tracking-tight">
+                When a Multi-Page Website Is the Right Choice
+              </h2>
+              <p className="blog-body-text text-sm">A multi-page website is usually the better choice when:</p>
+              <ul className="space-y-2.5 pt-1">
+                {multiPageItems.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm blog-body-text leading-relaxed">
+                    <CheckCircle2 size={16} className="text-[#05BB8D] shrink-0 mt-0.5" aria-hidden="true" />
+                    <span>{renderInlineFormatting(item)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderQuickDecisionGuide = (idx: number, rawContent: string) => {
+    const lines = rawContent.split("\n").filter((l) => l.trim().length > 0 && !l.includes(":::"));
+    const items: Array<{ question: string; answer: string }> = [];
+    let currentQ = "";
+    let currentA = "";
+
+    lines.forEach((line) => {
+      const qMatch = line.match(/^(\d+)\.\s+\*\*([^*]+)\*\*/);
+      if (qMatch) {
+        if (currentQ) {
+          items.push({ question: currentQ, answer: currentA.trim() });
+        }
+        currentQ = `${qMatch[1]}. ${qMatch[2]}`;
+        currentA = "";
+      } else if (!line.includes("QUICK DECISION GUIDE")) {
+        currentA += (currentA ? " " : "") + line.trim();
+      }
+    });
+    if (currentQ) {
+      items.push({ question: currentQ, answer: currentA.trim() });
+    }
+
+    return (
+      <div 
+        key={idx} 
+        id="quick-decision-guide" 
+        className="my-10 blog-card-subtle-surface border blog-border-color border-l-4 border-l-[#05BB8D] rounded-2xl p-6 sm:p-8 space-y-6 shadow-xs scroll-mt-28"
+      >
+        <div className="flex items-center justify-between border-b blog-border-color pb-4">
+          <div className="flex items-center space-x-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#05BB8D]" />
+            <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#05BB8D]">
+              Decision Matrix
+            </span>
+            <h3 className="blog-heading-primary text-lg sm:text-xl font-display font-black tracking-tight ml-2">
+              Quick Decision Guide
+            </h3>
+          </div>
+          <span className="font-mono text-[10px] blog-muted-text uppercase font-semibold hidden sm:inline">
+            6 Key Questions
+          </span>
+        </div>
+
+        <div className="space-y-4">
+          {items.map((item, qIdx) => (
+            <div key={qIdx} className="space-y-1.5 p-4 rounded-xl blog-card-surface border blog-border-color shadow-2xs">
+              <p className="blog-heading-primary text-sm sm:text-base font-bold">
+                {item.question}
+              </p>
+              <p className="blog-body-text text-sm sm:text-base leading-relaxed pl-1">
+                {renderInlineFormatting(item.answer)}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <p className="text-xs blog-muted-text italic pt-1">
+          If most of your answers point toward multi-page, a multi-page or hybrid structure is likely the better long-term choice.
+        </p>
+      </div>
+    );
+  };
+
   // Helper to render markdown content with full structural support
   const renderFormattedParagraph = (para: string, idx: number) => {
     const trimmed = para.trim();
@@ -709,7 +849,17 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
       return renderWebsiteBriefCard(idx, briefItems);
     }
 
-    if (trimmed.startsWith("### Need a Website Built for Better Online Visibility?") ||
+    if (trimmed.startsWith(":::best-for-cards")) {
+      return renderBestForCards(idx, trimmed);
+    }
+
+    if (trimmed.startsWith(":::quick-decision-guide")) {
+      return renderQuickDecisionGuide(idx, trimmed);
+    }
+
+    if (trimmed.startsWith("### Not Sure Which Website Structure Is Right for You?") ||
+        trimmed.startsWith("## Not Sure Which Website Structure Is Right for You?") ||
+        trimmed.startsWith("### Need a Website Built for Better Online Visibility?") ||
         trimmed.startsWith("## Need a Website Built for Better Online Visibility?") ||
         trimmed.startsWith("### Want a Website Designed to Do More Than Look Good?") ||
         trimmed.startsWith("## Want a Website Designed to Do More Than Look Good?") ||
@@ -730,11 +880,14 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
     }
 
     // Skip redundant plain text promo blocks that are rendered by the CTA card
-    if (trimmed.startsWith("At **Vprime Digitalz**, we help businesses strengthen their online presence") ||
+    if (trimmed.startsWith("At **Vprime Digitalz**, we help businesses choose the right website structure") ||
+        trimmed.startsWith("If you're planning a new website or rethinking your current one") ||
+        trimmed.startsWith("At **Vprime Digitalz**, we help businesses strengthen their online presence") ||
         trimmed.startsWith("**Let's create a website that helps your business stand out online.**") ||
         trimmed.startsWith("At **Vprime Digitalz**, we believe a professional website should combine") ||
         trimmed.startsWith("**Let's build a website that works harder for your business.**") ||
         trimmed.startsWith("[Discuss Your Website Project](/booking) [View Our Work](/portfolio)") ||
+        trimmed.startsWith("[View Our Work](/portfolio) [Start Your Project](/booking)") ||
         trimmed.startsWith("At **Vprime Digitalz**, we help businesses") ||
         trimmed.startsWith("At Vprime Digitalz, we help businesses turn their ideas") ||
         trimmed.startsWith("Whether you have a detailed brief or just a rough idea") ||
@@ -770,7 +923,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         trimmed.startsWith("- Day 9:") ||
         trimmed.startsWith("- Day 10:") ||
         trimmed.startsWith("- Day 11:") ||
-        trimmed.startsWith("- Day 12:")) {
+        trimmed.startsWith("- Day 12:") ||
+        trimmed.startsWith("- Day 13:")) {
       return null;
     }
 
@@ -919,6 +1073,8 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             .filter(Boolean)
         );
 
+        const isOnePageVsMultiPage = (headerCols.some((h) => h.toLowerCase().includes("one-page")) && headerCols.some((h) => h.toLowerCase().includes("multi-page"))) ||
+                                      selectedPost?.slug === "one-page-vs-multi-page-website";
         const isFeaturesPlanningTable = headerCols.some((h) => h.toLowerCase().includes("must-have") || h.toLowerCase().includes("nice-to-have")) ||
                                         (headerCols.some((h) => h.toLowerCase().includes("feature")) && headerCols.some((h) => h.toLowerCase().includes("notes")));
         const isCoreWebVitalsTable = headerCols.some((h) => h.toLowerCase().includes("threshold")) ||
@@ -937,7 +1093,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
         const isChecklistTable = headerCols.some((h) => h.toLowerCase().includes("problem") || h.toLowerCase().includes("mistake") || h.toLowerCase().includes("improvement"));
         const isConversionChecklist = headerCols.some((h) => h.toLowerCase().includes("element") || h.toLowerCase().includes("check"));
 
-        const tableTitle = isFeaturesPlanningTable
+        const tableTitle = isOnePageVsMultiPage
+          ? "One-Page vs Multi-Page Website: Quick Comparison"
+          : isFeaturesPlanningTable
           ? "Website Feature Prioritisation Matrix"
           : isCoreWebVitalsTable
           ? "Core Web Vitals Metric & Benchmark Guide"
@@ -961,7 +1119,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
           ? "Quick Website Conversion Checklist"
           : "Strategic Comparison";
 
-        const tableSubtitle = isFeaturesPlanningTable
+        const tableSubtitle = isOnePageVsMultiPage
+          ? "Structural Capabilities & Architectural Comparison"
+          : isFeaturesPlanningTable
           ? "Launch Essentials vs Future Enhancements"
           : isCoreWebVitalsTable
           ? "Google Page Experience Thresholds & Visitor Impact"
@@ -997,7 +1157,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
             </div>
 
             <div className="overflow-x-auto scrollbar-thin">
-              <table className={`w-full text-left border-collapse text-sm ${isPricingTable ? "min-w-[480px]" : (isRedesignLaunchChecklist || isCoreWebVitalsTable) ? "min-w-[700px]" : "min-w-[620px]"}`}>
+              <table className={`w-full text-left border-collapse text-sm ${isPricingTable ? "min-w-[480px]" : (isRedesignLaunchChecklist || isCoreWebVitalsTable || isOnePageVsMultiPage) ? "min-w-[700px]" : "min-w-[620px]"}`}>
                 <thead>
                   <tr className="blog-table-header border-b blog-border-color">
                     {headerCols.map((h, hIdx) => {
@@ -1008,7 +1168,9 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                         <th 
                           key={hIdx} 
                           className={`py-4 px-5 font-mono text-xs font-bold tracking-wider ${
-                            isPricingTable || isPriorityPlatformTable
+                            isOnePageVsMultiPage
+                              ? (hIdx === 0 ? "w-[24%]" : "w-[38%]")
+                              : isPricingTable || isPriorityPlatformTable
                               ? (hIdx === 0 ? "w-3/5" : "w-2/5") 
                               : isFeaturesPlanningTable
                               ? (hIdx === 0 ? "w-[36%]" : hIdx === 1 ? "w-[30%]" : "w-[34%]")
@@ -1019,7 +1181,17 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                               : (hIdx === 0 ? "w-1/4" : "w-[37.5%]")
                           }`}
                         >
-                          {isWf ? (
+                          {isOnePageVsMultiPage && h.toLowerCase().includes("one-page") ? (
+                            <div className="flex items-center gap-2 text-[#05BB8D]">
+                              <span className="w-2.5 h-2.5 rounded-full bg-[#05BB8D]" />
+                              <span className="text-sm font-bold tracking-wider uppercase">{h}</span>
+                            </div>
+                          ) : isOnePageVsMultiPage && h.toLowerCase().includes("multi-page") ? (
+                            <div className="flex items-center gap-2 text-blue-500">
+                              <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
+                              <span className="text-sm font-bold tracking-wider uppercase">{h}</span>
+                            </div>
+                          ) : isWf ? (
                             <div className="flex items-center gap-2 text-[#05BB8D]">
                               <span className="w-2.5 h-2.5 rounded-full bg-[#05BB8D]" />
                               <span className="text-sm font-bold tracking-wider uppercase">{h}</span>
@@ -1083,7 +1255,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                             <span className="font-semibold blog-heading-primary flex items-start gap-2">
                               {isChecklistTable ? (
                                 <span className="w-2 h-2 rounded-full bg-amber-500/80 shrink-0 mt-1.5" />
-                              ) : isConversionChecklist ? (
+                              ) : isConversionChecklist || isOnePageVsMultiPage ? (
                                 <span className="w-2 h-2 rounded-full bg-[#05BB8D] shrink-0 mt-1.5" />
                               ) : (
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#05BB8D]/70 shrink-0 mt-1.5" />
@@ -1267,6 +1439,22 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
   const isDay11Post = selectedPost?.slug === "plan-your-website-before-hiring-a-web-designer";
   const isDay12Post = selectedPost?.slug === "turn-website-visitors-into-customers";
   const isDay13Post = selectedPost?.slug === "website-seo-for-beginners";
+  const isDay14Post = selectedPost?.slug === "one-page-vs-multi-page-website";
+
+  const day14Sections = useMemo(() => [
+    { num: 1, title: "What Is One-Page?", id: "what-is-a-one-page-website-" },
+    { num: 2, title: "What Is Multi-Page?", id: "what-is-a-multi-page-website-" },
+    { num: 3, title: "Quick Comparison", id: "one-page-vs-multi-page-website-quick-comparison" },
+    { num: 4, title: "One-Page Pros", id: "the-advantages-of-a-one-page-website" },
+    { num: 5, title: "One-Page Limits", id: "the-limitations-of-a-one-page-website" },
+    { num: 6, title: "Multi-Page Pros", id: "the-advantages-of-a-multi-page-website" },
+    { num: 7, title: "Multi-Page Limits", id: "the-limitations-of-a-multi-page-website" },
+    { num: 8, title: "Conversions Impact", id: "how-each-structure-affects-conversions" },
+    { num: 9, title: "When One-Page Fits", id: "when-a-one-page-website-is-the-right-choice" },
+    { num: 10, title: "When Multi-Page Fits", id: "when-a-multi-page-website-is-the-right-choice" },
+    { num: 11, title: "Hybrid Approach", id: "the-hybrid-approach-the-best-of-both" },
+    { num: 12, title: "Decision Framework", id: "how-to-decide-a-simple-framework" },
+  ], []);
 
   const day13Sections = useMemo(() => [
     { num: 1, title: "Keyword Search", id: "seo-strategy-1" },
@@ -1458,7 +1646,7 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
   ], []);
 
   const scrollToAnchor = (id: string) => {
-    const el = document.getElementById(id);
+    const el = document.getElementById(id) || document.getElementById(id.replace(/-+$/, "")) || document.getElementById(`${id}-`);
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -1938,6 +2126,82 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                     referrerPolicy="no-referrer" 
                   />
                 </div>
+
+                {/* Quick Interactive Table of Contents for Day 14 (One-Page vs Multi-Page Website) */}
+                {isDay14Post && (
+                  <div className="blog-card-subtle-surface border blog-border-color rounded-2xl p-5 sm:p-6 space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Layers size={16} className="text-[#05BB8D]" />
+                        <span className="blog-heading-primary font-display font-bold text-sm tracking-tight">
+                          Quick Jump — One-Page vs Multi-Page Guide
+                        </span>
+                      </div>
+                      <span className="font-mono text-[10px] blog-muted-text font-bold uppercase tracking-wider">
+                        12 Sections • Comparison Matrix • Decision Guide
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 pt-1">
+                      {day14Sections.map((s) => (
+                        <button
+                          key={s.num}
+                          onClick={() => scrollToAnchor(s.id)}
+                          className="blog-card-surface border blog-border-color hover:border-[#05BB8D]/60 hover:text-brand px-2.5 py-2 rounded-xl text-left transition-all cursor-pointer group flex items-center space-x-1.5"
+                        >
+                          <span className="font-mono text-[10px] font-bold text-[#05BB8D] bg-[#05BB8D]/10 px-1.5 py-0.5 rounded">
+                            {s.num < 10 ? `0${s.num}` : s.num}
+                          </span>
+                          <span className="text-xs font-medium blog-heading-primary truncate group-hover:text-brand">
+                            {s.title}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 pt-2 border-t blog-border-color text-xs font-mono">
+                      <button
+                        onClick={() => scrollToAnchor("one-page-vs-multi-page-website-quick-comparison")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Comparison Matrix</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("when-to-choose-which-structure")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Best For Matching</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("quick-decision-guide")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Decision Guide</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("common-mistakes-to-avoid")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>Common Mistakes</span>
+                        <ChevronRight size={12} />
+                      </button>
+                      <span className="blog-muted-text">•</span>
+                      <button
+                        onClick={() => scrollToAnchor("faq-section")}
+                        className="blog-link-text font-bold hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <span>FAQ</span>
+                        <ChevronRight size={12} />
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 {/* Quick Interactive Table of Contents for Day 13 (Website SEO for Beginners) */}
                 {isDay13Post && (
@@ -2773,8 +3037,14 @@ export default function BlogSection({ onBookCall, onPageChange, initialPostSlug 
                   <h4 className="blog-heading-primary text-base font-display font-extrabold border-b blog-border-color pb-3">
                     More Articles & Strategy Guides
                   </h4>
-                  <div className={`grid grid-cols-1 ${isDay13Post || isDay12Post || isDay11Post ? "md:grid-cols-3" : "md:grid-cols-2"} gap-6`}>
-                    {(isDay13Post
+                  <div className={`grid grid-cols-1 ${isDay14Post || isDay13Post || isDay12Post || isDay11Post ? "md:grid-cols-3" : "md:grid-cols-2"} gap-6`}>
+                    {(isDay14Post
+                      ? [
+                          blogPostsData.find((p) => p.slug === "website-seo-for-beginners"),
+                          blogPostsData.find((p) => p.slug === "plan-your-website-before-hiring-a-web-designer"),
+                          blogPostsData.find((p) => p.slug === "what-makes-a-high-converting-landing-page"),
+                        ].filter(Boolean) as BlogPost[]
+                      : isDay13Post
                       ? [
                           blogPostsData.find((p) => p.slug === "turn-website-visitors-into-customers"),
                           blogPostsData.find((p) => p.slug === "why-website-speed-matters"),
